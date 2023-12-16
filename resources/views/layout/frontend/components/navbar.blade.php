@@ -7,7 +7,7 @@
             <div class="clearfix">
 
                 <div class="pull-left" style="margin-top:15px; margin-right:15px;">
-                    <div class="logo"><a href="{{ route('frontend.index') }}"><img src="{{ asset('assets/frontend/images/logo.png') }}" alt=""
+                    <div class="logo"><a href="#"><img src="{{ asset('assets/frontend/images/logo.png') }}" alt=""
                                 title=""></a></div>
                 </div>
 
@@ -39,15 +39,15 @@
 
                         <div class="navbar-collapse collapse clearfix" id="navbarSupportedContent">
                             <ul class="navigation clearfix">
-                                <li class="{{ Route::is('frontend.index') ? 'current' : '' }}"><a href="{{ route('frontend.index') }}">Home</a></li>
+                                <li class=""><a href="#">Home</a></li>
 
-                                <li class="{{ Route::is('frontend.about') ? 'current' : '' }}"><a href="{{ route('frontend.about') }}">About Us</a></li>
+                                <li class=""><a href="#">About Us</a></li>
 
-                                <li class="{{ Route::is('frontend.service') ? 'current' : '' }}"><a href="{{ route('frontend.service') }}">Service</a></li>
+                                <li class=""><a href="#">Service</a></li>
 
-                                <li class="{{ Route::is('frontend.project') ? 'current' : '' }}"><a href="{{ route('frontend.project') }}">Project</a></li>
+                                <li class=""><a href="#">Project</a></li>
 
-                                <li class="{{ Route::is('frontend.contactus') ? 'current' : '' }}"><a href="{{ route('frontend.contactus') }}">Contact us</a></li>
+                                <li class=""><a href="#">Contact us</a></li>
                             </ul>
                         </div>
 
@@ -65,7 +65,7 @@
         <div class="auto-container clearfix">
             <!--Logo-->
             <div class="logo pull-left">
-                <a href="{{ route('frontend.index') }}" class="img-responsive"><img src="{{ asset('assets/frontend/images/logo-small.png') }}" alt=""
+                <a href="#" class="img-responsive"><img src="{{ asset('assets/frontend/images/logo-small.png') }}" alt=""
                         title=""></a>
             </div>
 
@@ -83,15 +83,15 @@
 
                     <div class="navbar-collapse collapse clearfix" id="navbarSupportedContent1">
                         <ul class="navigation clearfix">
-                            <li class="{{ Route::is('frontend.index') ? 'current' : '' }}"><a href="{{ route('frontend.index') }}">Home</a></li>
+                            <li class=""><a href="#">Home</a></li>
 
-                            <li class="{{ Route::is('frontend.about') ? 'current' : '' }}"><a href="{{ route('frontend.about') }}">About Us</a></li>
+                            <li class=""><a href="#">About Us</a></li>
 
-                            <li class="{{ Route::is('frontend.service') ? 'current' : '' }}"><a href="{{ route('frontend.service') }}">Service</a></li>
+                            <li class=""><a href="#">Service</a></li>
 
-                            <li class="{{ Route::is('frontend.project') ? 'current' : '' }}"><a href="{{ route('frontend.project') }}">Project</a></li>
+                            <li class=""><a href="#">Project</a></li>
 
-                            <li class="{{ Route::is('frontend.contactus') ? 'current' : '' }}"><a href="{{ route('frontend.contactus') }}">Contact us</a></li>
+                            <li class=""><a href="#">Contact us</a></li>
                         </ul>
                     </div>
                 </nav><!-- Main Menu End-->

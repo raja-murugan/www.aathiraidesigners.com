@@ -14,11 +14,11 @@
                         <div class="row clearfix">
                             <div class="column col-lg-6 col-md-6 col-sm-12">
                                 <ul class="footer-link">
-                                    <li><a href="{{ route('frontend.index') }}">Home</a></li>
-                                    <li><a href="{{ route('frontend.about') }}">About Us</a></li>
-                                    <li><a href="{{ route('frontend.service') }}">Service</a></li>
-                                    <li><a href="{{ route('frontend.project') }}">Project</a></li>
-                                    <li><a href="{{ route('frontend.contactus') }}">Contact Us</a></li>
+                                    <li><a href="#">Home</a></li>
+                                    <li><a href="#">About Us</a></li>
+                                    <li><a href="#">Service</a></li>
+                                    <li><a href="#">Project</a></li>
+                                    <li><a href="#">Contact Us</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -61,9 +61,9 @@
                         <div class="widget-content">
                             <!--Social Icon One-->
                             <ul class="social-icon-one">
-                                <li><a href="https://www.facebook.com/anandupvcwindow" target="_blank"><span class="icon fa fa-facebook"></span>facebook</a></li>
-                                <li><a href="https://www.instagram.com/anandupvcwindow" target="_blank"><span class="icon fa fa-instagram"></span>instagram</a></li>
-                                <li><a href="https://maps.app.goo.gl/uh8PmSbAdYfCS9rJA" target="_blank"><span class="icon fa fa-google-plus"></span>google +</a></li>
+                                <li><a href="https://www.facebook.com/" target="_blank"><span class="icon fa fa-facebook"></span>facebook</a></li>
+                                <li><a href="https://www.instagram.com/" target="_blank"><span class="icon fa fa-instagram"></span>instagram</a></li>
+                                <li><a href="https://maps.app.goo.gl/" target="_blank"><span class="icon fa fa-google-plus"></span>google +</a></li>
                             </ul>
                         </div>
                     </div>
