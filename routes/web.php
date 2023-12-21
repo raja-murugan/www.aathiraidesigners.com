@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\AttendanceController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,3 +29,34 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     // DASHBOARD FILTER
     Route::middleware(['auth:sanctum', 'verified'])->put('/zworktech-anandtraders/home/datefilter', [App\Http\Controllers\HomeController::class, 'datefilter'])->name('home.datefilter');
 });
+
+
+
+// EMPLOYEE CONTROLLER
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    // INDEX
+    Route::middleware(['auth:sanctum', 'verified'])->get('/zworktechtechnology/employee', [EmployeeController::class, 'index'])->name('employee.index');
+    // STORE
+    Route::middleware(['auth:sanctum', 'verified'])->post('/zworktechtechnology/employee/store', [EmployeeController::class, 'store'])->name('employee.store');
+    // EDIT
+    Route::middleware(['auth:sanctum', 'verified'])->post('/zworktechtechnology/employee/edit/{unique_key}', [EmployeeController::class, 'edit'])->name('employee.edit');
+    // DELETE
+    Route::middleware(['auth:sanctum', 'verified'])->put('/zworktechtechnology/employee/delete/{unique_key}', [EmployeeController::class, 'delete'])->name('employee.delete');
+    // CHECK DUPLICATE
+    Route::middleware(['auth:sanctum', 'verified'])->post('/zworktechtechnology/employee/checkduplicate', [EmployeeController::class, 'checkduplicate'])->name('employee.checkduplicate');
+ });
+
+
+// ATTENDANCE CONTROLLER
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    // INDEX
+    Route::middleware(['auth:sanctum', 'verified'])->get('/zworktechtechnology/attendance', [AttendanceController::class, 'index'])->name('attendance.index');
+    // CREATE
+    Route::middleware(['auth:sanctum', 'verified'])->get('/zworktechtechnology/attendance/create', [AttendanceController::class, 'create'])->name('attendance.create');
+});
+
+
+
+
+
+Route::get('getemployee_photos/', [EmployeeController::class, 'getemployee_photos']);

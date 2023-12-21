@@ -21,8 +21,11 @@
 
             <ul>
                 <li class="menu-title"><span>Project</span></li>
-                <li class="">
-                    <a href="#"><i class="fe fe-users"></i> <span>Customer</span></a>
+                <li class="{{ Route::is('employee.index') ? 'active' : '' }}">
+                    <a href="{{ route('employee.index') }}"><i class="fe fe-users"></i> <span>Employee</span></a>
+                </li>
+                <li class="{{ Route::is('attendance.index') ? 'active' : '' }}">
+                    <a href="{{ route('attendance.index') }}"><i class="fe fe-book-open"></i> <span>Attendance</span></a>
                 </li>
             </ul>
 

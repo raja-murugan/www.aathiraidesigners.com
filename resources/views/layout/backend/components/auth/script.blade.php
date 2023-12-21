@@ -22,3 +22,37 @@
 
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+  <script src="https://cdn.jsdelivr.net/npm/face-api.js"></script>
+
+<script>
+
+$(document).ready(function() {
+         $(".employee_phoneno").keyup(function() {
+            var query = $(this).val();
+
+               if (query != '') {
+
+                    $.ajax({
+                        url: "{{ route('employee.checkduplicate') }}",
+                        type: 'POST',
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            query: query
+                        },
+                        dataType: 'json',
+                        success: function(response) {
+                            console.log(response['data']);
+                            if(response['data'] != null){
+                                alert('Employee Already Existed');
+                                $('.employee_phoneno').val('');
+                            }
+                        }
+                    });
+               }
+
+         });
+});
+  
+</script>
+
