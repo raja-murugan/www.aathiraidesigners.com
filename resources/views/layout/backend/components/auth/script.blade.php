@@ -52,6 +52,7 @@ $(document).ready(function() {
                }
 
          });
+    });
 
          Webcam.set({
             width: 300,
@@ -91,7 +92,7 @@ $(document).ready(function() {
                     '" style="height: 220px !important;width: 300px !important;margin-top: 40px;margin-left: 40px;"/>';
             });
         }
-});
+
   
 </script>
 

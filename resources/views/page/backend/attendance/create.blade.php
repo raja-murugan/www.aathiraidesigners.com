@@ -169,7 +169,7 @@
 
 
 
-$(document).ready(function() {
+//$(document).ready(function() {
 //    $('input[type=file]#attendance_photo').change(function() {
 //       //alert('changed!');
 //       var image_two = $(this).val();
@@ -230,6 +230,6 @@ $(document).ready(function() {
 //                     }
 //                 });
 //    });
-});
+//});
 </script>
     @endsection
