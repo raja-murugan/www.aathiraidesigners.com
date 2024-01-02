@@ -32,9 +32,8 @@
                               <tr>
                                  <th style="width:5%">S.No</th>
                                  <th style="width:15%">Date</th>
-                                 <th style="width:15%">CheckIn Time</th>
-                                 <th style="width:15%">CheckIn Time</th>
                                  <th style="width:15%">Employee</th>
+                                 <th style="width:15%">Working Hour</th>
                                  <th style="width:15%">Present / Absent</th>
                               </tr>
                            </thead>
@@ -42,10 +41,9 @@
                            @foreach ($Attendance_data as $keydata => $Attendance_datas)
                               <tr>
                                  <td>{{ ++$keydata }}</td>
-                                 <td>{{ $Attendance_datas['checkin_date'] }}</td>
-                                 <td>{{ $Attendance_datas['checkin_time'] }}</td>
-                                 <td>{{ $Attendance_datas['checkout_time'] }}</td>
+                                 <td>{{ $Attendance_datas['date'] }}</td>
                                  <td>{{ $Attendance_datas['employee'] }}</td>
+                                 <td>{{ $Attendance_datas['hour'] }}</td>
                                  <td>{{ $Attendance_datas['status'] }}</td>
                               </tr>
                            @endforeach

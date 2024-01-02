@@ -38,7 +38,7 @@
                      <input type="number" class="form-control" placeholder="Enter Employee Salary per Hour" name="salaray_per_hour" id="salaray_per_hour" value="{{ $Employee_datas['salaray_per_hour'] }}">
                   </div>
                </div>
-               <div class="col-lg-12 col-md-12" hidden>
+               <div class="col-lg-12 col-md-12" >
                   <div class="form-group">
                      <label>Photo</label>
                         <div class="col-sm-7">
@@ -53,7 +53,7 @@
                   </div>
                </div>
 
-               <div class="col-lg-12 col-md-12">
+               <div class="col-lg-12 col-md-12" hidden>
                   <div class="form-group">
                      <label>Photo</label>
                      <div class="col-sm-3">
@@ -74,23 +74,3 @@
    </div>
 </div>
 
-
-<script>
-    Webcam.set({
-            width: 300,
-            height: 300,
-            image_format: 'jpeg',
-            jpeg_quality: 90,
-            facingMode: 'environment'
-        });
-
-        Webcam.attach('#my_camera1');
-
-        function takesnapshot() {
-            Webcam.snap(function(data_uri) {
-                $(".image-tagcamera1").val(data_uri);
-                document.getElementById('captured_cameraimage1').innerHTML = '<img src="' + data_uri +
-                    '" style="height: 220px !important;width: 300px !important;margin-top: 40px;margin-left: 40px;"/>';
-            });
-        }
-</script>

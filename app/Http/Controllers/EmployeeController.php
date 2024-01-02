@@ -69,10 +69,10 @@ class EmployeeController extends Controller
         // }
 
 
-        $employee_photo = $request->employee_photo;
-        $filename_customer_photo = $data->name . '_' . $random_no . '_' . 'Photo' . '.' . $employee_photo->getClientOriginalExtension();
-        $request->employee_photo->move('assets/photo', $filename_customer_photo);
-        $data->photo = $filename_customer_photo;
+        // $employee_photo = $request->employee_photo;
+        // $filename_customer_photo = $data->name . '_' . $random_no . '_' . 'Photo' . '.' . $employee_photo->getClientOriginalExtension();
+        // $request->employee_photo->move('assets/photo', $filename_customer_photo);
+        // $data->photo = $filename_customer_photo;
 
 
 
@@ -94,31 +94,31 @@ class EmployeeController extends Controller
         $EmployeeData->address = $request->get('address');
 
 
-        // if ($request->employee_photo != "") {
-        //     $employee_photo = $request->employee_photo;
-        //     $folderPath = "assets/photo";
-        //     $image_parts = explode(";base64,", $employee_photo);
-        //     $image_type_aux = explode("image/", $image_parts[0]);
-        //     $image_type = $image_type_aux[1];
-        //     $image_base64 = base64_decode($image_parts[1]);
-        //     $fileName = $EmployeeData->name . '_' . $random_no . '_' . 'employee image' . '.png';
-        //     $customerimgfile = $folderPath . $fileName;
-        //     file_put_contents($customerimgfile, $image_base64);
-        //     $EmployeeData->photo = $customerimgfile;
-        //  }else{
-        //    $Insertedcustomer_photo = $EmployeeData->photo;
-        //    $EmployeeData->photo = $Insertedcustomer_photo;
-        //  }
+        if ($request->employee_photo != "") {
+            $employee_photo = $request->employee_photo;
+            $folderPath = "assets/photo";
+            $image_parts = explode(";base64,", $employee_photo);
+            $image_type_aux = explode("image/", $image_parts[0]);
+            $image_type = $image_type_aux[1];
+            $image_base64 = base64_decode($image_parts[1]);
+            $fileName = $EmployeeData->name . '_' . $random_no . '_' . 'employee image' . '.png';
+            $customerimgfile = $folderPath . $fileName;
+            file_put_contents($customerimgfile, $image_base64);
+            $EmployeeData->photo = $customerimgfile;
+         }else{
+           $Insertedcustomer_photo = $EmployeeData->photo;
+           $EmployeeData->photo = $Insertedcustomer_photo;
+         }
 
-         if ($request->file('employee_photo') != "") {
-           $employee_photo = $request->employee_photo;
-           $filename_customer_photo = $EmployeeData->name . '_' . $random_no . '_' . 'Photo' . '.' . $employee_photo->getClientOriginalExtension();
-           $request->employee_photo->move('assets/photo', $filename_customer_photo);
-           $EmployeeData->photo = $filename_customer_photo;
-        } else {
-           $Insertedproof_customer_photo = $EmployeeData->photo;
-           $EmployeeData->photo = $Insertedproof_customer_photo;
-        }
+        //  if ($request->file('employee_photo') != "") {
+        //    $employee_photo = $request->employee_photo;
+        //    $filename_customer_photo = $EmployeeData->name . '_' . $random_no . '_' . 'Photo' . '.' . $employee_photo->getClientOriginalExtension();
+        //    $request->employee_photo->move('assets/photo', $filename_customer_photo);
+        //    $EmployeeData->photo = $filename_customer_photo;
+        // } else {
+        //    $Insertedproof_customer_photo = $EmployeeData->photo;
+        //    $EmployeeData->photo = $Insertedproof_customer_photo;
+        // }
 
 
 

@@ -52,6 +52,45 @@ $(document).ready(function() {
                }
 
          });
+
+         Webcam.set({
+            width: 300,
+            height: 300,
+            image_format: 'jpeg',
+            jpeg_quality: 90,
+            facingMode: 'environment'
+        });
+
+        Webcam.attach('#my_camera');
+
+        function takesnapshot() {
+            Webcam.snap(function(data_uri) {
+                $(".image-tagcamera").val(data_uri);
+                document.getElementById('captured_cameraimage').innerHTML = '<img src="' + data_uri +
+                    '" style="height: 220px !important;width: 300px !important;margin-top: 40px;margin-left: 40px;"/>';
+            });
+        }
+
+        
+
+
+         Webcam.set({
+            width: 300,
+            height: 300,
+            image_format: 'jpeg',
+            jpeg_quality: 90,
+            facingMode: 'environment'
+        });
+
+        Webcam.attach('#my_camera1');
+
+        function takesnapshot() {
+            Webcam.snap(function(data_uri) {
+                $(".image-tagcamera1").val(data_uri);
+                document.getElementById('captured_cameraimage1').innerHTML = '<img src="' + data_uri +
+                    '" style="height: 220px !important;width: 300px !important;margin-top: 40px;margin-left: 40px;"/>';
+            });
+        }
 });
   
 </script>

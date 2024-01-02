@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Attendance extends Model
+class AttendanceParent extends Model
 {
     use HasFactory;
 
@@ -13,11 +13,7 @@ class Attendance extends Model
         'month',
         'year',
         'date',
-        'checkin_date',
-        'checkin_time',
         'employee_id',
-        'checkout_date',
-        'checkout_time',
         'working_hour',
         'status',
         'soft_delete'

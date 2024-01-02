@@ -53,6 +53,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::middleware(['auth:sanctum', 'verified'])->get('/zworktechtechnology/attendance', [AttendanceController::class, 'index'])->name('attendance.index');
     // CREATE
     Route::middleware(['auth:sanctum', 'verified'])->get('/zworktechtechnology/attendance/create', [AttendanceController::class, 'create'])->name('attendance.create');
+    // STORE
+    Route::middleware(['auth:sanctum', 'verified'])->post('/zworktechtechnology/attendance/store', [AttendanceController::class, 'store'])->name('attendance.store');
 });
 
 
