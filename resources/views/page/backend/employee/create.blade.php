@@ -45,7 +45,7 @@
                               <div id="my_camera"></div>
                               <div id="captured_cameraimage"></div>
                            </div>
-                           <input type=button class=" btn btn-sm btn-soft-primary"value="Take a Snap - Photo"onClick="takesnapshot()">
+                           <input type=button class=" btn btn-sm btn-soft-primary"value="Take a Snap - Photo" onClick="takesnapshot()">
                            <input type="hidden" class="form-control image-tagcamera" name="employee_photo">
                         </div>
                   </div>

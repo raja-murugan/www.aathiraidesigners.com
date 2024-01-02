@@ -82,12 +82,12 @@ $(document).ready(function() {
             facingMode: 'environment'
         });
 
-        Webcam.attach('#my_camera1');
+        Webcam.attach('#my_cameraone');
 
-        function takesnapshot() {
+        function takesnapshotone() {
             Webcam.snap(function(data_uri) {
-                $(".image-tagcamera1").val(data_uri);
-                document.getElementById('captured_cameraimage1').innerHTML = '<img src="' + data_uri +
+                $(".image-tagcameraone").val(data_uri);
+                document.getElementById('captured_cameraimageone').innerHTML = '<img src="' + data_uri +
                     '" style="height: 220px !important;width: 300px !important;margin-top: 40px;margin-left: 40px;"/>';
             });
         }
