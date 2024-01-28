@@ -35,14 +35,14 @@
                 <div class="form-group">
                    <label>Gender</label>
                    <div class="col-md-10" style="display: flex; margin-top: 10px;">
-                      <div class="radio">
+                      <div class="gender">
                           <label>
-                              <input type="radio" value="Male" name="radio"> Male
+                              <input type="radio" value="Male" name="gender"> Male
                           </label>
                       </div>
-                      <div class="radio"  style="margin-left: 25px;">
+                      <div class="gender"  style="margin-left: 25px;">
                           <label>
-                              <input type="radio" value="Fe-Male" name="radio"> Fe-Male
+                              <input type="radio" value="Fe-Male" name="gender"> Fe-Male
                           </label>
                       </div>
                   </div>
