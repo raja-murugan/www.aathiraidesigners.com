@@ -17,7 +17,7 @@
                         </li>
                      </ul>
                   </div>
-                  
+
                </div>
          </div>
       </div>
@@ -25,18 +25,17 @@
       <div class="row">
          <div class="col-sm-12">
             <div class="card">
-               
+
                   <div class="card-body">
                      <div class="table-responsive">
                         <table class="table table-center table-hover datatable table-striped">
                            <thead class="thead-light">
                               <tr>
                                  <th style="width:5%">S.No</th>
-                                 <th style="width:15%">Employee</th>
+                                 <th style="width:15%">Name</th>
                                  <th style="width:15%">Phone No</th>
                                  <th style="width:15%">Address</th>
-                                 <th style="width:15%">Salary / Hour</th>
-                                 <th style="width:15%">Photo</th>
+                                 <th style="width:15%">Salary Per Hour</th>
                                  <th style="width:20%">Action</th>
                               </tr>
                            </thead>
@@ -48,7 +47,6 @@
                                  <td>{{ $Employee_datas['phone_number'] }}</td>
                                  <td>{{ $Employee_datas['address'] }}</td>
                                  <td>{{ $Employee_datas['salaray_per_hour'] }}</td>
-                                 <td> <img src="{{ asset('assets/photo/' .$Employee_datas['photo']) }}" alt="" width="50" height="50"></td>
                                  <td>
                                     <ul class="list-unstyled hstack gap-1 mb-0">
                                        <li>
@@ -60,7 +58,7 @@
                                           data-bs-target=".employeedelete-modal-xl{{ $Employee_datas['unique_key'] }}" class="badge bg-danger-light" style="color: #28084b;">Delete</a>
                                        </li>
                                     </ul>
-                                 
+
                                  </td>
                               </tr>
 
@@ -81,7 +79,7 @@
                         </table>
                      </div>
                   </div>
-               
+
             </div>
          </div>
 
