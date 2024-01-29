@@ -15,6 +15,17 @@ return new class extends Migration
     {
         Schema::create('attendances', function (Blueprint $table) {
             $table->id();
+            $table->string('month')->nullable();
+            $table->string('year')->nullable();
+            $table->string('date')->nullable();
+            $table->unsignedBigInteger('employee_id');
+            $table->foreign('employee_id')->references('id')->on('employees')->onDelete('cascade');
+            $table->string('working_hour')->nullable();
+            $table->string('checkin_date')->nullable();
+            $table->string('checkin_time')->nullable();
+            $table->string('checkout_date')->nullable();
+            $table->string('checkout_time')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

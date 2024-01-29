@@ -1,4 +1,4 @@
-<div class="modal-dialog modal-dialog-centered modal-md">
+<div class="modal-dialog modal-dialog-centered modal-lg">
    <div class="modal-content">
 
       <div class="modal-header border-0 pb-0">
@@ -26,12 +26,12 @@
                   </div>
                </div>
                <div class="col-lg-6 col-md-6">
-                <div class="form-group">
-                   <label>Salary per Hour</label>
-                   <input type="number" class="form-control" placeholder="Enter Employee Salary per Hour" name="salaray_per_hour" id="salaray_per_hour">
-                </div>
-             </div>
-             <div class="col-lg-6 col-md-6">
+                  <div class="form-group">
+                     <label>Email Address</label>
+                     <input type="text" class="form-control" placeholder="Enter Employee Email Address" name="email" required>
+                  </div>
+               </div>
+               <div class="col-lg-6 col-md-6">
                 <div class="form-group">
                    <label>Gender</label>
                    <div class="col-md-10" style="display: flex; margin-top: 10px;">
@@ -48,25 +48,28 @@
                   </div>
                 </div>
              </div>
-             <div class="col-lg-12 col-md-12">
+               <div class="col-lg-6 col-md-6">
                 <div class="form-group">
-                   <label>Address</label>
-                   <input type="text" class="form-control" placeholder="Enter Employee Address" name="address" id="address" required>
+                   <label>Salary per Hour</label>
+                   <input type="number" class="form-control" placeholder="Enter Employee Salary per Hour" name="salaray_per_hour" id="salaray_per_hour">
                 </div>
              </div>
-               <div class="col-lg-6 col-md-6">
-                  <div class="form-group">
-                     <label>Email Address</label>
-                     <input type="text" class="form-control" placeholder="Enter Employee Email Address" name="email" required>
-                  </div>
-               </div>
-               <div class="col-lg-6 col-md-6">
+             <div class="col-lg-6 col-md-6">
                   <div class="form-group">
                      <label>Login Password</label>
                      <input type="password" class="form-control" placeholder="Enter Password" name="password">
                   </div>
                </div>
-               <div class="col-lg-12 col-md-12" >
+             
+             <div class="col-lg-12 col-md-12">
+                <div class="form-group">
+                   <label>Address</label>
+                   <textarea name="address" id="address" class="form-control" placeholder="Enter Employee Address" required></textarea>
+                </div>
+             </div>
+               
+               
+               <div class="col-lg-12 col-md-12" hidden>
                   <div class="form-group">
                      <label>Photo</label>
                         <div class="col-sm-7">

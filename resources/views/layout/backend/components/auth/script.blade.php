@@ -25,4 +25,24 @@
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
   <script src="https://cdn.jsdelivr.net/npm/face-api.js"></script>
 
+  <script language="JavaScript">
+    Webcam.set({
+            width: 350,
+            height: 200,
+            image_format: 'jpeg',
+            jpeg_quality: 90,
+            facingMode: 'environment'
+        });
+
+        Webcam.attach('#checin_camera');
+
+        function takechecinsnapshot() {
+            Webcam.snap(function(data_uri) {
+                $(".image-checincamera").val(data_uri);
+                document.getElementById('captured_checinimage').innerHTML = '<img src="' + data_uri +
+                    '" style="height: 220px !important;width: 300px !important;margin-top: 40px;margin-left: 40px;"/>';
+            });
+        }
+  </script>
+
 

@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Attendance extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'month',
+        'year',
+        'date',
+        'employee_id',
+        'working_hour',
+        'status',
+    ];
 }
