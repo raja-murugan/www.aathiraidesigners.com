@@ -50,10 +50,10 @@
                               <td>
                               <a class="badge btn" href="#checkin{{ $Attendance_datas['unique_key'] }}" data-bs-toggle="modal"
                                           data-bs-target=".checkin-modal-xl{{ $Attendance_datas['unique_key'] }}" 
-                                          data-employee-id ="{{ $Attendance_datas['employee_id'] }}" style="color: #28084b;background: #78d778;">Check in</a>
+                                          data-employee-id ="{{ $Attendance_datas['employee_id'] }}" style="color: #333;background: #caccd7d9;">Check in</a>
                               </td>
                               <td><a class="badge btn" href="#checkout{{ $Attendance_datas['unique_key'] }}" data-bs-toggle="modal"
-                                          data-bs-target=".checkout-modal-xl{{ $Attendance_datas['unique_key'] }}" style="color: #28084b;background: #b5b5c3;">Check out</a></td>
+                                          data-bs-target=".checkout-modal-xl{{ $Attendance_datas['unique_key'] }}" style="color: #333;background: #caccd7d9;">Check out</a></td>
                               <td></td>
                            </tr>
                               <div class="modal checin_modal fade checkin-modal-xl{{ $Attendance_datas['unique_key'] }}"

@@ -60,9 +60,9 @@ class AttendanceController extends Controller
         $data->working_hour = '';
 
 
-        dd($request->checkin_photo . $employee_id);
-        if ($request->checkin_photo . $employee_id != "") {
-            $checkin_photo = $request->checkin_photo . $employee_id;
+        dd($request->checkin_photo);
+        if ($request->checkin_photo != "") {
+            $checkin_photo = $request->checkin_photo;
             $folderPath = "assets/backend/checkin";
             $image_parts = explode(";base64,", $checkin_photo);
             $image_type_aux = explode("image/", $image_parts[0]);

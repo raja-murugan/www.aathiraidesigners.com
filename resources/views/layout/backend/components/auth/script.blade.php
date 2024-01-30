@@ -43,7 +43,7 @@
 
           Webcam.attach('#checin_camera' + employeeID);
 
-            function takechecinsnapshot(employeeID) {
+            function takechecinsnapshot() {
                 Webcam.snap(function(data_uri) {
                     $('.image-checincamera' + employeeID).val(data_uri);
                     document.getElementById('captured_checinimage' + employeeID).innerHTML = '<img src="' + data_uri +
