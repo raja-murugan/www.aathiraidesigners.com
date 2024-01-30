@@ -33,7 +33,7 @@
         $('.checin_modal').on('show.bs.modal', function (e) {
           var $modal = $(this);
           var employeeID = $(e.relatedTarget).data('employee-id');
-          alert(employeeID);
+          //alert(employeeID);
 
           Webcam.set({
               width: 350,
