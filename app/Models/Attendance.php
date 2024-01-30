@@ -20,6 +20,7 @@ class Attendance extends Model
         'checkout_date',
         'checkout_time',
         'checkin_photo',
+        'checkout_photo',
         'status',
     ];
 }

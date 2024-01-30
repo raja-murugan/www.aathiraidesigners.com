@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('checkout_date')->nullable();
             $table->string('checkout_time')->nullable();
             $table->longtext('checkin_photo')->nullable();
+            $table->longtext('checkout_photo')->nullable();
             $table->string('status')->nullable();
             $table->timestamps();
         });

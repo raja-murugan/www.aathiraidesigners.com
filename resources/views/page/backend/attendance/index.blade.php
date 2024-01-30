@@ -20,7 +20,7 @@
                     </div>
                 </form>
             </div>
-               
+
          </div>
       </div>
 
@@ -46,15 +46,45 @@
                            <tr>
                               <td>{{ ++$keydata }}</td>
                               <td>{{ $Attendance_datas['employee'] }}</td>
-                              <td></td>
                               <td>
-                              <a class="badge btn" href="#checkin{{ $Attendance_datas['unique_key'] }}" data-bs-toggle="modal"
-                                          data-bs-target=".checkin-modal-xl{{ $Attendance_datas['unique_key'] }}" 
-                                          data-employee-id ="{{ $Attendance_datas['employee_id'] }}" style="color: #333;background: #caccd7d9;">Check in</a>
+                                @if ($Attendance_datas['checkin_time'] != '')
+                                {{ $Attendance_datas['checkin_time'] }} -
+                                @endif
+
+                                @if ($Attendance_datas['checkout_time'] != '')
+                                {{ $Attendance_datas['checkout_time'] }}
+                                @endif
+
                               </td>
-                              <td><a class="badge btn" href="#checkout{{ $Attendance_datas['unique_key'] }}" data-bs-toggle="modal"
-                                          data-bs-target=".checkout-modal-xl{{ $Attendance_datas['unique_key'] }}" style="color: #333;background: #caccd7d9;">Check out</a></td>
-                              <td></td>
+
+                                @if ($Attendance_datas['checkin_time'] == '')
+                                <td><a class="badge btn" href="#checkin{{ $Attendance_datas['unique_key'] }}" data-bs-toggle="modal"
+                                          data-bs-target=".checkin-modal-xl{{ $Attendance_datas['unique_key'] }}"
+                                          data-employee_id ="{{ $Attendance_datas['employee_id'] }}" style="color: #333;background: #caccd7d9;">Check in</a></td>
+                                @else
+                                <td><img src="{{ asset($Attendance_datas['checkin_photo']) }}" alt="" width="50" height="50"></td>
+                                @endif
+
+                                @if ($Attendance_datas['checkout_time'] == '')
+                                <td>
+                                    <a class="badge btn" href="#checkout{{ $Attendance_datas['unique_key'] }}" data-bs-toggle="modal"
+                                          data-bs-target=".checkout-modal-xl{{ $Attendance_datas['unique_key'] }}"
+                                          data-employee_id ="{{ $Attendance_datas['employee_id'] }}"
+                                          style="color: #333;background: #caccd7d9;">Check out</a>
+                                </td>
+                                @else
+                                <td> <img src="{{ asset($Attendance_datas['checkout_photo']) }}" alt="" width="50" height="50"></td>
+                                @endif
+                              <td>
+                                <ul class="list-unstyled hstack gap-1 mb-0">
+                                    <li>
+                                        <a class="badge btn"  data-bs-toggle="modal"
+                                              data-bs-target=".attendanceedit-modal-xl{{ $Attendance_datas['unique_key'] }}"
+                                              style="color: #333;background: #d8c730d9;">Edit</a>
+                                    </li>
+                                </ul>
+
+                              </td>
                            </tr>
                               <div class="modal checin_modal fade checkin-modal-xl{{ $Attendance_datas['unique_key'] }}"
                                     tabindex="-1" role="dialog" data-bs-backdrop="static"
@@ -62,13 +92,19 @@
                                     aria-hidden="true">
                                     @include('page.backend.attendance.checkin')
                               </div>
-                              <div class="modal fade  checkout-modal-xl{{ $Attendance_datas['unique_key'] }}"
+                              <div class="modal checkout_modal fade  checkout-modal-xl{{ $Attendance_datas['unique_key'] }}"
                                     tabindex="-1" role="dialog" data-bs-backdrop="static"
                                     aria-labelledby="checkoutLargeModalLabel{{ $Attendance_datas['unique_key'] }}"
                                     aria-hidden="true">
                                     @include('page.backend.attendance.checkout')
                               </div>
-     
+                              <div class="modal fade attendanceedit-modal-xl{{ $Attendance_datas['unique_key'] }}"
+                                    tabindex="-1" role="dialog" data-bs-backdrop="static"
+                                    aria-labelledby="attendanceeditLargeModalLabel{{ $Attendance_datas['unique_key'] }}"
+                                    aria-hidden="true">
+                                    @include('page.backend.attendance.edit')
+                              </div>
+
                            @endforeach
                            </tbody>
                         </table>
