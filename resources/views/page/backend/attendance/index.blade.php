@@ -36,7 +36,7 @@
                                  <th style="width:10%">S.No</th>
                                  <th style="width:15%">Name</th>
                                  <th style="width:15%">Working Hours</th>
-                                 <th style="width:15%">Working Time</th>
+                                 <th style="width:15%">Time</th>
                                  <th style="width:15%">Check-In Photo</th>
                                  <th style="width:15%">Check-Out Photo</th>
                                  <th style="width:30%">Action</th>

@@ -173,85 +173,93 @@ class AttendanceController extends Controller
 
     public function checkinstore(Request $request)
     {
-        $today = Carbon::now()->format('Y-m-d');
-        $timenow = Carbon::now()->format('H:i');
-        $employeename = $request->get('employee');
-        $employee_id = $request->get('employee_id');
-
-        $random_no =  rand(100,999);
-
-        $data = new Attendance();
-        $data->month = date('m', strtotime($request->get('date')));
-        $data->year = date('Y', strtotime($request->get('date')));
-        $data->date = $request->get('date');
-        $data->employee_id = $request->get('employee_id');
-        $data->checkin_date = $request->get('date');
-        $data->checkin_time = $request->get('time');
-        $data->working_hour = '';
-
-
-      //  dd($request->checkin_photo);
         if ($request->checkin_photo != "") {
-            $checkin_photo = $request->checkin_photo;
-            $folderPath = "assets/backend/checkin/";
-            $image_parts = explode(";base64,", $checkin_photo);
-            $image_type_aux = explode("image/", $image_parts[0]);
-            $image_type = $image_type_aux[1];
-            $image_base64 = base64_decode($image_parts[1]);
-            $fileName = $employeename . '_' . $random_no . '_' . 'emploee' . '.png';
-            $customerimgfile = $folderPath . $fileName;
-            file_put_contents($customerimgfile, $image_base64);
-            $data->checkin_photo = $customerimgfile;
-        }
-        $data->status = 1;
-        $data->save();
+            $today = Carbon::now()->format('Y-m-d');
+            $timenow = Carbon::now()->format('H:i');
+            $employeename = $request->get('employee');
+            $employee_id = $request->get('employee_id');
 
-        return redirect()->route('attendance.index')->with('message', 'Added !');
+            $random_no =  rand(100,999);
+
+            $data = new Attendance();
+            $data->month = date('m', strtotime($request->get('date')));
+            $data->year = date('Y', strtotime($request->get('date')));
+            $data->date = $request->get('date');
+            $data->employee_id = $request->get('employee_id');
+            $data->checkin_date = $request->get('date');
+            $data->checkin_time = $request->get('time');
+            $data->working_hour = '';
+
+
+        //  dd($request->checkin_photo);
+            
+                $checkin_photo = $request->checkin_photo;
+                $folderPath = "assets/backend/checkin/";
+                $image_parts = explode(";base64,", $checkin_photo);
+                $image_type_aux = explode("image/", $image_parts[0]);
+                $image_type = $image_type_aux[1];
+                $image_base64 = base64_decode($image_parts[1]);
+                $fileName = $employeename . '_' . $random_no . '_' . 'emploee' . '.png';
+                $customerimgfile = $folderPath . $fileName;
+                file_put_contents($customerimgfile, $image_base64);
+                $data->checkin_photo = $customerimgfile;
+            
+            $data->status = 1;
+            $data->save();
+
+            return redirect()->route('attendance.index')->with('message', 'Added !');
+        }else {
+            return redirect()->route('attendance.index')->with('warning', 'Capture Your Photo !');
+        }
     }
 
 
 
     public function checkoutstore(Request $request)
     {
-        $today = Carbon::now()->format('Y-m-d');
-        $timenow = Carbon::now()->format('H:i');
-
-        $employeename = $request->get('employee');
-        $employee_id = $request->get('employee_id');
-        $random_no =  rand(100,999);
-
-        $checkindata = Attendance::where('checkin_date', '=', $today)->where('employee_id', '=', $employee_id)->where('status', '=', 1)->first();
-        $checkindata->checkout_date = $request->get('date');
-        $checkindata->checkout_time = $request->get('time');
-
-      //  dd($request->checkout_photo);
         if ($request->checkout_photo != "") {
-            $checkout_photo = $request->checkout_photo;
-            $folderPath = "assets/backend/checkout/";
-            $image_parts = explode(";base64,", $checkout_photo);
-            $image_type_aux = explode("image/", $image_parts[0]);
-            $image_type = $image_type_aux[1];
-            $image_base64 = base64_decode($image_parts[1]);
-            $fileName = $employeename . '_' . $random_no . '_' . 'emploee' . '.png';
-            $customerimgfile = $folderPath . $fileName;
-            file_put_contents($customerimgfile, $image_base64);
-            $checkindata->checkout_photo = $customerimgfile;
+            $today = Carbon::now()->format('Y-m-d');
+            $timenow = Carbon::now()->format('H:i');
+
+            $employeename = $request->get('employee');
+            $employee_id = $request->get('employee_id');
+            $random_no =  rand(100,999);
+
+            $checkindata = Attendance::where('checkin_date', '=', $today)->where('employee_id', '=', $employee_id)->where('status', '=', 1)->first();
+            $checkindata->checkout_date = $request->get('date');
+            $checkindata->checkout_time = $request->get('time');
+
+        //  dd($request->checkout_photo);
+            
+                $checkout_photo = $request->checkout_photo;
+                $folderPath = "assets/backend/checkout/";
+                $image_parts = explode(";base64,", $checkout_photo);
+                $image_type_aux = explode("image/", $image_parts[0]);
+                $image_type = $image_type_aux[1];
+                $image_base64 = base64_decode($image_parts[1]);
+                $fileName = $employeename . '_' . $random_no . '_' . 'emploee' . '.png';
+                $customerimgfile = $folderPath . $fileName;
+                file_put_contents($customerimgfile, $image_base64);
+                $checkindata->checkout_photo = $customerimgfile;
+            
+
+
+            $time1 = strtotime($checkindata->checkin_time);
+            $time2 = strtotime($request->get('time'));
+            $difference = ($time2 - $time1) / 60;
+
+            $hours = floor($difference / 60);
+            $min = $difference - ($hours * 60);
+            $total_time = $hours."Hours ".$min."Mins";
+
+            $checkindata->working_hour = $total_time;
+            $checkindata->status = 1;
+            $checkindata->update();
+
+            return redirect()->route('attendance.index')->with('message', 'Added !');
+        }else {
+            return redirect()->route('attendance.index')->with('warning', 'Capture Your Photo !');
         }
-
-
-        $time1 = strtotime($checkindata->checkin_time);
-        $time2 = strtotime($request->get('time'));
-        $difference = ($time2 - $time1) / 60;
-
-        $hours = floor($difference / 60);
-        $min = $difference - ($hours * 60);
-        $total_time = $hours."Hours ".$min."Mins";
-
-        $checkindata->working_hour = $total_time;
-        $checkindata->status = 1;
-        $checkindata->update();
-
-        return redirect()->route('attendance.index')->with('message', 'Added !');
     }
 
     public function edit(Request $request, $attendance_id)
