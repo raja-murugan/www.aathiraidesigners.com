@@ -56,8 +56,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::middleware(['auth:sanctum', 'verified'])->post('/zworktechtechnology/attendance/checkoutstore', [AttendanceController::class, 'checkoutstore'])->name('attendance.checkoutstore');
     // EDIT
     Route::middleware(['auth:sanctum', 'verified'])->post('/zworktechtechnology/attendance/edit/{attendance_id}', [AttendanceController::class, 'edit'])->name('attendance.edit');
-    // DELETE
-    Route::middleware(['auth:sanctum', 'verified'])->put('/zworktechtechnology/attendance/delete/{unique_key}', [AttendanceController::class, 'delete'])->name('attendance.delete');
+    // LEAVE
+    Route::middleware(['auth:sanctum', 'verified'])->put('/zworktechtechnology/attendance/leaveupdate/{id}', [AttendanceController::class, 'leaveupdate'])->name('attendance.leaveupdate');
     // DATAE FILTER
     Route::middleware(['auth:sanctum', 'verified'])->put('/zworktechtechnology/attendance/datefilter', [AttendanceController::class, 'datefilter'])->name('attendance.datefilter');
  });

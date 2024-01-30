@@ -9,18 +9,19 @@
             <span class="align-center" aria-hidden="true">&times;</span>
          </button>
       </div>
+      @if ($Attendance_datas['checkin_time'] != '')
       <form autocomplete="off" method="POST"  action="{{ route('attendance.edit', ['attendance_id' => $Attendance_datas['attendance_id']]) }}"
                  enctype="multipart/form-data">
                 @csrf
       <div class="modal-body">
         <div class="row">
-            <div class="col-lg-12 col-md-12" >
+            <div class="col-lg-6 col-md-12" >
                 <div class="form-group">
                    <label>Checkin-Time <span class="text-danger">*</span></label>
                    <input type="time" class="form-control"  name="checkin_time" id="checkin_time" value="{{ $Attendance_datas['checkin_time'] }}">
                 </div>
              </div>
-             <div class="col-lg-12 col-md-12" >
+             <div class="col-lg-6 col-md-12" >
                 <div class="form-group">
                    <label>Checkout-Time <span class="text-danger">*</span></label>
                    <input type="time" class="form-control" name="checkout_time" id="checkout_time" value="{{ $Attendance_datas['checkout_time'] }}">
@@ -35,6 +36,8 @@
                             aria-label="Close">Cancel</button>
       </div>
       </form>
+      @endif
+
    </div>
 </div>
 

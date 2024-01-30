@@ -35,6 +35,7 @@
                               <tr>
                                  <th style="width:10%">S.No</th>
                                  <th style="width:15%">Name</th>
+                                 <th style="width:15%">Working Hours</th>
                                  <th style="width:15%">Working Time</th>
                                  <th style="width:15%">Check-In Photo</th>
                                  <th style="width:15%">Check-Out Photo</th>
@@ -43,10 +44,17 @@
                            </thead>
                            <tbody>
                            @foreach ($Attendance_data as $keydata => $Attendance_datas)
+
                            <tr>
                               <td>{{ ++$keydata }}</td>
                               <td>{{ $Attendance_datas['employee'] }}</td>
                               <td>
+                                 @if ($Attendance_datas['status'] == 'Present')
+                                    {{$Attendance_datas['total_time'] }}
+                                 @endif
+                              </td>
+                              <td>
+                              @if ($Attendance_datas['status'] == 'Present')
                                 @if ($Attendance_datas['checkin_time'] != '')
                                 {{ $Attendance_datas['checkin_time'] }} -
                                 @endif
@@ -54,35 +62,68 @@
                                 @if ($Attendance_datas['checkout_time'] != '')
                                 {{ $Attendance_datas['checkout_time'] }}
                                 @endif
-
+                              @endif
                               </td>
 
-                                @if ($Attendance_datas['checkin_time'] == '')
-                                <td><a class="badge btn" href="#checkin{{ $Attendance_datas['unique_key'] }}" data-bs-toggle="modal"
-                                          data-bs-target=".checkin-modal-xl{{ $Attendance_datas['unique_key'] }}"
-                                          data-employee_id ="{{ $Attendance_datas['employee_id'] }}" style="color: #333;background: #caccd7d9;">Check in</a></td>
-                                @else
-                                <td><img src="{{ asset($Attendance_datas['checkin_photo']) }}" alt="" width="50" height="50"></td>
-                                @endif
+                                 @if ($Attendance_datas['status'] == 'Present')
+                                    <td><img src="{{ asset($Attendance_datas['checkin_photo']) }}" alt="" width="50" height="50"></td>
+                                 @elseif ($Attendance_datas['status'] == 'Absent')
+                                 <td></td>
+                                 @else
+                                 <td><a class="badge btn" href="#checkin{{ $Attendance_datas['unique_key'] }}" data-bs-toggle="modal"
+                                                data-bs-target=".checkin-modal-xl{{ $Attendance_datas['unique_key'] }}"
+                                                data-employee_id ="{{ $Attendance_datas['employee_id'] }}" style="color: #333;background: #caccd7d9;">Check in</a></td>
+                                 @endif
 
-                                @if ($Attendance_datas['checkout_time'] == '')
-                                <td>
-                                    <a class="badge btn" href="#checkout{{ $Attendance_datas['unique_key'] }}" data-bs-toggle="modal"
+
+                                 @if ($Attendance_datas['status'] == 'Present')
+                                    @if ($Attendance_datas['checkout_time'] != '')
+                                    <td><img src="{{ asset($Attendance_datas['checkout_photo']) }}" alt="" width="50" height="50"></td>
+                                    @else
+                                    <td><a class="badge btn" href="#checkout{{ $Attendance_datas['unique_key'] }}" data-bs-toggle="modal"
                                           data-bs-target=".checkout-modal-xl{{ $Attendance_datas['unique_key'] }}"
                                           data-employee_id ="{{ $Attendance_datas['employee_id'] }}"
-                                          style="color: #333;background: #caccd7d9;">Check out</a>
-                                </td>
-                                @else
-                                <td> <img src="{{ asset($Attendance_datas['checkout_photo']) }}" alt="" width="50" height="50"></td>
-                                @endif
+                                          style="color: #333;background: #caccd7d9;">Check out</a></td>
+
+                                    @endif
+
+                                    
+                                 @elseif ($Attendance_datas['status'] == 'Absent')
+                                 <td></td>
+                                 @else
+                                 <td><a class="badge btn" href="#checkout{{ $Attendance_datas['unique_key'] }}" data-bs-toggle="modal"
+                                          data-bs-target=".checkout-modal-xl{{ $Attendance_datas['unique_key'] }}"
+                                          data-employee_id ="{{ $Attendance_datas['employee_id'] }}"
+                                          style="color: #333;background: #caccd7d9;">Check out</a></td>
+                                 @endif
+
+
+
+                            
                               <td>
-                                <ul class="list-unstyled hstack gap-1 mb-0">
-                                    <li>
-                                        <a class="badge btn"  data-bs-toggle="modal"
-                                              data-bs-target=".attendanceedit-modal-xl{{ $Attendance_datas['unique_key'] }}"
-                                              style="color: #333;background: #d8c730d9;">Edit</a>
-                                    </li>
-                                </ul>
+                              
+                                 <ul class="list-unstyled hstack gap-1 mb-0">
+                                    
+                                    @if ($Attendance_datas['status'] == 'Present')
+                                       <li>
+                                          <a class="badge btn"  data-bs-toggle="modal"
+                                                data-bs-target=".attendanceedit-modal-xl{{ $Attendance_datas['unique_key'] }}"
+                                                style="color: #333;background: #d8c730d9;">Edit</a>
+                                       </li>
+                                    @elseif ($Attendance_datas['status'] == 'Absent')  
+                                       <li>
+                                             <a class="badge" style="color: #28084b;background: #d55561;">Leave</a>
+                                       </li>
+                                    @else
+
+                                       <li>
+                                             <a href="#leaveupdate{{ $Attendance_datas['unique_key'] }}" data-bs-toggle="modal"
+                                             data-bs-target=".leaveupdate-modal-xl{{ $Attendance_datas['unique_key'] }}" 
+                                             class="badge" style="color: #28084b;background: #9ed2acd9;">Leave Update</a>
+                                       </li>
+                                    @endif
+
+                                 </ul>
 
                               </td>
                            </tr>
@@ -103,6 +144,12 @@
                                     aria-labelledby="attendanceeditLargeModalLabel{{ $Attendance_datas['unique_key'] }}"
                                     aria-hidden="true">
                                     @include('page.backend.attendance.edit')
+                              </div>
+                              <div class="modal fade leaveupdate-modal-xl{{ $Attendance_datas['unique_key'] }}"
+                                    tabindex="-1" role="dialog"data-bs-backdrop="static"
+                                    aria-labelledby="leaveupdateLargeModalLabel{{ $Attendance_datas['unique_key'] }}"
+                                    aria-hidden="true">
+                                    @include('page.backend.attendance.leaveupdate')
                               </div>
 
                            @endforeach
