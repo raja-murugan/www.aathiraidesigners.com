@@ -59,10 +59,10 @@ class AttendanceController extends Controller
         $data->working_hour = '';
 
 
-
+        dd($request->checkin_photo);
         if ($request->checkin_photo != "") {
             $checkin_photo = $request->checkin_photo;
-            $folderPath = "assets/checkin";
+            $folderPath = "assets/backend/checkin";
             $image_parts = explode(";base64,", $checkin_photo);
             $image_type_aux = explode("image/", $image_parts[0]);
             $image_type = $image_type_aux[1];
@@ -73,8 +73,8 @@ class AttendanceController extends Controller
             $data->checkin_photo = $customerimgfile;
         }
         $data->status = 1;
-        $data->save();
+        //$data->save();
 
-        return redirect()->route('attendance.index')->with('message', 'Added !');
+        //return redirect()->route('attendance.index')->with('message', 'Added !');
     }
 }
