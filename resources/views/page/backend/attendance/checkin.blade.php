@@ -36,25 +36,7 @@
                      <input type="text" class="form-control" name="employee_id" id="employee_id" value="{{ $Attendance_datas['id'] }}" readonly>
                   </div>
                </div>
-<script>
-   Webcam.set({
-            width: 350,
-            height: 200,
-            image_format: 'jpeg',
-            jpeg_quality: 90,
-            facingMode: 'environment'
-        });
 
-        Webcam.attach('#checin_camera' + {{ $Attendance_datas['id'] }});
-
-        function takechecinsnapshot({{ $Attendance_datas['id'] }}) {
-            Webcam.snap(function(data_uri) {
-                $('.image-checincamera' + {{ $Attendance_datas['id'] }}).val(data_uri);
-                document.getElementById('captured_checinimage' + {{ $Attendance_datas['id'] }}).innerHTML = '<img src="' + data_uri +
-                    '" style="height: 220px !important;width: 300px !important;margin-top: 40px;margin-left: 40px;"/>';
-            });
-        }
-</script>
                <div class="row align-item-center">
                   <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="form-group">

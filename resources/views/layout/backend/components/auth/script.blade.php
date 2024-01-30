@@ -26,23 +26,33 @@
   <script src="https://cdn.jsdelivr.net/npm/face-api.js"></script>
 
   <script language="JavaScript">
-    Webcam.set({
-            width: 350,
-            height: 200,
-            image_format: 'jpeg',
-            jpeg_quality: 90,
-            facingMode: 'environment'
+    
+
+
+
+        $('.checin_modal').on('show.bs.modal', function (e) {
+          var $modal = $(this);
+          var employeeID = $(e.relatedTarget).data('employee-id');
+          alert(employeeID);
+
+          Webcam.set({
+              width: 350,
+              height: 200,
+              image_format: 'jpeg',
+              jpeg_quality: 90,
+              facingMode: 'environment'
+          });
+
+          Webcam.attach('#checin_camera' + employeeID);
+
+            function takechecinsnapshot(employeeID) {
+                Webcam.snap(function(data_uri) {
+                    $('.image-checincamera' + employeeID).val(data_uri);
+                    document.getElementById('captured_checinimage' + employeeID).innerHTML = '<img src="' + data_uri +
+                        '" style="height: 220px !important;width: 300px !important;margin-top: 40px;margin-left: 40px;"/>';
+                });
+            }
         });
-
-        Webcam.attach('#checin_camera');
-
-        function takechecinsnapshot() {
-            Webcam.snap(function(data_uri) {
-                $(".image-checincamera").val(data_uri);
-                document.getElementById('captured_checinimage').innerHTML = '<img src="' + data_uri +
-                    '" style="height: 220px !important;width: 300px !important;margin-top: 40px;margin-left: 40px;"/>';
-            });
-        }
   </script>
 
 

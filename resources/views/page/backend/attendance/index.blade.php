@@ -49,25 +49,26 @@
                               <td></td>
                               <td>
                               <a class="badge btn" href="#checkin{{ $Attendance_datas['unique_key'] }}" data-bs-toggle="modal"
-                                          data-bs-target=".checkin-modal-xl{{ $Attendance_datas['unique_key'] }}" style="color: #28084b;background: #78d778;">Check in</a>
+                                          data-bs-target=".checkin-modal-xl{{ $Attendance_datas['unique_key'] }}" 
+                                          data-employee-id ="{{ $Attendance_datas['employee_id'] }}" style="color: #28084b;background: #78d778;">Check in</a>
                               </td>
                               <td><a class="badge btn" href="#checkout{{ $Attendance_datas['unique_key'] }}" data-bs-toggle="modal"
                                           data-bs-target=".checkout-modal-xl{{ $Attendance_datas['unique_key'] }}" style="color: #28084b;background: #e47a61;">Check out</a></td>
                               <td></td>
                            </tr>
-
-                           <div class="modal fade checkout-modal-xl{{ $Attendance_datas['unique_key'] }}"
-                                    tabindex="-1" role="dialog" data-bs-backdrop="static"
-                                    aria-labelledby="checkoutLargeModalLabel{{ $Attendance_datas['unique_key'] }}"
-                                    aria-hidden="true">
-                                    @include('page.backend.attendance.checkout')
-                              </div>
-                              <div class="modal fade checkin-modal-xl{{ $Attendance_datas['unique_key'] }}"
+                              <div class="modal checin_modal fade checkin-modal-xl{{ $Attendance_datas['unique_key'] }}"
                                     tabindex="-1" role="dialog" data-bs-backdrop="static"
                                     aria-labelledby="checkinLargeModalLabel{{ $Attendance_datas['unique_key'] }}"
                                     aria-hidden="true">
                                     @include('page.backend.attendance.checkin')
                               </div>
+                              <div class="modal fade  checkout-modal-xl{{ $Attendance_datas['unique_key'] }}"
+                                    tabindex="-1" role="dialog" data-bs-backdrop="static"
+                                    aria-labelledby="checkoutLargeModalLabel{{ $Attendance_datas['unique_key'] }}"
+                                    aria-hidden="true">
+                                    @include('page.backend.attendance.checkout')
+                              </div>
+                              
                            @endforeach
                            </tbody>
                         </table>
