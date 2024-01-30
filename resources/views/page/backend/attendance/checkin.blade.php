@@ -43,7 +43,7 @@
                                  <div id="checin_camera{{ $Attendance_datas['id'] }}"></div>
                                  <div id="captured_checinimage{{ $Attendance_datas['id'] }}"></div>
                               </div>
-                              <input type="button" class=" btn btn-sm" value="Take a Snap" id="take_snapshot{{ $Attendance_datas['id'] }}"  style="background: #d8e4ce;">
+                              <input type="button" class=" btn btn-sm" required value="Take a Snap" id="take_snapshot{{ $Attendance_datas['id'] }}"  style="background: #d8e4ce;">
                               <input type="hidden" class="form-control image-checincamera{{ $Attendance_datas['id'] }}" name="checkin_photo" id="checkin_photo">
                         </div>
                   </div>
