@@ -28,9 +28,7 @@
   <script language="JavaScript">
     
 
-
-
-        $('.checin_modal').on('show.bs.modal', function (e) {
+    $('.checin_modal').on('show.bs.modal', function (e) {
           var $modal = $(this);
           var employeeID = $(e.relatedTarget).data('employee-id');
           //alert(employeeID);
@@ -52,7 +50,7 @@
                         '" style="height: 220px !important;width: 300px !important;margin-top: 40px;margin-left: 40px;"/>';
                 });
             }
-        });
+    });
   </script>
 
 

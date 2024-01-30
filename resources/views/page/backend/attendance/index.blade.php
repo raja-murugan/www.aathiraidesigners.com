@@ -53,7 +53,7 @@
                                           data-employee-id ="{{ $Attendance_datas['employee_id'] }}" style="color: #28084b;background: #78d778;">Check in</a>
                               </td>
                               <td><a class="badge btn" href="#checkout{{ $Attendance_datas['unique_key'] }}" data-bs-toggle="modal"
-                                          data-bs-target=".checkout-modal-xl{{ $Attendance_datas['unique_key'] }}" style="color: #28084b;background: #e47a61;">Check out</a></td>
+                                          data-bs-target=".checkout-modal-xl{{ $Attendance_datas['unique_key'] }}" style="color: #28084b;background: #b5b5c3;">Check out</a></td>
                               <td></td>
                            </tr>
                               <div class="modal checin_modal fade checkin-modal-xl{{ $Attendance_datas['unique_key'] }}"
@@ -68,7 +68,7 @@
                                     aria-hidden="true">
                                     @include('page.backend.attendance.checkout')
                               </div>
-                              
+     
                            @endforeach
                            </tbody>
                         </table>
@@ -88,4 +88,5 @@
 
    </div>
 </div>
+
 @endsection

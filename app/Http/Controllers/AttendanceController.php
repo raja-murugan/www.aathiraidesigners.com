@@ -46,6 +46,7 @@ class AttendanceController extends Controller
         $today = Carbon::now()->format('Y-m-d');
         $timenow = Carbon::now()->format('H:i');
         $employeename = $request->get('employee');
+        $employee_id = $request->get('employee_id');
 
         $random_no =  rand(100,999);
 
@@ -59,9 +60,9 @@ class AttendanceController extends Controller
         $data->working_hour = '';
 
 
-        dd($request->checkin_photo);
-        if ($request->checkin_photo != "") {
-            $checkin_photo = $request->checkin_photo;
+        dd($request->checkin_photo . $employee_id);
+        if ($request->checkin_photo . $employee_id != "") {
+            $checkin_photo = $request->checkin_photo . $employee_id;
             $folderPath = "assets/backend/checkin";
             $image_parts = explode(";base64,", $checkin_photo);
             $image_type_aux = explode("image/", $image_parts[0]);
