@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('salaray_per_hour')->nullable();
             $table->string('address')->nullable();
             $table->string('photo')->nullable();
+            $table->string('aadhaar_card')->nullable();
             $table->boolean('soft_delete')->default(0);
             $table->timestamps();
         });

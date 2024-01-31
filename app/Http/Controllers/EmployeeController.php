@@ -29,6 +29,7 @@ class EmployeeController extends Controller
                 'phone_number' => $datas->phone_number,
                 'salaray_per_hour' => $datas->salaray_per_hour,
                 'address' => $datas->address,
+                'aadhaar_card' => $datas->aadhaar_card,
                 'photo' => $datas->photo,
                 'id' => $datas->id,
             );
@@ -53,6 +54,7 @@ class EmployeeController extends Controller
         $data->email = $request->get('email');
         $data->salaray_per_hour = $request->get('salaray_per_hour');
         $data->address = $request->get('address');
+        $data->aadhaar_card = $request->get('aadhaar_card');
 
         // if ($request->employee_photo != "") {
         //     $employee_photo = $request->employee_photo;
@@ -106,6 +108,7 @@ class EmployeeController extends Controller
         $EmployeeData->phone_number = $request->get('phone_number');
         $EmployeeData->salaray_per_hour = $request->get('salaray_per_hour');
         $EmployeeData->address = $request->get('address');
+        $EmployeeData->aadhaar_card = $request->get('aadhaar_card');
 
 
         if ($request->employee_photo != "") {
