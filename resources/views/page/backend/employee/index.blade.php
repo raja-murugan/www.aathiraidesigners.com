@@ -33,6 +33,7 @@
                               <tr>
                                  <th style="width:5%">S.No</th>
                                  <th style="width:15%">Name</th>
+                                 <th style="width:15%">Photo</th>
                                  <th style="width:15%">Phone No</th>
                                  <th style="width:15%">Address</th>
                                  <th style="width:15%">Salary Per Hour</th>
@@ -44,6 +45,10 @@
                               <tr>
                                  <td>{{ ++$keydata }}</td>
                                  <td>{{ $Employee_datas['name'] }}</td>
+                                 <td>
+                                 <img src="{{ asset('assets/photo/' . $Employee_datas['photo']) }}" alt=""
+                                    style="width: 50px !important; height: 50px !important;">
+                                 </td>
                                  <td>{{ $Employee_datas['phone_number'] }}</td>
                                  <td>{{ $Employee_datas['address'] }}</td>
                                  <td>{{ $Employee_datas['salaray_per_hour'] }}</td>

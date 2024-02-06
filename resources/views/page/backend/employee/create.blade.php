@@ -64,19 +64,19 @@
                             <input type="password" class="form-control" placeholder="Enter Password" name="password">
                         </div>
                     </div>
-                    <div class="col-lg-12 col-md-12">
+                    <div class="col-lg-6 col-md-12">
                         <div class="form-group">
                             <label>Aadhaar Card</label>
                             <input type="text" class="form-control" placeholder="Enter Aadhar Card" name="aadhaar_card">
                         </div>
                     </div>
-                    <div class="col-lg-12 col-md-12">
+                    <div class="col-lg-6 col-md-12">
                         <div class="form-group">
                             <label>Address</label>
                             <textarea name="address" id="address" class="form-control" placeholder="Enter Employee Address" required></textarea>
                         </div>
                     </div>
-                    <div class="col-lg-12 col-md-12" hidden>
+                    <div class="col-lg-12 col-md-12" >
                         <div class="form-group">
                             <label>Photo</label>
                             <div class="col-sm-7">
@@ -84,7 +84,7 @@
                                     <div id="my_camera"></div>
                                     <div id="captured_cameraimage"></div>
                                 </div>
-                                <input type=button class="btn btn-sm btn-soft-primary" value="Take a Snap - Photo"
+                                <input type=button class="btn btn-sm btn-primary" value="Take a Snap - Photo"
                                     onClick="takesnapshot()">
                                 <input type="hidden" class="form-control image-tagcamera" name="employee_photo">
                             </div>

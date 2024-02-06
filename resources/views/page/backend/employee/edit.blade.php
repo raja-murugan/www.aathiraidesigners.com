@@ -51,18 +51,18 @@
                             <input type="text" class="form-control" placeholder="Enter Aadhar Card" name="aadhaar_card" value="{{ $Employee_datas['aadhaar_card'] }}">
                         </div>
                     </div>
-                    <div class="col-lg-12 col-md-12">
+                    <div class="col-lg-12 col-md-12" >
                         <div class="form-group">
                             <label>Photo</label>
                             <div class="col-sm-7">
                                 <div style="display: flex">
-                                    <div><img src="{{ asset($Employee_datas['photo']) }}" alt=""
+                                    <div><img src="{{ asset('assets/photo/' . $Employee_datas['photo']) }}" alt=""
                                             style="width: 200px !important; height: 150px !important; margin-right: 40px !important; margin-top: 25px !important;">
                                     </div>
                                     <div id="my_cameraone"></div>
                                     <div id="captured_cameraimageone"></div>
                                 </div>
-                                <input type=button class=" btn btn-sm btn-soft-primary"value="Take a Snap - Photo"
+                                <input type=button class=" btn btn-sm btn-primary"value="Take a Snap - Photo"
                                     onClick="takesnapshotone()">
                                 <input type="hidden" class="form-control image-tagcameraone" name="employee_photo">
                             </div>

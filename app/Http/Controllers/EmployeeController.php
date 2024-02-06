@@ -56,23 +56,23 @@ class EmployeeController extends Controller
         $data->address = $request->get('address');
         $data->aadhaar_card = $request->get('aadhaar_card');
 
-        // if ($request->employee_photo != "") {
-        //     $employee_photo = $request->employee_photo;
-        //     $folderPath = "assets/photo";
-        //     $image_parts = explode(";base64,", $employee_photo);
-        //     $image_type_aux = explode("image/", $image_parts[0]);
-        //     $image_type = $image_type_aux[1];
-        //     $image_base64 = base64_decode($image_parts[1]);
-        //     $fileName = $data->name . '_' . $random_no . '_' . 'employee image' . '.png';
-        //     $employeeimgfile = $folderPath . $fileName;
-        //     file_put_contents($employeeimgfile, $image_base64);
-        //     $data->photo = $employeeimgfile;
-        // }else {
-        //     $contactno = $request->get('phone_number');
-        //    $get_mobno_person = Employee::where('phone_number', '=', $contactno)->latest('id')->first();
-        //     $old_customer_photo = $get_mobno_person->photo;
-        //     $data->photo = $old_customer_photo;
-        // }
+        if ($request->employee_photo != "") {
+            $employee_photo = $request->employee_photo;
+            $folderPath = "assets/photo";
+            $image_parts = explode(";base64,", $employee_photo);
+            $image_type_aux = explode("image/", $image_parts[0]);
+            $image_type = $image_type_aux[1];
+            $image_base64 = base64_decode($image_parts[1]);
+            $fileName = $data->name . '_' . $random_no . '_' . 'employee image' . '.png';
+            $employeeimgfile = $folderPath . $fileName;
+            file_put_contents($employeeimgfile, $image_base64);
+            $data->photo = $employeeimgfile;
+        }else {
+            $contactno = $request->get('phone_number');
+           $get_mobno_person = Employee::where('phone_number', '=', $contactno)->latest('id')->first();
+            $old_customer_photo = $get_mobno_person->photo;
+            $data->photo = $old_customer_photo;
+        }
 
 
         // $employee_photo = $request->employee_photo;

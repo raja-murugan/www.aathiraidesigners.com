@@ -9,7 +9,7 @@
          <div class="content-page-header">
             <h6>Attendance</h6>
             <div style="display: flex;">
-                <form autocomplete="off" method="POST" action="{{ route('attendance.datefilter') }}" style="display: flex;">
+                <form autocomplete="off" method="POST" action="{{ route('admin_attendance.admin_datefilter') }}" style="display: flex;">
                     @method('PUT')
                     @csrf
                     <div style="display: flex">
@@ -75,8 +75,8 @@
                                  @elseif ($Attendance_datas['status'] == 'Absent')
                                  <td></td>
                                  @else
-                                 <td><a class="badge btn" href="#checkin{{ $Attendance_datas['unique_key'] }}" data-bs-toggle="modal"
-                                                data-bs-target=".checkin-modal-xl{{ $Attendance_datas['unique_key'] }}"
+                                 <td><a class="badge btn" href="#admin_checkin{{ $Attendance_datas['unique_key'] }}" data-bs-toggle="modal"
+                                                data-bs-target=".admin_checkin-modal-xl{{ $Attendance_datas['unique_key'] }}"
                                                 data-employee_id ="{{ $Attendance_datas['employee_id'] }}" style="color: #333;background: #caccd7d9;">Check in</a></td>
                                  @endif
 
@@ -85,8 +85,8 @@
                                     @if ($Attendance_datas['checkout_time'] != '')
                                     <td><img src="{{ asset($Attendance_datas['checkout_photo']) }}" alt="" width="50" height="50"></td>
                                     @else
-                                    <td><a class="badge btn" href="#checkout{{ $Attendance_datas['unique_key'] }}" data-bs-toggle="modal"
-                                          data-bs-target=".checkout-modal-xl{{ $Attendance_datas['unique_key'] }}"
+                                    <td><a class="badge btn" href="#admin_checkout{{ $Attendance_datas['unique_key'] }}" data-bs-toggle="modal"
+                                          data-bs-target=".admin_checkout-modal-xl{{ $Attendance_datas['unique_key'] }}"
                                           data-employee_id ="{{ $Attendance_datas['employee_id'] }}"
                                           style="color: #333;background: #caccd7d9;">Check out</a></td>
 
@@ -96,8 +96,8 @@
                                  @elseif ($Attendance_datas['status'] == 'Absent')
                                  <td></td>
                                  @else
-                                 <td><a class="badge btn" href="#checkout{{ $Attendance_datas['unique_key'] }}" data-bs-toggle="modal"
-                                          data-bs-target=".checkout-modal-xl{{ $Attendance_datas['unique_key'] }}"
+                                 <td><a class="badge btn" href="#admin_checkout{{ $Attendance_datas['unique_key'] }}" data-bs-toggle="modal"
+                                          data-bs-target=".admin_checkout-modal-xl{{ $Attendance_datas['unique_key'] }}"
                                           data-employee_id ="{{ $Attendance_datas['employee_id'] }}"
                                           style="color: #333;background: #caccd7d9;">Check out</a></td>
                                  @endif
@@ -112,7 +112,7 @@
                                     @if ($Attendance_datas['status'] == 'Present')
                                        <li>
                                           <a class="badge btn"  data-bs-toggle="modal"
-                                                data-bs-target=".attendanceedit-modal-xl{{ $Attendance_datas['unique_key'] }}"
+                                                data-bs-target=".admin_edit-modal-xl{{ $Attendance_datas['unique_key'] }}"
                                                 style="color: #333;background: #d8c730d9;">Edit</a>
                                        </li>
                                     @elseif ($Attendance_datas['status'] == 'Absent')  
@@ -122,8 +122,8 @@
                                     @else
 
                                        <li>
-                                             <a href="#leaveupdate{{ $Attendance_datas['unique_key'] }}" data-bs-toggle="modal"
-                                             data-bs-target=".leaveupdate-modal-xl{{ $Attendance_datas['unique_key'] }}" 
+                                             <a href="#admin_leaveupdate{{ $Attendance_datas['unique_key'] }}" data-bs-toggle="modal"
+                                             data-bs-target=".admin_leaveupdate-modal-xl{{ $Attendance_datas['unique_key'] }}" 
                                              class="badge" style="color: #28084b;background: #9ed2acd9;">Leave Update</a>
                                        </li>
                                     @endif
@@ -132,29 +132,29 @@
 
                               </td>
                            </tr>
-                              <div class="modal checin_modal fade checkin-modal-xl{{ $Attendance_datas['unique_key'] }}"
+                              <div class="modal checin_modal fade admin_checkin-modal-xl{{ $Attendance_datas['unique_key'] }}"
                                     tabindex="-1" role="dialog" data-bs-backdrop="static"
-                                    aria-labelledby="checkinLargeModalLabel{{ $Attendance_datas['unique_key'] }}"
+                                    aria-labelledby="admin_checkinLargeModalLabel{{ $Attendance_datas['unique_key'] }}"
                                     aria-hidden="true">
-                                    @include('page.backend.attendance.checkin')
+                                    @include('page.backend.admin_attendance.admin_checkin')
                               </div>
-                              <div class="modal checkout_modal fade  checkout-modal-xl{{ $Attendance_datas['unique_key'] }}"
+                              <div class="modal checkout_modal fade  admin_checkout-modal-xl{{ $Attendance_datas['unique_key'] }}"
                                     tabindex="-1" role="dialog" data-bs-backdrop="static"
-                                    aria-labelledby="checkoutLargeModalLabel{{ $Attendance_datas['unique_key'] }}"
+                                    aria-labelledby="admin_checkoutLargeModalLabel{{ $Attendance_datas['unique_key'] }}"
                                     aria-hidden="true">
-                                    @include('page.backend.attendance.checkout')
+                                    @include('page.backend.admin_attendance.admin_checkout')
                               </div>
-                              <div class="modal fade attendanceedit-modal-xl{{ $Attendance_datas['unique_key'] }}"
+                              <div class="modal fade admin_edit-modal-xl{{ $Attendance_datas['unique_key'] }}"
                                     tabindex="-1" role="dialog" data-bs-backdrop="static"
-                                    aria-labelledby="attendanceeditLargeModalLabel{{ $Attendance_datas['unique_key'] }}"
+                                    aria-labelledby="admin_editLargeModalLabel{{ $Attendance_datas['unique_key'] }}"
                                     aria-hidden="true">
-                                    @include('page.backend.attendance.edit')
+                                    @include('page.backend.admin_attendance.admin_edit')
                               </div>
-                              <div class="modal fade leaveupdate-modal-xl{{ $Attendance_datas['unique_key'] }}"
+                              <div class="modal fade admin_leaveupdate-modal-xl{{ $Attendance_datas['unique_key'] }}"
                                     tabindex="-1" role="dialog"data-bs-backdrop="static"
-                                    aria-labelledby="leaveupdateLargeModalLabel{{ $Attendance_datas['unique_key'] }}"
+                                    aria-labelledby="admin_leaveupdateLargeModalLabel{{ $Attendance_datas['unique_key'] }}"
                                     aria-hidden="true">
-                                    @include('page.backend.attendance.leaveupdate')
+                                    @include('page.backend.admin_attendance.admin_leaveupdate')
                               </div>
 
                            @endforeach

@@ -61,3 +61,20 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     // DATAE FILTER
     Route::middleware(['auth:sanctum', 'verified'])->put('/zworktechtechnology/attendance/datefilter', [AttendanceController::class, 'datefilter'])->name('attendance.datefilter');
  });
+
+
+ // ADMIN ATTENDANCE CONTROLLER
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    // INDEX
+    Route::middleware(['auth:sanctum', 'verified'])->get('/zworktechtechnology/admin_attendance', [AttendanceController::class, 'admin_index'])->name('admin_attendance.admin_index');
+    // STORE
+    Route::middleware(['auth:sanctum', 'verified'])->post('/zworktechtechnology/admin_attendance/admin_checkinstore', [AttendanceController::class, 'admin_checkinstore'])->name('admin_attendance.admin_checkinstore');
+    // STORE
+    Route::middleware(['auth:sanctum', 'verified'])->post('/zworktechtechnology/admin_attendance/admin_checkoutstore', [AttendanceController::class, 'admin_checkoutstore'])->name('admin_attendance.admin_checkoutstore');
+    // EDIT
+    Route::middleware(['auth:sanctum', 'verified'])->post('/zworktechtechnology/admin_attendance/admin_edit/{attendance_id}', [AttendanceController::class, 'admin_edit'])->name('admin_attendance.admin_edit');
+    // LEAVE
+    Route::middleware(['auth:sanctum', 'verified'])->put('/zworktechtechnology/admin_attendance/admin_leaveupdate/{id}', [AttendanceController::class, 'admin_leaveupdate'])->name('admin_attendance.admin_leaveupdate');
+    // DATAE FILTER
+    Route::middleware(['auth:sanctum', 'verified'])->put('/zworktechtechnology/admin_attendance/admin_datefilter', [AttendanceController::class, 'admin_datefilter'])->name('admin_attendance.admin_datefilter');
+ });

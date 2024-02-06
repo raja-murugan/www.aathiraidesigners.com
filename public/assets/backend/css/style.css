@@ -3161,7 +3161,7 @@ span.select2-container.select2-container--default.select2-container--open {
 }
 .sidebar .sidebar-menu > ul > li > a span {
   padding: 0 10px 0;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: normal;
   color: #3F4254;
   line-height: 18px;
@@ -4091,7 +4091,7 @@ span.select2-container.select2-container--default.select2-container--open {
   font-size: 14px;
 }
 .table .thead-light th {
-  font-size: 13px;
+  font-size: 14px;
   color: #28084B;
   font-weight: 500;
   background-color: #F3F3F9;
