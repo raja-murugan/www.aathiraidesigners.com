@@ -71,7 +71,7 @@
                                                                                 <input class="form-check-input" type="radio" value="0" id="attendance" name="attendance[{{ $attendances['employee_id'] }}]"
                                                                                     aria-label="Radio button for following text input" >
                                                                             </div>
-                                                                            <input type="text" class="form-control" value="Leave" disabled style="background: #fff;"
+                                                                            <input type="text" class="form-control" value="Leave" disabled style="text-transform:uppercase;"
                                                                                 aria-label="Text input with radio button">
                                                                         </div>
                                                                         @elseif ($attendances['status'] == 1)
@@ -79,9 +79,9 @@
                                                                         <div class="input-group" style="margin-right: 5px;">
                                                                             <div class="input-group-text">
                                                                                 <input class="form-check-input" type="radio" value="2" id="attendance" name="attendance[{{ $attendances['employee_id'] }}]"
-                                                                                    aria-label="Radio button for following text input" style="color:red;font-weight:500;">
+                                                                                    aria-label="Radio button for following text input">
                                                                             </div>
-                                                                            <input type="text" class="form-control" value="Check-Out" disabled style="background: #fff;text-transform:uppercase;"
+                                                                            <input type="text" class="form-control" value="Check-Out" disabled style="text-transform:uppercase;"
                                                                                 aria-label="Text input with radio button" >
                                                                         </div>
                                                                         @elseif ($attendances['status'] == 2)

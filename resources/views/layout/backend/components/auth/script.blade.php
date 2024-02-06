@@ -24,6 +24,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
   <script src="https://cdn.jsdelivr.net/npm/face-api.js"></script>
+  
 
 <script>
 
@@ -56,7 +57,7 @@ $(document).ready(function() {
 
          Webcam.set({
             width: 300,
-            height: 300,
+            height: 400,
             image_format: 'jpeg',
             jpeg_quality: 90,
             facingMode: 'environment'
@@ -77,7 +78,7 @@ $(document).ready(function() {
 
          Webcam.set({
             width: 300,
-            height: 300,
+            height: 400,
             image_format: 'jpeg',
             jpeg_quality: 90,
             facingMode: 'environment'
