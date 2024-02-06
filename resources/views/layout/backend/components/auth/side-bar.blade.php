@@ -20,7 +20,7 @@
             </ul>
 
             <ul>
-                <li class="menu-title"><span>Project</span></li>
+                <li class="menu-title"><span>Side Menu</span></li>
                 <li class="{{ Route::is('employee.index') ? 'active' : '' }}">
                     <a href="{{ route('employee.index') }}"><i class="fe fe-users"></i> <span>Employee</span></a>
                 </li>

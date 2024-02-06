@@ -5,7 +5,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Employee;
 use App\Models\Attendance;
-use App\Models\AttendanceParent;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Http;
@@ -18,177 +17,284 @@ class AttendanceController extends Controller
     public function index()
     {
         $today = Carbon::now()->format('Y-m-d');
-        
-
-        $Attendance_data = [];
-        
-
-        $AttendanceParent = AttendanceParent::where('soft_delete', '!=', 1)->where('date', '=', $today)->get();
-        foreach ($AttendanceParent as $key => $AttendanceParents) {
-
-            $employee = Employee::findOrFail($AttendanceParents->employee_id);
-
-            $hours = floor($AttendanceParents->working_hour / 60);
-            $min = $AttendanceParents->working_hour - ($hours * 60);
-
-            $Attendance_data[] = array(
-                'employee_id' => $employee->id,
-                'employee' => $employee->name,
-                'date' => $AttendanceParents->date,
-                'hour' => $hours."Hour ".$min."Mins",
-                'status' => $AttendanceParents->status,
-                
-            );
-        }
-        return view('page.backend.attendance.index', compact('Attendance_data', 'today'));
-    }
-
-
-    public function create()
-    {
-        
-        $today = Carbon::now()->format('Y-m-d');
         $timenow = Carbon::now()->format('H:i');
 
-        $attendance = [];
-        $Employee = Employee::where('soft_delete', '!=', 1)->get();
-        foreach ($Employee as $key => $Employees) {
+        $Attendance_data = [];
+        $AllEmployees = Employee::where('soft_delete', '!=', 1)->get();
+        foreach ($AllEmployees as $key => $AllEmployees_arr) {
 
-            $latestcheckinout = Attendance::where('employee_id', '=', $Employees->id)
-                                            ->where('soft_delete', '!=', 1)
-                                            ->where('date', '=', $today)
-                                            ->latest('id')->first();
-            if($latestcheckinout != ""){
-                if($latestcheckinout->status == 1){
-                    $status = 1;
-                }if($latestcheckinout->status == 2){
-                    $status = 2;
-                }if($latestcheckinout->status == 0){
-                    $status = 0;
+            $checkindata = Attendance::where('checkin_date', '=', $today)->where('employee_id', '=', $AllEmployees_arr->id)->first();
+            if($checkindata != ""){
+                if($checkindata->status == 1){
+                    $checkin_time = $checkindata->checkin_time;
+                    $checkin_photo = $checkindata->checkin_photo;
+                }else {
+                    $checkin_time = '';
+                    $checkin_photo = '';
                 }
+                
             }else {
+                $checkin_time = '';
+                $checkin_photo = '';
+            }
+
+            $checkoutdata = Attendance::where('checkout_date', '=', $today)->where('employee_id', '=', $AllEmployees_arr->id)->first();
+            if($checkoutdata != ""){
+                if($checkoutdata->status == 1){
+                    $checkout_time = $checkoutdata->checkout_time;
+                    $checkout_photo = $checkoutdata->checkout_photo;
+                    $total_time = $checkoutdata->working_hour;
+                }else {
+                    $checkout_time = '';
+                    $checkout_photo = '';
+                    $total_time = '';
+                }
+                
+            }else {
+                $checkout_time = '';
+                $checkout_photo = '';
+                $total_time = '';
+            }
+
+            $attendance_date = Attendance::where('date', '=', $today)->where('employee_id', '=', $AllEmployees_arr->id)->first();
+            if($attendance_date != ""){
+
+                $attendance_id = $attendance_date->id;
+
+                if($attendance_date->status == 1){
+                    $status = 'Present';
+                }else if($attendance_date->status == 2) {
+                    $status = 'Absent';
+                }else {
+                    $status = 'Empty';
+                }
+                
+            }else {
+                $attendance_id = '';
                 $status = '';
             }
 
-
-            $attendance[] = array(
-                'employee_id' => $Employees->id,
-                'employee' => $Employees->name,
+            $Attendance_data[] = array(
+                'employee_id' => $AllEmployees_arr->id,
+                'employee' => $AllEmployees_arr->name,
+                'unique_key' => $AllEmployees_arr->unique_key,
+                'id' => $AllEmployees_arr->id,
+                'checkin_time' => $checkin_time,
+                'checkout_time' => $checkout_time,
+                'checkin_photo' => $checkin_photo,
+                'checkout_photo' => $checkout_photo,
+                'attendance_id' => $attendance_id,
+                'total_time' => $total_time,
                 'status' => $status,
             );
-
         }
+        return view('page.backend.attendance.index', compact('Attendance_data', 'today', 'timenow'));
+    }
 
-        
+    public function datefilter(Request $request)
+    {
+        $today = $request->get('from_date');
 
-        return view('page.backend.attendance.create', compact('attendance', 'today', 'timenow'));
+        $timenow = Carbon::now()->format('H:i');
+
+        $Attendance_data = [];
+        $AllEmployees = Employee::where('soft_delete', '!=', 1)->get();
+        foreach ($AllEmployees as $key => $AllEmployees_arr) {
+
+            $checkindata = Attendance::where('checkin_date', '=', $today)->where('employee_id', '=', $AllEmployees_arr->id)->first();
+            if($checkindata != ""){
+                if($checkindata->status == 1){
+                    $checkin_time = $checkindata->checkin_time;
+                    $checkin_photo = $checkindata->checkin_photo;
+                }else {
+                    $checkin_time = '';
+                    $checkin_photo = '';
+                }
+                
+            }else {
+                $checkin_time = '';
+                $checkin_photo = '';
+            }
+
+            $checkoutdata = Attendance::where('checkout_date', '=', $today)->where('employee_id', '=', $AllEmployees_arr->id)->first();
+            if($checkoutdata != ""){
+                if($checkoutdata->status == 1){
+                    $checkout_time = $checkoutdata->checkout_time;
+                    $checkout_photo = $checkoutdata->checkout_photo;
+                    $total_time = $checkoutdata->working_hour;
+                }else {
+                    $checkout_time = '';
+                    $checkout_photo = '';
+                    $total_time = '';
+                }
+                
+            }else {
+                $checkout_time = '';
+                $checkout_photo = '';
+                $total_time = '';
+            }
+
+            $attendance_date = Attendance::where('date', '=', $today)->where('employee_id', '=', $AllEmployees_arr->id)->first();
+            if($attendance_date != ""){
+
+                $attendance_id = $attendance_date->id;
+
+                if($attendance_date->status == 1){
+                    $status = 'Present';
+                }else if($attendance_date->status == 2) {
+                    $status = 'Absent';
+                }else {
+                    $status = 'Empty';
+                }
+                
+            }else {
+                $attendance_id = '';
+                $status = '';
+            }
+
+            $Attendance_data[] = array(
+                'employee_id' => $AllEmployees_arr->id,
+                'employee' => $AllEmployees_arr->name,
+                'unique_key' => $AllEmployees_arr->unique_key,
+                'id' => $AllEmployees_arr->id,
+                'checkin_time' => $checkin_time,
+                'checkout_time' => $checkout_time,
+                'checkin_photo' => $checkin_photo,
+                'checkout_photo' => $checkout_photo,
+                'attendance_id' => $attendance_id,
+                'total_time' => $total_time,
+                'status' => $status,
+            );
+        }
+        return view('page.backend.attendance.index', compact('Attendance_data', 'today', 'timenow'));
+
+        return view('page.backend.attendance.index', compact('today', 'timenow'));
+    }
+
+    public function checkinstore(Request $request)
+    {
+        if ($request->checkin_photo != "") {
+            $today = Carbon::now()->format('Y-m-d');
+            $timenow = Carbon::now()->format('H:i');
+            $employeename = $request->get('employee');
+            $employee_id = $request->get('employee_id');
+
+            $random_no =  rand(100,999);
+
+            $data = new Attendance();
+            $data->month = date('m', strtotime($request->get('date')));
+            $data->year = date('Y', strtotime($request->get('date')));
+            $data->date = $request->get('date');
+            $data->employee_id = $request->get('employee_id');
+            $data->checkin_date = $request->get('date');
+            $data->checkin_time = $request->get('time');
+            $data->working_hour = '';
+
+
+        //  dd($request->checkin_photo);
+            
+                $checkin_photo = $request->checkin_photo;
+                $folderPath = "assets/backend/checkin/";
+                $image_parts = explode(";base64,", $checkin_photo);
+                $image_type_aux = explode("image/", $image_parts[0]);
+                $image_type = $image_type_aux[1];
+                $image_base64 = base64_decode($image_parts[1]);
+                $fileName = $employeename . '_' . $random_no . '_' . 'emploee' . '.png';
+                $customerimgfile = $folderPath . $fileName;
+                file_put_contents($customerimgfile, $image_base64);
+                $data->checkin_photo = $customerimgfile;
+            
+            $data->status = 1;
+            $data->save();
+
+            return redirect()->route('attendance.index')->with('message', 'Added !');
+        }else {
+            return redirect()->route('attendance.index')->with('warning', 'Capture Your Photo !');
+        }
     }
 
 
-    public function store(Request $request)
+
+    public function checkoutstore(Request $request)
+    {
+        if ($request->checkout_photo != "") {
+            $today = Carbon::now()->format('Y-m-d');
+            $timenow = Carbon::now()->format('H:i');
+
+            $employeename = $request->get('employee');
+            $employee_id = $request->get('employee_id');
+            $random_no =  rand(100,999);
+
+            $checkindata = Attendance::where('checkin_date', '=', $today)->where('employee_id', '=', $employee_id)->where('status', '=', 1)->first();
+            $checkindata->checkout_date = $request->get('date');
+            $checkindata->checkout_time = $request->get('time');
+
+        //  dd($request->checkout_photo);
+            
+                $checkout_photo = $request->checkout_photo;
+                $folderPath = "assets/backend/checkout/";
+                $image_parts = explode(";base64,", $checkout_photo);
+                $image_type_aux = explode("image/", $image_parts[0]);
+                $image_type = $image_type_aux[1];
+                $image_base64 = base64_decode($image_parts[1]);
+                $fileName = $employeename . '_' . $random_no . '_' . 'emploee' . '.png';
+                $customerimgfile = $folderPath . $fileName;
+                file_put_contents($customerimgfile, $image_base64);
+                $checkindata->checkout_photo = $customerimgfile;
+            
+
+
+            $time1 = strtotime($checkindata->checkin_time);
+            $time2 = strtotime($request->get('time'));
+            $difference = ($time2 - $time1) / 60;
+
+            $hours = floor($difference / 60);
+            $min = $difference - ($hours * 60);
+            $total_time = $hours."Hours ".$min."Mins";
+
+            $checkindata->working_hour = $total_time;
+            $checkindata->status = 1;
+            $checkindata->update();
+
+            return redirect()->route('attendance.index')->with('message', 'Added !');
+        }else {
+            return redirect()->route('attendance.index')->with('warning', 'Capture Your Photo !');
+        }
+    }
+
+    public function edit(Request $request, $attendance_id)
+    {
+        $AttendanceData = Attendance::where('id', '=', $attendance_id)->first();
+        $AttendanceData->checkin_time = $request->get('checkin_time');
+        $AttendanceData->checkout_time = $request->get('checkout_time');
+
+        $time1 = strtotime($request->get('checkin_time'));
+        $time2 = strtotime($request->get('checkout_time'));
+        $difference = ($time2 - $time1) / 60;
+
+        $hours = floor($difference / 60);
+        $min = $difference - ($hours * 60);
+        $total_time = $hours."Hours ".$min."Mins";
+
+        $AttendanceData->working_hour = $total_time;
+        $AttendanceData->update();
+
+        return redirect()->route('attendance.index')->with('info', 'Updated !');
+    }
+
+    public function leaveupdate($id)
     {
         $today = Carbon::now()->format('Y-m-d');
         $timenow = Carbon::now()->format('H:i');
-        
 
-        foreach ($request->get('employee_id') as $key => $employee_id) {
-            error_reporting(0);
+        $data = new Attendance();
+        $data->month = date('m', strtotime($today));
+        $data->year = date('Y', strtotime($today));
+        $data->date = $today;
+        $data->employee_id = $id;
+        $data->status = 2;
+        $data->save();
 
-            $Attendance = new Attendance;
-            $Attendance->month = date('m', strtotime($request->get('date')));
-            $Attendance->year = date('Y', strtotime($request->get('date')));
-            $Attendance->date = $request->get('date');
-            $Attendance->employee_id = $employee_id;
-            
-
-            if($request->attendance[$employee_id] != ''){
-
-                if($request->attendance[$employee_id] == 1){
-
-                    $Attendance->checkin_date = $request->get('date');
-                    $Attendance->checkin_time = $request->get('time');
-                    $Attendance->checkout_date = '';
-                    $Attendance->checkout_time = '';
-                    $Attendance->status = 1;
-
-
-
-
-                }else if($request->attendance[$employee_id] == 2){
-
-                    $Attendance->checkin_date = '';
-                    $Attendance->checkin_time = '';
-                    $Attendance->checkout_date = $request->get('date');
-                    $Attendance->checkout_time = $request->get('time');
-                    $Attendance->status = 2;
-
-                    $latesthour = Attendance::where('employee_id', '=', $employee_id)
-                    ->where('soft_delete', '!=', 1)
-                    ->where('date', '=', $request->get('date'))
-                    ->latest('id')->first();
-
-
-                        $time1 = strtotime($latesthour->checkin_time);
-                        $time2 = strtotime($request->get('time'));
-                        $difference = ($time2 - $time1) / 60;
-                        $Attendance->working_hour = $difference;
-
-                }else if($request->attendance[$employee_id] == 0){
-
-                    $Attendance->checkin_date = '';
-                    $Attendance->checkin_time = '';
-                    $Attendance->checkout_date = '';
-                    $Attendance->checkout_time = '';
-                    $Attendance->status = 0;
-                }
-            }else {
-                $latestcheckinout = Attendance::where('employee_id', '=', $employee_id)
-                                            ->where('soft_delete', '!=', 1)
-                                            ->where('date', '=', $today)
-                                            ->latest('id')->first();
-
-                $Attendance->status = $latestcheckinout->status;
-                $Attendance->checkin_date = $latestcheckinout->checkin_date;
-                $Attendance->checkin_time = $latestcheckinout->checkin_time;
-                $Attendance->checkout_date = $latestcheckinout->checkout_date;
-                $Attendance->checkout_time = $latestcheckinout->checkout_time;
-            }
-            $Attendance->save();
-
-
-
-
-            $dateatend = AttendanceParent::where('date', '=', $request->get('date'))->where('employee_id', '=', $employee_id)->first();
-            if($dateatend == ''){
-
-                if($request->attendance[$employee_id] == 1){
-                    $Status = 'PRESENT';
-                }else if($request->attendance[$employee_id] == 0){
-                    $Status = 'ABSENT';
-                }
-
-                $data = new AttendanceParent();
-                $data->month = date('m', strtotime($request->get('date')));
-                $data->year = date('Y', strtotime($request->get('date')));
-                $data->date = $request->get('date');
-                $data->employee_id = $employee_id;
-                $data->working_hour = '';
-                $data->status = $Status;
-                $data->save();
-            }else {
-                $latesthourdata = Attendance::where('employee_id', '=', $employee_id)
-                    ->where('soft_delete', '!=', 1)
-                    ->where('date', '=', $request->get('date'))
-                    ->get();
-                    $totalhour = 0;
-                    foreach ($latesthourdata as $key => $latesthourdatas) {
-                        $totalhour += $latesthourdatas->working_hour;
-                    }   
-                    $dateatend->working_hour = $totalhour;
-                    $dateatend->update();
-            }
-        }
-
-        return redirect()->route('attendance.index')->with('message', 'Added !');
+        return redirect()->route('attendance.index')->with('info', 'Updated !');
     }
 }

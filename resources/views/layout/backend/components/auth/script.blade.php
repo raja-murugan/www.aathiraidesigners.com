@@ -26,74 +26,62 @@
   <script src="https://cdn.jsdelivr.net/npm/face-api.js"></script>
   
 
-<script>
+  <script language="JavaScript">
 
-$(document).ready(function() {
-         $(".employee_phoneno").keyup(function() {
-            var query = $(this).val();
 
-               if (query != '') {
+    $('.checin_modal').on('show.bs.modal', function (e) {
+          var $modal = $(this);
+          var employeeID = $(e.relatedTarget).data('employee_id');
+          //alert(employeeID);
 
-                    $.ajax({
-                        url: "{{ route('employee.checkduplicate') }}",
-                        type: 'POST',
-                        data: {
-                            _token: "{{ csrf_token() }}",
-                            query: query
-                        },
-                        dataType: 'json',
-                        success: function(response) {
-                            console.log(response['data']);
-                            if(response['data'] != null){
-                                alert('Employee Already Existed');
-                                $('.employee_phoneno').val('');
-                            }
-                        }
-                    });
-               }
+            Webcam.set({
+              width: 350,
+              height: 200,
+              image_format: 'jpeg',
+              jpeg_quality: 90,
+              facingMode: 'environment'
+            });
 
-         });
+          Webcam.attach('#checin_camera' + employeeID);
+
+          $('#take_snapshot' + employeeID).click(function() {
+            Webcam.snap(function(data_uri) {
+                    $('.image-checincamera' + employeeID).val(data_uri);
+                    document.getElementById('captured_checinimage' + employeeID).innerHTML = '<img src="' + data_uri +
+                        '" style="height: 100px !important;width: 100px !important;margin-top: 20px;margin-left: 20px;"/>';
+                });
+            });
+
+
     });
 
-         Webcam.set({
-            width: 300,
-            height: 400,
-            image_format: 'jpeg',
-            jpeg_quality: 90,
-            facingMode: 'environment'
-        });
+    $('.checkout_modal').on('show.bs.modal', function (e) {
+          var $modal = $(this);
+          var employeeID = $(e.relatedTarget).data('employee_id');
+          //alert(employeeID);
 
-        Webcam.attach('#my_camera');
-
-        function takesnapshot() {
-            Webcam.snap(function(data_uri) {
-                $(".image-tagcamera").val(data_uri);
-                document.getElementById('captured_cameraimage').innerHTML = '<img src="' + data_uri +
-                    '" style="height: 220px !important;width: 300px !important;margin-top: 40px;margin-left: 40px;"/>';
+            Webcam.set({
+              width: 350,
+              height: 200,
+              image_format: 'jpeg',
+              jpeg_quality: 90,
+              facingMode: 'environment'
             });
-        }
 
-        
+          Webcam.attach('#checkout_camera' + employeeID);
 
-
-         Webcam.set({
-            width: 300,
-            height: 400,
-            image_format: 'jpeg',
-            jpeg_quality: 90,
-            facingMode: 'environment'
-        });
-
-        Webcam.attach('#my_cameraone');
-
-        function takesnapshotone() {
+          $('#takecheckout_snapshot' + employeeID).click(function() {
             Webcam.snap(function(data_uri) {
-                $(".image-tagcameraone").val(data_uri);
-                document.getElementById('captured_cameraimageone').innerHTML = '<img src="' + data_uri +
-                    '" style="height: 220px !important;width: 300px !important;margin-top: 40px;margin-left: 40px;"/>';
+                    $('.image-checkoutcamera' + employeeID).val(data_uri);
+                    document.getElementById('captured_checkoutimage' + employeeID).innerHTML = '<img src="' + data_uri +
+                        '" style="height: 100px !important;width: 100px !important;margin-top: 20px;margin-left: 20px;"/>';
+                });
             });
-        }
 
-  
-</script>
+
+    });
+
+
+  </script>
+
 

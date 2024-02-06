@@ -24,7 +24,7 @@
                     <span class="animate-circle"></span>
                 </span>
                 <span class="user-content">
-                    {{-- <span class="user-details">Admin</span> --}}
+                    <span class="user-details">{{Auth::user()->role}}</span>
                     <span class="user-name">{{Auth::user()->name}}</span>
                 </span>
             </a>

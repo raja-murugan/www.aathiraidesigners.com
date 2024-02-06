@@ -17,6 +17,7 @@ class Employee extends Model
         'salaray_per_hour',
         'address',
         'photo',
+        'aadhaar_card',
         'soft_delete'
     ];
 }

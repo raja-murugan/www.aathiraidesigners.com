@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use App\Models\Employee;
+use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Http;
 use GuzzleHttp\Client;
 use Carbon\Carbon;
+use Hash;
 use PDF;
 
 use Illuminate\Http\Request;
@@ -27,6 +29,7 @@ class EmployeeController extends Controller
                 'phone_number' => $datas->phone_number,
                 'salaray_per_hour' => $datas->salaray_per_hour,
                 'address' => $datas->address,
+                'aadhaar_card' => $datas->aadhaar_card,
                 'photo' => $datas->photo,
                 'id' => $datas->id,
             );
@@ -47,8 +50,11 @@ class EmployeeController extends Controller
         $data->unique_key = $randomkey;
         $data->name = $request->get('name');
         $data->phone_number = $request->get('phone_number');
+        $data->gender = $request->get('gender');
+        $data->email = $request->get('email');
         $data->salaray_per_hour = $request->get('salaray_per_hour');
         $data->address = $request->get('address');
+        $data->aadhaar_card = $request->get('aadhaar_card');
 
         // if ($request->employee_photo != "") {
         //     $employee_photo = $request->employee_photo;
@@ -78,6 +84,16 @@ class EmployeeController extends Controller
 
         $data->save();
 
+        $password = $request->get('password');
+        $hashedPassword = Hash::make($password);
+
+        $Userdata = new User();
+        $Userdata->name = $request->get('name');
+        $Userdata->email = $request->get('email');
+        $Userdata->emp_id = $data->id;
+        $Userdata->password = $hashedPassword;
+        $Userdata->save();
+
 
         return redirect()->route('employee.index')->with('message', 'Added !');
     }
@@ -86,12 +102,13 @@ class EmployeeController extends Controller
     public function edit(Request $request, $unique_key)
     {
         $random_no =  rand(100,999);
-        
+
         $EmployeeData = Employee::where('unique_key', '=', $unique_key)->first();
         $EmployeeData->name = $request->get('name');
         $EmployeeData->phone_number = $request->get('phone_number');
         $EmployeeData->salaray_per_hour = $request->get('salaray_per_hour');
         $EmployeeData->address = $request->get('address');
+        $EmployeeData->aadhaar_card = $request->get('aadhaar_card');
 
 
         if ($request->employee_photo != "") {

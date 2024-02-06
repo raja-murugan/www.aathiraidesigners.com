@@ -1,8 +1,5 @@
-{{-- @hasanyrole('Super-Admin|Admin')
-    @include('page.backend.has-role-index')
-@else
-    @include('page.backend.has-no-role-index')
-@endhasanyrole --}}
+@extends('layout.backend.auth')
 
+@section('content')
 
-@include('page.backend.has-role-index')
+@endsection

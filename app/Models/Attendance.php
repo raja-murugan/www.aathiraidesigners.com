@@ -13,13 +13,14 @@ class Attendance extends Model
         'month',
         'year',
         'date',
+        'employee_id',
+        'working_hour',
         'checkin_date',
         'checkin_time',
-        'employee_id',
         'checkout_date',
         'checkout_time',
-        'working_hour',
+        'checkin_photo',
+        'checkout_photo',
         'status',
-        'soft_delete'
     ];
 }

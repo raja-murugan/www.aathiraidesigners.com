@@ -46,19 +46,18 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::middleware(['auth:sanctum', 'verified'])->post('/zworktechtechnology/employee/checkduplicate', [EmployeeController::class, 'checkduplicate'])->name('employee.checkduplicate');
  });
 
-
 // ATTENDANCE CONTROLLER
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     // INDEX
     Route::middleware(['auth:sanctum', 'verified'])->get('/zworktechtechnology/attendance', [AttendanceController::class, 'index'])->name('attendance.index');
-    // CREATE
-    Route::middleware(['auth:sanctum', 'verified'])->get('/zworktechtechnology/attendance/create', [AttendanceController::class, 'create'])->name('attendance.create');
     // STORE
-    Route::middleware(['auth:sanctum', 'verified'])->post('/zworktechtechnology/attendance/store', [AttendanceController::class, 'store'])->name('attendance.store');
-});
-
-
-
-
-
-Route::get('getemployee_photos/', [EmployeeController::class, 'getemployee_photos']);
+    Route::middleware(['auth:sanctum', 'verified'])->post('/zworktechtechnology/attendance/checkinstore', [AttendanceController::class, 'checkinstore'])->name('attendance.checkinstore');
+    // STORE
+    Route::middleware(['auth:sanctum', 'verified'])->post('/zworktechtechnology/attendance/checkoutstore', [AttendanceController::class, 'checkoutstore'])->name('attendance.checkoutstore');
+    // EDIT
+    Route::middleware(['auth:sanctum', 'verified'])->post('/zworktechtechnology/attendance/edit/{attendance_id}', [AttendanceController::class, 'edit'])->name('attendance.edit');
+    // LEAVE
+    Route::middleware(['auth:sanctum', 'verified'])->put('/zworktechtechnology/attendance/leaveupdate/{id}', [AttendanceController::class, 'leaveupdate'])->name('attendance.leaveupdate');
+    // DATAE FILTER
+    Route::middleware(['auth:sanctum', 'verified'])->put('/zworktechtechnology/attendance/datefilter', [AttendanceController::class, 'datefilter'])->name('attendance.datefilter');
+ });

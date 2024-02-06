@@ -18,9 +18,12 @@ return new class extends Migration
             $table->string('unique_key')->unique();
             $table->string('name');
             $table->string('phone_number')->nullable();
+            $table->string('email')->nullable();
+            $table->string('gender')->nullable();
             $table->string('salaray_per_hour')->nullable();
             $table->string('address')->nullable();
             $table->string('photo')->nullable();
+            $table->string('aadhaar_card')->nullable();
             $table->boolean('soft_delete')->default(0);
             $table->timestamps();
         });
