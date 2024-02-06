@@ -30,7 +30,7 @@
 
                   <div class="card-body">
                      <div class="table-responsive">
-                        <table class="table table-center table-hover table-striped">
+                        <table class="table table-center table-hover datatable table-striped">
                            <thead class="thead-light">
                               <tr>
                                  <th style="width:10%">S.No</th>
