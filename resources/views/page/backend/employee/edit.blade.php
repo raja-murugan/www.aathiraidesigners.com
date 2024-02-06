@@ -54,13 +54,19 @@
                     <div class="col-lg-12 col-md-12" >
                         <div class="form-group">
                             <label>Photo</label>
-                            <div class="col-sm-7">
+                            <div class="col-lg-12 col-md-12">
                                 <div style="display: flex">
-                                    <div><img src="{{ asset('assets/photo/' . $Employee_datas['photo']) }}" alt=""
-                                            style="width: 200px !important; height: 150px !important; margin-right: 40px !important; margin-top: 25px !important;">
+                                    <div class="col-lg-4 col-md-4">
+                                        <div><img src="{{ asset($Employee_datas['photo']) }}" alt=""
+                                                style="width: 150px !important; height: 110px !important; margin-top: 20px !important;">
+                                        </div>
                                     </div>
-                                    <div id="my_cameraone"></div>
-                                    <div id="captured_cameraimageone"></div>
+                                    <div class="col-lg-4 col-md-4">
+                                        {{-- <div id="my_cameraone"></div> --}}
+                                    </div>
+                                    <div class="col-lg-4 col-md-4">
+                                        <div id="captured_cameraimageone"></div>
+                                    </div>
                                 </div>
                                 <input type=button class=" btn btn-sm btn-primary"value="Take a Snap - Photo"
                                     onClick="takesnapshotone()">

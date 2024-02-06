@@ -32,7 +32,7 @@ class AttendanceController extends Controller
                     $checkin_time = '';
                     $checkin_photo = '';
                 }
-                
+
             }else {
                 $checkin_time = '';
                 $checkin_photo = '';
@@ -49,7 +49,7 @@ class AttendanceController extends Controller
                     $checkout_photo = '';
                     $total_time = '';
                 }
-                
+
             }else {
                 $checkout_time = '';
                 $checkout_photo = '';
@@ -68,7 +68,7 @@ class AttendanceController extends Controller
                 }else {
                     $status = 'Empty';
                 }
-                
+
             }else {
                 $attendance_id = '';
                 $status = '';
@@ -111,7 +111,7 @@ class AttendanceController extends Controller
                     $checkin_time = '';
                     $checkin_photo = '';
                 }
-                
+
             }else {
                 $checkin_time = '';
                 $checkin_photo = '';
@@ -128,7 +128,7 @@ class AttendanceController extends Controller
                     $checkout_photo = '';
                     $total_time = '';
                 }
-                
+
             }else {
                 $checkout_time = '';
                 $checkout_photo = '';
@@ -147,7 +147,7 @@ class AttendanceController extends Controller
                 }else {
                     $status = 'Empty';
                 }
-                
+
             }else {
                 $attendance_id = '';
                 $status = '';
@@ -192,18 +192,18 @@ class AttendanceController extends Controller
 
 
         //  dd($request->checkin_photo);
-            
+
                 $checkin_photo = $request->checkin_photo;
                 $folderPath = "assets/backend/checkin/";
                 $image_parts = explode(";base64,", $checkin_photo);
                 $image_type_aux = explode("image/", $image_parts[0]);
                 $image_type = $image_type_aux[1];
                 $image_base64 = base64_decode($image_parts[1]);
-                $fileName = $employeename . '_' . $random_no . '_' . 'emploee' . '.png';
+                $fileName = $employeename . '_' . $random_no . '_' . 'emploee' . '.webp';
                 $customerimgfile = $folderPath . $fileName;
                 file_put_contents($customerimgfile, $image_base64);
                 $data->checkin_photo = $customerimgfile;
-            
+
             $data->status = 1;
             $data->save();
 
@@ -230,18 +230,18 @@ class AttendanceController extends Controller
             $checkindata->checkout_time = $request->get('time');
 
         //  dd($request->checkout_photo);
-            
+
                 $checkout_photo = $request->checkout_photo;
                 $folderPath = "assets/backend/checkout/";
                 $image_parts = explode(";base64,", $checkout_photo);
                 $image_type_aux = explode("image/", $image_parts[0]);
                 $image_type = $image_type_aux[1];
                 $image_base64 = base64_decode($image_parts[1]);
-                $fileName = $employeename . '_' . $random_no . '_' . 'emploee' . '.png';
+                $fileName = $employeename . '_' . $random_no . '_' . 'emploee' . '.webp';
                 $customerimgfile = $folderPath . $fileName;
                 file_put_contents($customerimgfile, $image_base64);
                 $checkindata->checkout_photo = $customerimgfile;
-            
+
 
 
             $time1 = strtotime($checkindata->checkin_time);
@@ -321,7 +321,7 @@ class AttendanceController extends Controller
                     $checkin_time = '';
                     $checkin_photo = '';
                 }
-                
+
             }else {
                 $checkin_time = '';
                 $checkin_photo = '';
@@ -338,7 +338,7 @@ class AttendanceController extends Controller
                     $checkout_photo = '';
                     $total_time = '';
                 }
-                
+
             }else {
                 $checkout_time = '';
                 $checkout_photo = '';
@@ -357,7 +357,7 @@ class AttendanceController extends Controller
                 }else {
                     $status = 'Empty';
                 }
-                
+
             }else {
                 $attendance_id = '';
                 $status = '';
@@ -400,7 +400,7 @@ class AttendanceController extends Controller
                     $checkin_time = '';
                     $checkin_photo = '';
                 }
-                
+
             }else {
                 $checkin_time = '';
                 $checkin_photo = '';
@@ -417,7 +417,7 @@ class AttendanceController extends Controller
                     $checkout_photo = '';
                     $total_time = '';
                 }
-                
+
             }else {
                 $checkout_time = '';
                 $checkout_photo = '';
@@ -436,7 +436,7 @@ class AttendanceController extends Controller
                 }else {
                     $status = 'Empty';
                 }
-                
+
             }else {
                 $attendance_id = '';
                 $status = '';
@@ -480,18 +480,18 @@ class AttendanceController extends Controller
 
 
         //  dd($request->checkin_photo);
-            
+
                 $checkin_photo = $request->checkin_photo;
                 $folderPath = "assets/backend/checkin/";
                 $image_parts = explode(";base64,", $checkin_photo);
                 $image_type_aux = explode("image/", $image_parts[0]);
                 $image_type = $image_type_aux[1];
                 $image_base64 = base64_decode($image_parts[1]);
-                $fileName = $employeename . '_' . $random_no . '_' . 'emploee' . '.png';
+                $fileName = $employeename . '_' . $random_no . '_' . 'emploee' . '.webp';
                 $customerimgfile = $folderPath . $fileName;
                 file_put_contents($customerimgfile, $image_base64);
                 $data->checkin_photo = $customerimgfile;
-            
+
             $data->status = 1;
             $data->save();
 
@@ -518,18 +518,18 @@ class AttendanceController extends Controller
             $checkindata->checkout_time = $request->get('time');
 
         //  dd($request->checkout_photo);
-            
+
                 $checkout_photo = $request->checkout_photo;
                 $folderPath = "assets/backend/checkout/";
                 $image_parts = explode(";base64,", $checkout_photo);
                 $image_type_aux = explode("image/", $image_parts[0]);
                 $image_type = $image_type_aux[1];
                 $image_base64 = base64_decode($image_parts[1]);
-                $fileName = $employeename . '_' . $random_no . '_' . 'emploee' . '.png';
+                $fileName = $employeename . '_' . $random_no . '_' . 'emploee' . '.webp';
                 $customerimgfile = $folderPath . $fileName;
                 file_put_contents($customerimgfile, $image_base64);
                 $checkindata->checkout_photo = $customerimgfile;
-            
+
 
 
             $time1 = strtotime($checkindata->checkin_time);

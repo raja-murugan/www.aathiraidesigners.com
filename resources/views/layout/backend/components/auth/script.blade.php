@@ -24,7 +24,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
   <script src="https://cdn.jsdelivr.net/npm/face-api.js"></script>
-  
+
 
   <script language="JavaScript">
 
@@ -35,7 +35,7 @@
           //alert(employeeID);
 
             Webcam.set({
-              width: 350,
+              width: 200,
               height: 200,
               image_format: 'jpeg',
               jpeg_quality: 90,
@@ -48,7 +48,7 @@
             Webcam.snap(function(data_uri) {
                     $('.image-checincamera' + employeeID).val(data_uri);
                     document.getElementById('captured_checinimage' + employeeID).innerHTML = '<img src="' + data_uri +
-                        '" style="height: 100px !important;width: 100px !important;margin-top: 20px;margin-left: 20px;"/>';
+                        '" style="height: 150px !important;width: 200px !important;margin-top: 23px;margin-left: 20px;"/>';
                 });
             });
 
@@ -83,8 +83,8 @@
 
 
     Webcam.set({
-            width: 300,
-            height: 400,
+            width: 150,
+            height: 150,
             image_format: 'jpeg',
             jpeg_quality: 90,
             facingMode: 'environment'
@@ -96,19 +96,19 @@
             Webcam.snap(function(data_uri) {
                 $(".image-tagcamera").val(data_uri);
                 document.getElementById('captured_cameraimage').innerHTML = '<img src="' + data_uri +
-                    '" style="height: 100px !important;width: 100px !important;margin-top: 20px;margin-left: 20px;"/>';
+                    '" style="height: 110px !important;width: 150px !important;margin-top: 20px;margin-left: 20px;"/>';
             });
         }
 
-        Webcam.attach('#my_cameraone');
+        // Webcam.attach('#my_cameraone');
 
-        function takesnapshotone() {
-            Webcam.snap(function(data_uri) {
-                $(".image-tagcameraone").val(data_uri);
-                document.getElementById('captured_cameraimageone').innerHTML = '<img src="' + data_uri +
-                    '" style="height: 100px !important;width: 100px !important;margin-top: 20px;margin-left: 20px;"/>';
-            });
-        }
+        // function takesnapshotone() {
+        //     Webcam.snap(function(data_uri) {
+        //         $(".image-tagcameraone").val(data_uri);
+        //         document.getElementById('captured_cameraimageone').innerHTML = '<img src="' + data_uri +
+        //             '" style="height: 110px !important;width: 150px !important;margin-top: 20px;"/>';
+        //     });
+        // }
 
 
 
@@ -160,8 +160,6 @@
     //                     '" style="height: 100px !important;width: 100px !important;margin-top: 20px;margin-left: 20px;"/>';
     //             });
     //         });
-
-
     //   });
 
 

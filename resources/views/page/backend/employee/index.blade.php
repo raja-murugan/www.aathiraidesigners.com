@@ -46,7 +46,7 @@
                                  <td>{{ ++$keydata }}</td>
                                  <td>{{ $Employee_datas['name'] }}</td>
                                  <td>
-                                 <img src="{{ asset('assets/photo/' . $Employee_datas['photo']) }}" alt=""
+                                 <img src="{{ asset($Employee_datas['photo']) }}" alt=""
                                     style="width: 50px !important; height: 50px !important;">
                                  </td>
                                  <td>{{ $Employee_datas['phone_number'] }}</td>

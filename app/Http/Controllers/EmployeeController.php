@@ -58,7 +58,7 @@ class EmployeeController extends Controller
 
         if ($request->employee_photo != "") {
             $employee_photo = $request->employee_photo;
-            $folderPath = "assets/photo";
+            $folderPath = "assets/backend/emp/";
             $image_parts = explode(";base64,", $employee_photo);
             $image_type_aux = explode("image/", $image_parts[0]);
             $image_type = $image_type_aux[1];
@@ -113,7 +113,7 @@ class EmployeeController extends Controller
 
         if ($request->employee_photo != "") {
             $employee_photo = $request->employee_photo;
-            $folderPath = "assets/photo";
+            $folderPath = "assets/backend/emp/";
             $image_parts = explode(";base64,", $employee_photo);
             $image_type_aux = explode("image/", $image_parts[0]);
             $image_type = $image_type_aux[1];

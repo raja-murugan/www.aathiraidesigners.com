@@ -34,8 +34,8 @@
                            <thead class="thead-light">
                               <tr>
                                  <th style="width:10%">S.No</th>
-                                 <th style="width:15%">Name</th>
                                  <th style="width:15%">Photo</th>
+                                 <th style="width:15%">Name</th>
                                  <th style="width:15%">Working Hours</th>
                                  <th style="width:15%">Time</th>
                                  <th style="width:15%">Check-In Photo</th>
@@ -48,11 +48,11 @@
 
                            <tr>
                               <td>{{ ++$keydata }}</td>
-                              <td>{{ $Attendance_datas['employee'] }}</td>
                               <td>
-                              <img src="{{ asset('assets/photo/' . $Attendance_datas['photo']) }}" alt=""
-                                    style="width: 40px !important; height: 40px !important;">
+                              <img src="{{ asset($Attendance_datas['photo']) }}" alt=""
+                              style="width: 80px !important; height: 80px !important;">
                               </td>
+                              <td>{{ $Attendance_datas['employee'] }}</td>
                               <td>
                                  @if ($Attendance_datas['status'] == 'Present')
                                     {{$Attendance_datas['total_time'] }}
@@ -71,7 +71,7 @@
                               </td>
 
                                  @if ($Attendance_datas['status'] == 'Present')
-                                    <td><img src="{{ asset($Attendance_datas['checkin_photo']) }}" alt="" width="50" height="50"></td>
+                                    <td><img src="{{ asset($Attendance_datas['checkin_photo']) }}" alt="" style="width: 70px !important; height: 70px !important;"></td>
                                  @elseif ($Attendance_datas['status'] == 'Absent')
                                  <td></td>
                                  @else
@@ -83,7 +83,7 @@
 
                                  @if ($Attendance_datas['status'] == 'Present')
                                     @if ($Attendance_datas['checkout_time'] != '')
-                                    <td><img src="{{ asset($Attendance_datas['checkout_photo']) }}" alt="" width="50" height="50"></td>
+                                    <td><img src="{{ asset($Attendance_datas['checkout_photo']) }}" alt="" style="width: 70px !important; height: 70px !important;"></td>
                                     @else
                                     <td><a class="badge btn" href="#checkout{{ $Attendance_datas['unique_key'] }}" data-bs-toggle="modal"
                                           data-bs-target=".checkout-modal-xl{{ $Attendance_datas['unique_key'] }}"
@@ -92,7 +92,7 @@
 
                                     @endif
 
-                                    
+
                                  @elseif ($Attendance_datas['status'] == 'Absent')
                                  <td></td>
                                  @else
@@ -104,18 +104,18 @@
 
 
 
-                            
+
                               <td>
-                              
+
                                  <ul class="list-unstyled hstack gap-1 mb-0">
-                                    
+
                                     @if ($Attendance_datas['status'] == 'Present')
                                        <li>
                                           <a class="badge btn"  data-bs-toggle="modal"
                                                 data-bs-target=".attendanceedit-modal-xl{{ $Attendance_datas['unique_key'] }}"
                                                 style="color: #333;background: #d8c730d9;">Edit</a>
                                        </li>
-                                    @elseif ($Attendance_datas['status'] == 'Absent')  
+                                    @elseif ($Attendance_datas['status'] == 'Absent')
                                        <li>
                                              <a class="badge" style="color: #28084b;background: #d55561;">Leave</a>
                                        </li>
@@ -123,7 +123,7 @@
 
                                        <li>
                                              <a href="#leaveupdate{{ $Attendance_datas['unique_key'] }}" data-bs-toggle="modal"
-                                             data-bs-target=".leaveupdate-modal-xl{{ $Attendance_datas['unique_key'] }}" 
+                                             data-bs-target=".leaveupdate-modal-xl{{ $Attendance_datas['unique_key'] }}"
                                              class="badge" style="color: #28084b;background: #9ed2acd9;">Leave Update</a>
                                        </li>
                                     @endif
