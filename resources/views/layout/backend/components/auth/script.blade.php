@@ -61,7 +61,7 @@
           //alert(employeeID);
 
             Webcam.set({
-              width: 350,
+              width: 200,
               height: 200,
               image_format: 'jpeg',
               jpeg_quality: 90,
@@ -74,7 +74,7 @@
             Webcam.snap(function(data_uri) {
                     $('.image-checkoutcamera' + employeeID).val(data_uri);
                     document.getElementById('captured_checkoutimage' + employeeID).innerHTML = '<img src="' + data_uri +
-                        '" style="height: 100px !important;width: 100px !important;margin-top: 20px;margin-left: 20px;"/>';
+                        '" style="height: 150px !important;width: 200px !important;margin-top: 23px;margin-left: 20px;"/>';
                 });
             });
 
