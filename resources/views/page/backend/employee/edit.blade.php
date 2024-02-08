@@ -37,7 +37,7 @@
                                 name="address" id="address" value="{{ $Employee_datas['address'] }}">
                         </div>
                     </div>
-                    <div class="col-lg-12 col-md-12">
+                    <div class="col-lg-6 col-md-6">
                         <div class="form-group">
                             <label>Salary per Hour</label>
                             <input type="number" class="form-control" placeholder="Enter Employee Salary per Hour"
@@ -45,13 +45,29 @@
                                 value="{{ $Employee_datas['salaray_per_hour'] }}">
                         </div>
                     </div>
-                    <div class="col-lg-12 col-md-12">
+                    <div class="col-lg-6 col-md-6">
                         <div class="form-group">
                             <label>Aadhaar Card</label>
-                            <input type="text" class="form-control" placeholder="Enter Aadhar Card" name="aadhaar_card" value="{{ $Employee_datas['aadhaar_card'] }}">
+                            <input type="text" class="form-control" placeholder="Enter Aadhar Card"
+                                name="aadhaar_card" value="{{ $Employee_datas['aadhaar_card'] }}">
                         </div>
                     </div>
-                    <div class="col-lg-12 col-md-12" >
+                    <div class="col-lg-12 col-md-12">
+                        <div class="form-group">
+                            <label>Department</label>
+                            <select class="form-control select department_id js-example-basic-single"
+                                name="department_id" id="department_id" required>
+                                <option value="" disabled selected hiddden>Select Department
+                                </option>
+                                @foreach ($department as $departments)
+                                    <option
+                                        value="{{ $departments->id }}"@if ($departments->id === $Employee_datas['department_id']) selected='selected' @endif>
+                                        {{ $departments->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12">
                         <div class="form-group">
                             <label>Photo</label>
                             <div class="col-lg-12 col-md-12">

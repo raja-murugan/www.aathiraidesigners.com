@@ -13,18 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('employees', function (Blueprint $table) {
+        Schema::create('departments', function (Blueprint $table) {
             $table->id();
             $table->string('unique_key')->unique();
             $table->string('name');
-            $table->unsignedBigInteger('department_id')->nullable();
-            $table->string('phone_number')->nullable();
-            $table->string('email')->nullable();
-            $table->string('gender')->nullable();
-            $table->string('salaray_per_hour')->nullable();
-            $table->string('address')->nullable();
-            $table->string('photo')->nullable();
-            $table->string('aadhaar_card')->nullable();
             $table->boolean('soft_delete')->default(0);
             $table->timestamps();
         });
@@ -37,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('employees');
+        Schema::dropIfExists('departments');
     }
 };
