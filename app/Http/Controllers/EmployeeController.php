@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Department;
 use Illuminate\Support\Facades\DB;
 use App\Models\Employee;
 use App\Models\User;
@@ -19,6 +21,7 @@ class EmployeeController extends Controller
     public function index()
     {
         $data = Employee::where('soft_delete', '!=', 1)->orderBy('id', 'DESC')->get();
+        $department = Department::where('soft_delete', '!=', 1)->orderBy('id', 'DESC')->get();
 
         $Employee_data = [];
         foreach ($data as $key => $datas) {
@@ -28,6 +31,7 @@ class EmployeeController extends Controller
                 'unique_key' => $datas->unique_key,
                 'phone_number' => $datas->phone_number,
                 'salaray_per_hour' => $datas->salaray_per_hour,
+                'department_id' => $datas->department_id,
                 'address' => $datas->address,
                 'aadhaar_card' => $datas->aadhaar_card,
                 'photo' => $datas->photo,
@@ -36,7 +40,7 @@ class EmployeeController extends Controller
 
         }
         $today = Carbon::now()->format('Y-m-d');
-        return view('page.backend.employee.index', compact('Employee_data', 'today'));
+        return view('page.backend.employee.index', compact('Employee_data', 'today', 'department'));
     }
 
 
@@ -50,6 +54,7 @@ class EmployeeController extends Controller
         $data->unique_key = $randomkey;
         $data->name = $request->get('name');
         $data->phone_number = $request->get('phone_number');
+        $data->department_id = $request->get('department_id');
         $data->gender = $request->get('gender');
         $data->email = $request->get('email');
         $data->salaray_per_hour = $request->get('salaray_per_hour');
@@ -58,7 +63,7 @@ class EmployeeController extends Controller
 
         if ($request->employee_photo != "") {
             $employee_photo = $request->employee_photo;
-            $folderPath = "assets/photo";
+            $folderPath = "assets/backend/emp/";
             $image_parts = explode(";base64,", $employee_photo);
             $image_type_aux = explode("image/", $image_parts[0]);
             $image_type = $image_type_aux[1];
@@ -106,6 +111,7 @@ class EmployeeController extends Controller
         $EmployeeData = Employee::where('unique_key', '=', $unique_key)->first();
         $EmployeeData->name = $request->get('name');
         $EmployeeData->phone_number = $request->get('phone_number');
+        $EmployeeData->department_id = $request->get('department_id');
         $EmployeeData->salaray_per_hour = $request->get('salaray_per_hour');
         $EmployeeData->address = $request->get('address');
         $EmployeeData->aadhaar_card = $request->get('aadhaar_card');
@@ -113,7 +119,7 @@ class EmployeeController extends Controller
 
         if ($request->employee_photo != "") {
             $employee_photo = $request->employee_photo;
-            $folderPath = "assets/photo";
+            $folderPath = "assets/backend/emp/";
             $image_parts = explode(";base64,", $employee_photo);
             $image_type_aux = explode("image/", $image_parts[0]);
             $image_type = $image_type_aux[1];

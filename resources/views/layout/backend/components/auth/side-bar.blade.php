@@ -21,10 +21,16 @@
 
             <ul>
                 <li class="menu-title"><span>Side Menu</span></li>
+
+                @if(Auth::user()->role == 'Super-Admin')
+                <li class="{{ Route::is('department.index') ? 'active' : '' }}">
+                    <a href="{{ route('department.index') }}"><i class="fe fe-book"></i> <span>Department</span></a>
+                </li>
+
                 <li class="{{ Route::is('employee.index') ? 'active' : '' }}">
                     <a href="{{ route('employee.index') }}"><i class="fe fe-users"></i> <span>Employee</span></a>
                 </li>
-                @if(Auth::user()->role == 'Super-Admin')
+
                 <li class="{{ Route::is('attendance.index') ? 'active' : '' }}">
                     <a href="{{ route('attendance.index') }}"><i class="fe fe-book-open"></i> <span>Attendance</span></a>
                 </li>

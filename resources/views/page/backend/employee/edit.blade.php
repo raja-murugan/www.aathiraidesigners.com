@@ -37,7 +37,7 @@
                                 name="address" id="address" value="{{ $Employee_datas['address'] }}">
                         </div>
                     </div>
-                    <div class="col-lg-12 col-md-12">
+                    <div class="col-lg-6 col-md-6">
                         <div class="form-group">
                             <label>Salary per Hour</label>
                             <input type="number" class="form-control" placeholder="Enter Employee Salary per Hour"
@@ -45,22 +45,44 @@
                                 value="{{ $Employee_datas['salaray_per_hour'] }}">
                         </div>
                     </div>
-                    <div class="col-lg-12 col-md-12">
+                    <div class="col-lg-6 col-md-6">
                         <div class="form-group">
                             <label>Aadhaar Card</label>
-                            <input type="text" class="form-control" placeholder="Enter Aadhar Card" name="aadhaar_card" value="{{ $Employee_datas['aadhaar_card'] }}">
+                            <input type="text" class="form-control" placeholder="Enter Aadhar Card"
+                                name="aadhaar_card" value="{{ $Employee_datas['aadhaar_card'] }}">
                         </div>
                     </div>
-                    <div class="col-lg-12 col-md-12" >
+                    <div class="col-lg-12 col-md-12">
+                        <div class="form-group">
+                            <label>Department</label>
+                            <select class="form-control select department_id js-example-basic-single"
+                                name="department_id" id="department_id" required>
+                                <option value="" disabled selected hiddden>Select Department
+                                </option>
+                                @foreach ($department as $departments)
+                                    <option
+                                        value="{{ $departments->id }}"@if ($departments->id === $Employee_datas['department_id']) selected='selected' @endif>
+                                        {{ $departments->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12">
                         <div class="form-group">
                             <label>Photo</label>
-                            <div class="col-sm-7">
+                            <div class="col-lg-12 col-md-12">
                                 <div style="display: flex">
-                                    <div><img src="{{ asset('assets/photo/' . $Employee_datas['photo']) }}" alt=""
-                                            style="width: 200px !important; height: 150px !important; margin-right: 40px !important; margin-top: 25px !important;">
+                                    <div class="col-lg-4 col-md-4">
+                                        <div><img src="{{ asset($Employee_datas['photo']) }}" alt=""
+                                                style="width: 150px !important; height: 110px !important; margin-top: 20px !important;">
+                                        </div>
                                     </div>
-                                    <div id="my_cameraone"></div>
-                                    <div id="captured_cameraimageone"></div>
+                                    <div class="col-lg-4 col-md-4">
+                                        {{-- <div id="my_cameraone"></div> --}}
+                                    </div>
+                                    <div class="col-lg-4 col-md-4">
+                                        <div id="captured_cameraimageone"></div>
+                                    </div>
                                 </div>
                                 <input type=button class=" btn btn-sm btn-primary"value="Take a Snap - Photo"
                                     onClick="takesnapshotone()">

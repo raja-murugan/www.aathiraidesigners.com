@@ -67,16 +67,30 @@
                     <div class="col-lg-6 col-md-12">
                         <div class="form-group">
                             <label>Aadhaar Card</label>
-                            <input type="text" class="form-control" placeholder="Enter Aadhar Card" name="aadhaar_card">
+                            <input type="text" class="form-control" placeholder="Enter Aadhar Card"
+                                name="aadhaar_card">
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-12">
+                        <div class="form-group">
+                            <label>Department</label>
+                            <select class="form-control select department_id js-example-basic-single" name="department_id"
+                                id="department_id" required>
+                                <option value="" disabled selected hiddden>Select Department
+                                </option>
+                                @foreach ($department as $departments)
+                                    <option value="{{ $departments->id }}">{{ $departments->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12">
                         <div class="form-group">
                             <label>Address</label>
                             <textarea name="address" id="address" class="form-control" placeholder="Enter Employee Address" required></textarea>
                         </div>
                     </div>
-                    <div class="col-lg-12 col-md-12" >
+                    <div class="col-lg-12 col-md-12">
                         <div class="form-group">
                             <label>Photo</label>
                             <div class="col-sm-7">

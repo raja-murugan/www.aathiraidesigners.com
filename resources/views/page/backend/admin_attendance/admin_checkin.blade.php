@@ -25,8 +25,9 @@
                      <input type="time" class="form-control" name="time" id="time" value="{{$timenow}}">
                   </div>
                </div>
-               <div class="col-lg-6 col-md-6">
+               <div class="col-lg-12 col-md-12">
                   <div class="form-group">
+                    <label>Verify Your Name <span class="text-danger">*</span></label>
                      <input type="text" class="form-control" name="employee" id="employee" value="{{ $Attendance_datas['employee'] }}" readonly>
                   </div>
                </div>
