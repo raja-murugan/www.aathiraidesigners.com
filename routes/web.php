@@ -63,6 +63,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::middleware(['auth:sanctum', 'verified'])->put('/zworktechtechnology/attendance/datefilter', [AttendanceController::class, 'datefilter'])->name('attendance.datefilter');
     // DATAE FILTER
     Route::middleware(['auth:sanctum', 'verified'])->put('/zworktechtechnology/attendance/departmentwisefilter', [AttendanceController::class, 'departmentwisefilter'])->name('attendance.departmentwisefilter');
+    // EDIT
+    Route::middleware(['auth:sanctum', 'verified'])->post('/zworktechtechnology/attendance/dateupdate/{date}', [AttendanceController::class, 'dateupdate'])->name('attendance.dateupdate');
  });
 
 

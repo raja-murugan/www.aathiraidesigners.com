@@ -36,6 +36,38 @@
                             aria-label="Close">Cancel</button>
       </div>
       </form>
+
+      @else
+
+
+      <form autocomplete="off" method="POST"  action="{{ route('attendance.dateupdate', ['date' => $today]) }}"
+                 enctype="multipart/form-data">
+                @csrf
+         <div class="modal-body">
+            <div class="row">
+                  <div class="col-lg-6 col-md-12" >
+                     <div class="form-group">
+                        <label>Checkin-Time <span class="text-danger">*</span></label>
+                        <input type="time" class="form-control"  name="checkin_time" id="checkin_time" value="">
+                        <input type="hidden" class="form-control"  name="employee_id" id="employee_id" value="{{ $Attendance_datas['employee_id'] }}">
+                     </div>
+                  </div>
+                  <div class="col-lg-6 col-md-12" >
+                     <div class="form-group">
+                        <label>Checkout-Time <span class="text-danger">*</span></label>
+                        <input type="time" class="form-control" name="checkout_time" id="checkout_time" value="">
+                     </div>
+                  </div>
+            </div>
+         </div>
+
+         <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" style="margin-right: 5px;">Update</button>
+            <button type="button" class="btn btn-cancel btn-danger" data-bs-dismiss="modal"
+                              aria-label="Close">Cancel</button>
+         </div>
+      </form>
+
       @endif
 
    </div>

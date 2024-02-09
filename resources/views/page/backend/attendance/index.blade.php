@@ -65,8 +65,10 @@
                                  <th style="width:15%">Name</th>
                                  <th style="width:15%">Working Hours</th>
                                  <th style="width:15%">Time</th>
+                                 @if ($today == $current_date)
                                  <th style="width:15%">Check-In Photo</th>
                                  <th style="width:15%">Check-Out Photo</th>
+                                 @endif
                                  <th style="width:30%">Action</th>
                               </tr>
                            </thead>
@@ -97,62 +99,77 @@
                               @endif
                               </td>
 
-                                 @if ($Attendance_datas['status'] == 'Present')
-                                    <td><img src="{{ asset($Attendance_datas['checkin_photo']) }}" alt="" style="width: 70px !important; height: 70px !important;"></td>
-                                 @elseif ($Attendance_datas['status'] == 'Absent')
-                                 <td></td>
-                                 @else
-                                 <td><a class="badge btn" href="#checkin{{ $Attendance_datas['unique_key'] }}" data-bs-toggle="modal"
-                                                data-bs-target=".checkin-modal-xl{{ $Attendance_datas['unique_key'] }}"
-                                                data-employee_id ="{{ $Attendance_datas['employee_id'] }}" style="color: #333;background: #caccd7d9;">Check in</a></td>
-                                 @endif
 
-
-                                 @if ($Attendance_datas['status'] == 'Present')
-                                    @if ($Attendance_datas['checkout_time'] != '')
-                                    <td><img src="{{ asset($Attendance_datas['checkout_photo']) }}" alt="" style="width: 70px !important; height: 70px !important;"></td>
+                                 @if ($today == $current_date)
+                                    @if ($Attendance_datas['status'] == 'Present')
+                                       <td><img src="{{ asset($Attendance_datas['checkin_photo']) }}" alt="" style="width: 70px !important; height: 70px !important;"></td>
+                                    @elseif ($Attendance_datas['status'] == 'Absent')
+                                    <td></td>
                                     @else
-                                    <td><a class="badge btn" href="#checkout{{ $Attendance_datas['unique_key'] }}" data-bs-toggle="modal"
-                                          data-bs-target=".checkout-modal-xl{{ $Attendance_datas['unique_key'] }}"
-                                          data-employee_id ="{{ $Attendance_datas['employee_id'] }}"
-                                          style="color: #333;background: #caccd7d9;">Check out</a></td>
-
+                                    <td><a class="badge btn" href="#checkin{{ $Attendance_datas['unique_key'] }}" data-bs-toggle="modal"
+                                                   data-bs-target=".checkin-modal-xl{{ $Attendance_datas['unique_key'] }}"
+                                                   data-employee_id ="{{ $Attendance_datas['employee_id'] }}" style="color: #333;background: #caccd7d9;">Check in</a></td>
                                     @endif
 
 
-                                 @elseif ($Attendance_datas['status'] == 'Absent')
-                                 <td></td>
-                                 @else
-                                 <td><a class="badge btn" href="#checkout{{ $Attendance_datas['unique_key'] }}" data-bs-toggle="modal"
-                                          data-bs-target=".checkout-modal-xl{{ $Attendance_datas['unique_key'] }}"
-                                          data-employee_id ="{{ $Attendance_datas['employee_id'] }}"
-                                          style="color: #333;background: #caccd7d9;">Check out</a></td>
+                                    @if ($Attendance_datas['status'] == 'Present')
+                                       @if ($Attendance_datas['checkout_time'] != '')
+                                       <td><img src="{{ asset($Attendance_datas['checkout_photo']) }}" alt="" style="width: 70px !important; height: 70px !important;"></td>
+                                       @else
+                                       <td><a class="badge btn" href="#checkout{{ $Attendance_datas['unique_key'] }}" data-bs-toggle="modal"
+                                             data-bs-target=".checkout-modal-xl{{ $Attendance_datas['unique_key'] }}"
+                                             data-employee_id ="{{ $Attendance_datas['employee_id'] }}"
+                                             style="color: #333;background: #caccd7d9;">Check out</a></td>
+
+                                       @endif
+
+
+                                    @elseif ($Attendance_datas['status'] == 'Absent')
+                                    <td></td>
+                                    @else
+                                    <td><a class="badge btn" href="#checkout{{ $Attendance_datas['unique_key'] }}" data-bs-toggle="modal"
+                                             data-bs-target=".checkout-modal-xl{{ $Attendance_datas['unique_key'] }}"
+                                             data-employee_id ="{{ $Attendance_datas['employee_id'] }}"
+                                             style="color: #333;background: #caccd7d9;">Check out</a></td>
+                                    @endif
+
                                  @endif
-
-
 
 
                               <td>
 
                                  <ul class="list-unstyled hstack gap-1 mb-0">
+                                    @if ($today == $current_date)
+                                       @if ($Attendance_datas['status'] == 'Present')
+                                          <li>
+                                             <a class="badge btn"  data-bs-toggle="modal"
+                                                   data-bs-target=".attendanceedit-modal-xl{{ $Attendance_datas['unique_key'] }}"
+                                                   style="color: #333;background: #d8c730d9;">Edit</a>
+                                          </li>
+                                       @elseif ($Attendance_datas['status'] == 'Absent')
+                                          <li>
+                                                <a class="badge" style="color: #28084b;background: #d55561;">Leave</a>
+                                          </li>
+                                       @else
 
-                                    @if ($Attendance_datas['status'] == 'Present')
-                                       <li>
-                                          <a class="badge btn"  data-bs-toggle="modal"
-                                                data-bs-target=".attendanceedit-modal-xl{{ $Attendance_datas['unique_key'] }}"
-                                                style="color: #333;background: #d8c730d9;">Edit</a>
-                                       </li>
-                                    @elseif ($Attendance_datas['status'] == 'Absent')
-                                       <li>
-                                             <a class="badge" style="color: #28084b;background: #d55561;">Leave</a>
-                                       </li>
+                                          <li>
+                                                <a href="#leaveupdate{{ $Attendance_datas['unique_key'] }}" data-bs-toggle="modal"
+                                                data-bs-target=".leaveupdate-modal-xl{{ $Attendance_datas['unique_key'] }}"
+                                                class="badge" style="color: #28084b;background: #9ed2acd9;">Leave Update</a>
+                                          </li>
+                                       @endif
                                     @else
-
-                                       <li>
-                                             <a href="#leaveupdate{{ $Attendance_datas['unique_key'] }}" data-bs-toggle="modal"
-                                             data-bs-target=".leaveupdate-modal-xl{{ $Attendance_datas['unique_key'] }}"
-                                             class="badge" style="color: #28084b;background: #9ed2acd9;">Leave Update</a>
-                                       </li>
+                                          @if ($Attendance_datas['status'] == 'Absent')
+                                             <li>
+                                                   <a class="badge" style="color: #28084b;background: #d55561;">Leave</a>
+                                             </li>
+                                          @else
+                                          <li>
+                                             <a class="badge btn"  data-bs-toggle="modal"
+                                                   data-bs-target=".attendanceedit-modal-xl{{ $Attendance_datas['unique_key'] }}"
+                                                   style="color: #333;background: #d8c730d9;">Edit</a>
+                                          </li>
+                                          @endif
                                     @endif
 
                                  </ul>
