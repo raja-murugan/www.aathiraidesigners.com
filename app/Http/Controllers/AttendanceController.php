@@ -325,7 +325,7 @@ class AttendanceController extends Controller
             $employee_id = $request->get('employee_id');
             $random_no =  rand(100,999);
 
-            $checkindata = Attendance::where('checkin_date', '=', $today)->where('employee_id', '=', $employee_id)->where('status', '=', 1)->first();
+            $checkindata = Attendance::where('checkin_date', '=', $request->get('date'))->where('employee_id', '=', $employee_id)->where('status', '=', 1)->first();
             $checkindata->checkout_date = $request->get('date');
             $checkindata->checkout_time = $request->get('time');
 
