@@ -31,13 +31,13 @@
                     <a href="{{ route('employee.index') }}"><i class="fe fe-users"></i> <span>Employee</span></a>
                 </li>
 
-                <li class="{{ Route::is('attendance.index') ? 'active' : '' }}">
+                <li class="{{ Route::is('attendance.index', 'attendance.datefilter', 'attendance.departmentwisefilter') ? 'active' : '' }}">
                     <a href="{{ route('attendance.index') }}"><i class="fe fe-book-open"></i> <span>Attendance</span></a>
                 </li>
                 @endif
 
                 @if(Auth::user()->role == 'Admin')
-                <li class="{{ Route::is('admin_attendance.admin_index') ? 'active' : '' }}">
+                <li class="{{ Route::is('admin_attendance.admin_index', 'admin_attendance.admin_departmentwisefilter') ? 'active' : '' }}">
                     <a href="{{ route('admin_attendance.admin_index') }}"><i class="fe fe-book-open"></i> <span>Attendance</span></a>
                 </li>
                 @endif

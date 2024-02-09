@@ -67,29 +67,20 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-lg-12 col-md-12">
-                        <div class="form-group">
-                            <label>Photo</label>
-                            <div class="col-lg-12 col-md-12">
-                                <div style="display: flex">
-                                    <div class="col-lg-4 col-md-4">
-                                        <div><img src="{{ asset($Employee_datas['photo']) }}" alt=""
-                                                style="width: 150px !important; height: 110px !important; margin-top: 20px !important;">
-                                        </div>
+
+                    <div class="row align-item-center">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <div style="display: flex">
+                                        <div id="empedit_camera{{ $Employee_datas['id'] }}"></div>
+                                        <div id="captured_empeditimage{{ $Employee_datas['id'] }}"></div>
                                     </div>
-                                    <div class="col-lg-4 col-md-4">
-                                        {{-- <div id="my_cameraone"></div> --}}
-                                    </div>
-                                    <div class="col-lg-4 col-md-4">
-                                        <div id="captured_cameraimageone"></div>
-                                    </div>
+                                    <input type="button" class=" btn btn-sm"  value="Take a Snap" id="takeempedit_snapshot{{ $Employee_datas['id'] }}"  style="background: #d8e4ce;">
+                                    <input type="hidden" class="form-control image-empeditcamera{{ $Employee_datas['id'] }}"  name="employee_photo" id="employee_photo">
                                 </div>
-                                <input type=button class=" btn btn-sm btn-primary"value="Take a Snap - Photo"
-                                    onClick="takesnapshotone()">
-                                <input type="hidden" class="form-control image-tagcameraone" name="employee_photo">
-                            </div>
                         </div>
                     </div>
+                   
                     <div class="col-lg-12 col-md-12" hidden>
                         <div class="form-group">
                             <label>Photo</label>

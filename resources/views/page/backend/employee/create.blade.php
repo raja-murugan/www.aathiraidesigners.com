@@ -90,17 +90,17 @@
                             <textarea name="address" id="address" class="form-control" placeholder="Enter Employee Address" required></textarea>
                         </div>
                     </div>
-                    <div class="col-lg-12 col-md-12">
+                    <div class="col-lg-12 col-md-12" >
                         <div class="form-group">
                             <label>Photo</label>
                             <div class="col-sm-7">
                                 <div style="display: flex">
-                                    <div id="my_camera"></div>
-                                    <div id="captured_cameraimage"></div>
+                                    <div id="employee_camera"></div>
+                                    <div id="captured_employeeimage"></div>
                                 </div>
-                                <input type=button class="btn btn-sm btn-primary" value="Take a Snap - Photo"
-                                    onClick="takesnapshot()">
-                                <input type="hidden" class="form-control image-tagcamera" name="employee_photo">
+                                <input type=button class="btn btn-sm btn-primary" value="Take a Snap"
+                                    id="takeemployeesnapshot">
+                                <input type="hidden" class="form-control image-employeetagcamera" name="employee_photo">
                             </div>
                         </div>
                     </div>

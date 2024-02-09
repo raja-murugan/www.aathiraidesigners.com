@@ -45,7 +45,7 @@
                            @foreach ($Employee_data as $keydata => $Employee_datas)
                               <tr>
                                  <td>{{ ++$keydata }}</td>
-                                 <td>{{ $Employee_datas['department_id'] }}</td>
+                                 <td>{{ $Employee_datas['departmentname'] }}</td>
                                  <td>{{ $Employee_datas['name'] }}</td>
                                  <td>
                                  <img src="{{ asset($Employee_datas['photo']) }}" alt=""
@@ -57,7 +57,7 @@
                                  <td>
                                     <ul class="list-unstyled hstack gap-1 mb-0">
                                        <li>
-                                          <a class="badge bg-warning-light" href="#edit{{ $Employee_datas['unique_key'] }}" data-bs-toggle="modal"
+                                          <a class="badge bg-warning-light" href="#edit{{ $Employee_datas['unique_key'] }}" data-bs-toggle="modal"  data-emp_id ="{{ $Employee_datas['id'] }}"
                                           data-bs-target=".employeeedit-modal-xl{{ $Employee_datas['unique_key'] }}" style="color: #28084b;">Edit</a>
                                        </li>
                                        <li>
@@ -69,7 +69,7 @@
                                  </td>
                               </tr>
 
-                              <div class="modal fade employeeedit-modal-xl{{ $Employee_datas['unique_key'] }}"
+                              <div class="modal fade  editemployee_modal employeeedit-modal-xl{{ $Employee_datas['unique_key'] }}"
                                     tabindex="-1" role="dialog" data-bs-backdrop="static"
                                     aria-labelledby="employeeeditLargeModalLabel{{ $Employee_datas['unique_key'] }}"
                                     aria-hidden="true">
@@ -97,7 +97,7 @@
 
 
 
-      <div class="modal fade employee-modal-xl" tabindex="-1" role="dialog" aria-labelledby="employeeLargeModalLabel"
+      <div class="modal fade addemployee_modal employee-modal-xl" tabindex="-1" role="dialog" aria-labelledby="employeeLargeModalLabel"
             aria-hidden="true" data-bs-backdrop="static">
             @include('page.backend.employee.create')
         </div>

@@ -25,11 +25,13 @@ class EmployeeController extends Controller
 
         $Employee_data = [];
         foreach ($data as $key => $datas) {
+            $departmentname = Department::findOrFail($datas->department_id);
 
             $Employee_data[] = array(
                 'name' => $datas->name,
                 'unique_key' => $datas->unique_key,
                 'phone_number' => $datas->phone_number,
+                'departmentname' => $departmentname->name,
                 'salaray_per_hour' => $datas->salaray_per_hour,
                 'department_id' => $datas->department_id,
                 'address' => $datas->address,
@@ -82,7 +84,7 @@ class EmployeeController extends Controller
 
         // $employee_photo = $request->employee_photo;
         // $filename_customer_photo = $data->name . '_' . $random_no . '_' . 'Photo' . '.' . $employee_photo->getClientOriginalExtension();
-        // $request->employee_photo->move('assets/photo', $filename_customer_photo);
+        // $request->employee_photo->move('assets/backend/emp/', $filename_customer_photo);
         // $data->photo = $filename_customer_photo;
 
 
@@ -136,7 +138,7 @@ class EmployeeController extends Controller
         //  if ($request->file('employee_photo') != "") {
         //    $employee_photo = $request->employee_photo;
         //    $filename_customer_photo = $EmployeeData->name . '_' . $random_no . '_' . 'Photo' . '.' . $employee_photo->getClientOriginalExtension();
-        //    $request->employee_photo->move('assets/photo', $filename_customer_photo);
+        //    $request->employee_photo->move('assets/backend/emp/', $filename_customer_photo);
         //    $EmployeeData->photo = $filename_customer_photo;
         // } else {
         //    $Insertedproof_customer_photo = $EmployeeData->photo;

@@ -82,86 +82,58 @@
     });
 
 
-        Webcam.set({
-            width: 150,
-            height: 150,
-            image_format: 'jpeg',
-            jpeg_quality: 90,
-            facingMode: 'environment'
-        });
+    $('.addemployee_modal').on('show.bs.modal', function (e) {
 
-        Webcam.attach('#my_camera');
-
-        function takesnapshot() {
-            Webcam.snap(function(data_uri) {
-                $(".image-tagcamera").val(data_uri);
-                document.getElementById('captured_cameraimage').innerHTML = '<img src="' + data_uri +
-                    '" style="height: 110px !important;width: 150px !important;margin-top: 20px;margin-left: 20px;"/>';
+            Webcam.set({
+              width: 200,
+              height: 200,
+              image_format: 'jpeg',
+              jpeg_quality: 90,
+              facingMode: 'environment'
             });
-        }
 
-        // Webcam.attach('#my_cameraone');
+            Webcam.attach('#employee_camera');
 
-        // function takesnapshotone() {
-        //     Webcam.snap(function(data_uri) {
-        //         $(".image-tagcameraone").val(data_uri);
-        //         document.getElementById('captured_cameraimageone').innerHTML = '<img src="' + data_uri +
-        //             '" style="height: 110px !important;width: 150px !important;margin-top: 20px;"/>';
-        //     });
-        // }
-
+            $('#takeemployeesnapshot').click(function() {
+              Webcam.snap(function(data_uri) {
+                      $('.image-employeetagcamera').val(data_uri);
+                      document.getElementById('captured_employeeimage').innerHTML = '<img src="' + data_uri +
+                          '" style="height: 150px !important;width: 200px !important;margin-top: 23px;margin-left: 20px;"/>';
+                  });
+              });
 
 
-      //   $('.admin_checkin_modal').on('show.bs.modal', function (e) {
-      //     var $modal = $(this);
-      //     var employeeID = $(e.relatedTarget).data('adminemployee_id');
-      //     //alert(employeeID);
-
-      //       Webcam.set({
-      //         width: 350,
-      //         height: 200,
-      //         image_format: 'jpeg',
-      //         jpeg_quality: 90,
-      //         facingMode: 'environment'
-      //       });
-
-      //     Webcam.attach('#adminchecin_camera' + employeeID);
-
-      //     $('#admintake_snapshot' + employeeID).click(function() {
-      //       Webcam.snap(function(data_uri) {
-      //               $('.adminimage-checincamera' + employeeID).val(data_uri);
-      //               document.getElementById('admincaptured_checinimage' + employeeID).innerHTML = '<img src="' + data_uri +
-      //                   '" style="height: 100px !important;width: 100px !important;margin-top: 20px;margin-left: 20px;"/>';
-      //           });
-      //       });
+    });
 
 
-      // });
+    $('.editemployee_modal').on('show.bs.modal', function (e) {
+          var $modal = $(this);
+          var emp_id = $(e.relatedTarget).data('emp_id');
+          //alert(emp_id);
 
-    // $('.admin_checkout_modal').on('show.bs.modal', function (e) {
-    //       var $modal = $(this);
-    //       var employeeID = $(e.relatedTarget).data('admincheckout_employee_id');
-    //       //alert(employeeID);
+            Webcam.set({
+              width: 200,
+              height: 200,
+              image_format: 'jpeg',
+              jpeg_quality: 90,
+              facingMode: 'environment'
+            });
 
-    //         Webcam.set({
-    //           width: 350,
-    //           height: 200,
-    //           image_format: 'jpeg',
-    //           jpeg_quality: 90,
-    //           facingMode: 'environment'
-    //         });
+          Webcam.attach('#empedit_camera' + emp_id);
 
-    //       Webcam.attach('#admincheckout_camera' + employeeID);
+          $('#takeempedit_snapshot' + emp_id).click(function() {
+            Webcam.snap(function(data_uri) {
+                    $('.image-empeditcamera' + emp_id).val(data_uri);
+                    document.getElementById('captured_empeditimage' + emp_id).innerHTML = '<img src="' + data_uri +
+                        '" style="height: 150px !important;width: 200px !important;margin-top: 23px;margin-left: 20px;"/>';
+                });
+            });
 
-    //       $('#admintakecheckout_snapshot' + employeeID).click(function() {
-    //         Webcam.snap(function(data_uri) {
-    //                 $('.adminimage-checkoutcamera' + employeeID).val(data_uri);
-    //                 document.getElementById('admincaptured_checkoutimage' + employeeID).innerHTML = '<img src="' + data_uri +
-    //                     '" style="height: 100px !important;width: 100px !important;margin-top: 20px;margin-left: 20px;"/>';
-    //             });
-    //         });
-    //   });
 
+    });
+
+
+    
 
   </script>
 

@@ -13,6 +13,7 @@
                      @csrf
 
                      <div class="col-6">
+                     <input type="hidden" class="form-control"  name="date" id="date" value="{{$today}}" required>
                         <button type="submit" class="btn btn-primary paid-continue-btn">Yes, Leave</button>
                      </div>
                   </form>

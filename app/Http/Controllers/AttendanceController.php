@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Employee;
+use App\Models\Department;
 use App\Models\Attendance;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
@@ -89,7 +90,10 @@ class AttendanceController extends Controller
                 'status' => $status,
             );
         }
-        return view('page.backend.attendance.index', compact('Attendance_data', 'today', 'timenow'));
+        $AllDepartment = Department::where('soft_delete', '!=', 1)->get();
+        $department_name = 'Attendance';
+
+        return view('page.backend.attendance.index', compact('Attendance_data', 'today', 'timenow', 'AllDepartment', 'department_name'));
     }
 
     public function datefilter(Request $request)
@@ -165,9 +169,105 @@ class AttendanceController extends Controller
                 'attendance_id' => $attendance_id,
                 'total_time' => $total_time,
                 'status' => $status,
+                'photo' => $AllEmployees_arr->photo,
             );
         }
-        return view('page.backend.attendance.index', compact('Attendance_data', 'today', 'timenow'));
+
+        $AllDepartment = Department::where('soft_delete', '!=', 1)->get();
+        $department_name = 'Attendance';
+
+        return view('page.backend.attendance.index', compact('Attendance_data', 'today', 'timenow', 'AllDepartment', 'department_name'));
+
+    }
+
+
+
+    public function departmentwisefilter(Request $request)
+    {
+        $department_name = $request->get('department_name');
+
+        $departmentname = Department::where('name', '=', $department_name)->first();
+      
+
+      
+
+        $today = $request->get('date');
+        $timenow = Carbon::now()->format('H:i');
+
+        $Attendance_data = [];
+        $AllEmployees = Employee::where('soft_delete', '!=', 1)->where('department_id', '=', $departmentname->id)->get();
+        foreach ($AllEmployees as $key => $AllEmployees_arr) {
+
+            $checkindata = Attendance::where('checkin_date', '=', $today)->where('employee_id', '=', $AllEmployees_arr->id)->first();
+            if($checkindata != ""){
+                if($checkindata->status == 1){
+                    $checkin_time = $checkindata->checkin_time;
+                    $checkin_photo = $checkindata->checkin_photo;
+                }else {
+                    $checkin_time = '';
+                    $checkin_photo = '';
+                }
+
+            }else {
+                $checkin_time = '';
+                $checkin_photo = '';
+            }
+
+            $checkoutdata = Attendance::where('checkout_date', '=', $today)->where('employee_id', '=', $AllEmployees_arr->id)->first();
+            if($checkoutdata != ""){
+                if($checkoutdata->status == 1){
+                    $checkout_time = $checkoutdata->checkout_time;
+                    $checkout_photo = $checkoutdata->checkout_photo;
+                    $total_time = $checkoutdata->working_hour;
+                }else {
+                    $checkout_time = '';
+                    $checkout_photo = '';
+                    $total_time = '';
+                }
+
+            }else {
+                $checkout_time = '';
+                $checkout_photo = '';
+                $total_time = '';
+            }
+
+            $attendance_date = Attendance::where('date', '=', $today)->where('employee_id', '=', $AllEmployees_arr->id)->first();
+            if($attendance_date != ""){
+
+                $attendance_id = $attendance_date->id;
+
+                if($attendance_date->status == 1){
+                    $status = 'Present';
+                }else if($attendance_date->status == 2) {
+                    $status = 'Absent';
+                }else {
+                    $status = 'Empty';
+                }
+
+            }else {
+                $attendance_id = '';
+                $status = '';
+            }
+
+            $Attendance_data[] = array(
+                'employee_id' => $AllEmployees_arr->id,
+                'employee' => $AllEmployees_arr->name,
+                'photo' => $AllEmployees_arr->photo,
+                'unique_key' => $AllEmployees_arr->unique_key,
+                'id' => $AllEmployees_arr->id,
+                'checkin_time' => $checkin_time,
+                'checkout_time' => $checkout_time,
+                'checkin_photo' => $checkin_photo,
+                'checkout_photo' => $checkout_photo,
+                'attendance_id' => $attendance_id,
+                'total_time' => $total_time,
+                'status' => $status,
+            );
+        }
+        $AllDepartment = Department::where('soft_delete', '!=', 1)->get();
+
+        return view('page.backend.attendance.index', compact('Attendance_data', 'today', 'timenow', 'AllDepartment', 'department_name'));
+
 
     }
 
@@ -282,15 +382,15 @@ class AttendanceController extends Controller
         return redirect()->route('attendance.index')->with('info', 'Updated !');
     }
 
-    public function leaveupdate($id)
+    public function leaveupdate(Request $request, $id)
     {
         $today = Carbon::now()->format('Y-m-d');
         $timenow = Carbon::now()->format('H:i');
 
         $data = new Attendance();
-        $data->month = date('m', strtotime($today));
-        $data->year = date('Y', strtotime($today));
-        $data->date = $today;
+        $data->month = date('m', strtotime($request->get('date')));
+        $data->year = date('Y', strtotime($request->get('date')));
+        $data->date = $request->get('date');
         $data->employee_id = $id;
         $data->status = 2;
         $data->save();
@@ -378,7 +478,100 @@ class AttendanceController extends Controller
                 'status' => $status,
             );
         }
-        return view('page.backend.admin_attendance.admin_index', compact('Attendance_data', 'today', 'timenow'));
+
+        $AllDepartment = Department::where('soft_delete', '!=', 1)->get();
+        $department_name = 'Attendance';
+
+        return view('page.backend.admin_attendance.admin_index', compact('Attendance_data', 'today', 'timenow', 'AllDepartment', 'department_name'));
+    }
+
+    public function admin_departmentwisefilter(Request $request)
+    {
+        $department_name = $request->get('department_name');
+
+        $departmentname = Department::where('name', '=', $department_name)->first();
+      
+
+      
+
+        $today = Carbon::now()->format('Y-m-d');
+        $timenow = Carbon::now()->format('H:i');
+
+        $Attendance_data = [];
+        $AllEmployees = Employee::where('soft_delete', '!=', 1)->where('department_id', '=', $departmentname->id)->get();
+        foreach ($AllEmployees as $key => $AllEmployees_arr) {
+
+            $checkindata = Attendance::where('checkin_date', '=', $today)->where('employee_id', '=', $AllEmployees_arr->id)->first();
+            if($checkindata != ""){
+                if($checkindata->status == 1){
+                    $checkin_time = $checkindata->checkin_time;
+                    $checkin_photo = $checkindata->checkin_photo;
+                }else {
+                    $checkin_time = '';
+                    $checkin_photo = '';
+                }
+
+            }else {
+                $checkin_time = '';
+                $checkin_photo = '';
+            }
+
+            $checkoutdata = Attendance::where('checkout_date', '=', $today)->where('employee_id', '=', $AllEmployees_arr->id)->first();
+            if($checkoutdata != ""){
+                if($checkoutdata->status == 1){
+                    $checkout_time = $checkoutdata->checkout_time;
+                    $checkout_photo = $checkoutdata->checkout_photo;
+                    $total_time = $checkoutdata->working_hour;
+                }else {
+                    $checkout_time = '';
+                    $checkout_photo = '';
+                    $total_time = '';
+                }
+
+            }else {
+                $checkout_time = '';
+                $checkout_photo = '';
+                $total_time = '';
+            }
+
+            $attendance_date = Attendance::where('date', '=', $today)->where('employee_id', '=', $AllEmployees_arr->id)->first();
+            if($attendance_date != ""){
+
+                $attendance_id = $attendance_date->id;
+
+                if($attendance_date->status == 1){
+                    $status = 'Present';
+                }else if($attendance_date->status == 2) {
+                    $status = 'Absent';
+                }else {
+                    $status = 'Empty';
+                }
+
+            }else {
+                $attendance_id = '';
+                $status = '';
+            }
+
+            $Attendance_data[] = array(
+                'employee_id' => $AllEmployees_arr->id,
+                'employee' => $AllEmployees_arr->name,
+                'photo' => $AllEmployees_arr->photo,
+                'unique_key' => $AllEmployees_arr->unique_key,
+                'id' => $AllEmployees_arr->id,
+                'checkin_time' => $checkin_time,
+                'checkout_time' => $checkout_time,
+                'checkin_photo' => $checkin_photo,
+                'checkout_photo' => $checkout_photo,
+                'attendance_id' => $attendance_id,
+                'total_time' => $total_time,
+                'status' => $status,
+            );
+        }
+        $AllDepartment = Department::where('soft_delete', '!=', 1)->get();
+
+        return view('page.backend.admin_attendance.admin_index', compact('Attendance_data', 'today', 'timenow', 'AllDepartment', 'department_name'));
+
+
     }
 
     public function admin_datefilter(Request $request)

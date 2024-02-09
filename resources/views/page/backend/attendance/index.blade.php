@@ -2,27 +2,54 @@
 
 @section('content')
 
+
 <div class="page-wrapper">
    <div class="content container-fluid">
 
       <div class="page-header">
          <div class="content-page-header">
-            <h6>Attendance</h6>
-            <div style="display: flex;">
-                <form autocomplete="off" method="POST" action="{{ route('attendance.datefilter') }}" style="display: flex;">
-                    @method('PUT')
-                    @csrf
-                    <div style="display: flex">
-                        <div style="margin-right: 10px;"><input type="date" name="from_date" required
-                                class="form-control from_date" value="{{ $today }}"></div>
-                        <div style="margin-right: 10px;"><input type="submit" class="btn btn-primary" value="Search" />
+            <h6> <span style="color:black;text-transform:uppercase;"> {{$department_name}} </span></h6>
+
+               <div class="list-btn">
+                  <div style="display:flex;">
+                        <div class="page-btn">
+                            <div style="display: flex;">
+                                    <form autocomplete="off" method="POST" action="{{ route('attendance.datefilter') }}">
+                                        @method('PUT')
+                                        @csrf
+                                        <div style="display: flex">
+                                            <div style="margin-right: 10px;"><input type="date" name="from_date"
+                                                    class="form-control from_date" value="{{ $today }}"></div>
+                                            <div style="margin-right: 10px;"><input type="submit" class="btn btn-success"
+                                                    value="Search" /></div>
+                                        </div>
+                                    </form>
+                            </div>
+
+
                         </div>
-                    </div>
-                </form>
-            </div>
+                    
+                     <form autocomplete="off" method="POST" action="{{ route('attendance.departmentwisefilter') }}">
+                     @method('PUT')
+                     @csrf
+                     <input type="hidden" name="date" class="form-control date" value="{{ $today }}">
+                     <ul class="filter-list">
+                        @foreach ($AllDepartment as $keydata => $AllDepartments)
+                           <li>
+                              
+                                 <input type="submit" class="btn btn-primary" name="department_name" value="{{$AllDepartments->name}}" />
+                           </li>
+                        @endforeach
+                        </ul>
+                     </form>
+                     
+                  </div>
+
+               </div>
 
          </div>
       </div>
+
 
       <div class="row">
          <div class="col-sm-12">
