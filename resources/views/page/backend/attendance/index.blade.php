@@ -169,6 +169,13 @@
                                                    data-bs-target=".attendanceedit-modal-xl{{ $Attendance_datas['unique_key'] }}"
                                                    style="color: #333;background: #d8c730d9;">Edit</a>
                                           </li>
+                                          @if ($Attendance_datas['status'] != 'Present')
+                                          <li>
+                                                <a href="#leaveupdate{{ $Attendance_datas['unique_key'] }}" data-bs-toggle="modal"
+                                                data-bs-target=".leaveupdate-modal-xl{{ $Attendance_datas['unique_key'] }}"
+                                                class="badge" style="color: #28084b;background: #9ed2acd9;">Leave Update</a>
+                                          </li>
+                                          @endif
                                           @endif
                                     @endif
 

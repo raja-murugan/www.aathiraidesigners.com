@@ -398,19 +398,40 @@ class AttendanceController extends Controller
         $min = $difference - ($hours * 60);
         $total_time = $hours."Hours ".$min."Mins";
 
+        $attendance_date = Attendance::where('date', '=', $date)->where('employee_id', '=', $request->get('employee_id'))->first();
+        if($attendance_date != ""){
 
-        $data = new Attendance();
-        $data->month = date('m', strtotime($date));
-        $data->year = date('Y', strtotime($date));
-        $data->date = $date;
-        $data->employee_id = $request->get('employee_id');
-        $data->checkin_date = $date;
-        $data->checkin_time = $request->get('checkin_time');
-        $data->checkout_date = $date;
-        $data->checkout_time = $request->get('checkout_time');
-        $data->working_hour = $total_time;
-        $data->status = 1;
-        $data->save();
+            $attendance_date->checkin_date = $date;
+            $attendance_date->checkin_time = $request->get('checkin_time');
+            $attendance_date->checkout_date = $date;
+            $attendance_date->checkout_time = $request->get('checkout_time');
+            $attendance_date->working_hour = $total_time;
+            $attendance_date->status = 1;
+            $attendance_date->update();
+
+
+
+
+        }else {
+            $data = new Attendance();
+            $data->month = date('m', strtotime($date));
+            $data->year = date('Y', strtotime($date));
+            $data->date = $date;
+            $data->employee_id = $request->get('employee_id');
+            $data->checkin_date = $date;
+            $data->checkin_time = $request->get('checkin_time');
+            $data->checkout_date = $date;
+            $data->checkout_time = $request->get('checkout_time');
+            $data->working_hour = $total_time;
+            $data->status = 1;
+            $data->save();
+
+
+            
+        }
+
+
+        
 
 
         $today = $date;
