@@ -385,7 +385,7 @@ class AttendanceController extends Controller
         $AttendanceData->working_hour = $total_time;
         $AttendanceData->update();
 
-        return redirect()->route('attendance.index')->with('info', 'Updated !');
+      //  return redirect()->route('attendance.index')->with('info', 'Updated !');
 
         $today = $AttendanceData->checkin_date;
         $current_date = Carbon::now()->format('Y-m-d');
