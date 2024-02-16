@@ -372,6 +372,8 @@ class AttendanceController extends Controller
         $AttendanceData->checkin_time = $request->get('checkin_time');
         $AttendanceData->checkout_time = $request->get('checkout_time');
 
+        $AttendanceData->checkout_date = $AttendanceData->checkin_date;
+
         $time1 = strtotime($request->get('checkin_time'));
         $time2 = strtotime($request->get('checkout_time'));
         $difference = ($time2 - $time1) / 60;
