@@ -223,12 +223,20 @@ class EmployeeController extends Controller
                     $status = 'P';
                     $attendence_id = $attendencedata->id;
 
-                    $time1 = strtotime($attendencedata->checkin_time);
-                    $time2 = strtotime($attendencedata->checkout_time);
-                    $total_minits = ($time2 - $time1) / 60;
+                    if($attendencedata->checkout_time != ""){
+                        $time1 = strtotime($attendencedata->checkin_time);
+                        $time2 = strtotime($attendencedata->checkout_time);
+                        $total_minits = ($time2 - $time1) / 60;
+    
+                        $workinghour = $attendencedata->working_hour;
+                        $totalmins += $total_minits;
+                    }else {
+                        $workinghour = '';
+                        $total_minits = 0;
+                        $totalmins += 0;
+                    }
 
-                    $workinghour = $attendencedata->working_hour;
-                    $totalmins += $total_minits;
+                    
 
                 }else if($attendencedata->status == 2){
                     $status = 'A';
@@ -313,12 +321,18 @@ class EmployeeController extends Controller
                     $status = 'P';
                     $attendence_id = $attendencedata->id;
 
-                    $time1 = strtotime($attendencedata->checkin_time);
-                    $time2 = strtotime($attendencedata->checkout_time);
-                    $total_minits = ($time2 - $time1) / 60;
-
-                    $workinghour = $attendencedata->working_hour;
-                    $totalmins += $total_minits;
+                    if($attendencedata->checkout_time != ""){
+                        $time1 = strtotime($attendencedata->checkin_time);
+                        $time2 = strtotime($attendencedata->checkout_time);
+                        $total_minits = ($time2 - $time1) / 60;
+    
+                        $workinghour = $attendencedata->working_hour;
+                        $totalmins += $total_minits;
+                    }else {
+                        $workinghour = '';
+                        $total_minits = 0;
+                        $totalmins += 0;
+                    }
 
                 }else if($attendencedata->status == 2){
                     $status = 'A';
