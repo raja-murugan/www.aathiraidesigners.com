@@ -64,6 +64,10 @@
                                           <a href="#delete{{ $Employee_datas['unique_key'] }}" data-bs-toggle="modal"
                                           data-bs-target=".employeedelete-modal-xl{{ $Employee_datas['unique_key'] }}" class="badge bg-danger-light" style="color: #28084b;">Delete</a>
                                        </li>
+                                       <li>
+                                          <a href="{{ route('employee.view', ['unique_key' => $Employee_datas['unique_key']]) }}"
+                                             class="badge" style="color:#28084b;background: #6bdda7;">View</a>
+                                       </li>
                                     </ul>
 
                                  </td>

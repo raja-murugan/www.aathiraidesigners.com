@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Department;
 use Illuminate\Support\Facades\DB;
 use App\Models\Employee;
+use App\Models\Attendance;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
@@ -183,5 +184,183 @@ class EmployeeController extends Controller
         $GetEmployeePhotos = Employee::where('soft_delete', '!=', 1)->get();
         $userData['data'] = $GetEmployeePhotos;
         echo json_encode($userData);
+    }
+
+
+    public function view($unique_key)
+    {
+        $Employeedata = Employee::where('unique_key', '=', $unique_key)->first();
+        $today = Carbon::now()->format('Y-m-d');
+        $timenow = Carbon::now()->format('H:i');
+
+
+        $time = strtotime($today);
+        $curent_month = date("F",$time);
+
+
+        $month = date("m",strtotime($today));
+        $year = date("Y",strtotime($today));
+
+        $list=array();
+        $monthdates = [];
+        $maxDays = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+        for($d=1; $d<=$maxDays; $d++)
+        {
+            $times = mktime(12, 0, 0, $month, $d, $year);
+            if (date('m', $times) == $month)
+                $list[] = date('d', $times);
+                $monthdates[] = date('Y-m-d', $times);
+        }
+
+        $attendence_Data = [];
+        $totalmins = 0;
+        foreach (($monthdates) as $key => $monthdate_arr) {
+
+            $attendencedata = Attendance::where('employee_id', '=', $Employeedata->id)->where('date', '=', $monthdate_arr)->first();
+            if($attendencedata != ""){
+
+                if($attendencedata->status == 1){
+                    $status = 'P';
+                    $attendence_id = $attendencedata->id;
+
+                    $time1 = strtotime($attendencedata->checkin_time);
+                    $time2 = strtotime($attendencedata->checkout_time);
+                    $total_minits = ($time2 - $time1) / 60;
+
+                    $workinghour = $attendencedata->working_hour;
+                    $totalmins += $total_minits;
+
+                }else if($attendencedata->status == 2){
+                    $status = 'A';
+                    $attendence_id = $attendencedata->id;
+                    $workinghour = '';
+                    $total_minits = 0;
+                    $totalmins += 0;
+                }
+            }else {
+                $attendence_id = 0;
+                $status = '';
+                $workinghour = '';
+                $total_minits = 0;
+                $totalmins += 0;
+            }
+            
+            
+            
+
+
+            $attendence_Data[] = array(
+                'employee' => $Employeedata->name,
+                'employeeid' => $Employeedata->id,
+                'attendence_status' => $status,
+                'date' => date("d-m-Y",strtotime($monthdate_arr)),
+                'attendence_id' => $attendence_id,
+                'workinghour' => $workinghour,
+                'total_minits' => $total_minits
+            );
+        }
+
+        $hours = floor($totalmins / 60);
+        $min = $totalmins - ($hours * 60);
+        $total_time = $hours."Hours ".$min."Mins";
+
+        $c_month = date("M",strtotime($today));
+
+        $hour_salary = $Employeedata->salaray_per_hour;
+        $one_min_salary = ($Employeedata->salaray_per_hour) / 60;
+        $total_min_salary = $totalmins * $one_min_salary;
+        $total_salary = number_format((float)$total_min_salary, 2, '.', '');
+
+        return view('page.backend.employee.view', compact('Employeedata', 'today', 'timenow', 'attendence_Data', 'list', 'year', 'month', 'curent_month', 'c_month', 'total_time', 'total_salary'));
+    }
+
+
+    public function datefilter(Request $request) {
+
+        $today = $request->get('from_date');
+        $unique_key = $request->get('employee_uniquekey');
+        $timenow = Carbon::now()->format('H:i');
+
+        $Employeedata = Employee::where('unique_key', '=', $unique_key)->first();
+
+
+        $time = strtotime($today);
+        $curent_month = date("F",$time);
+
+
+        $month = date("m",strtotime($today));
+        $year = date("Y",strtotime($today));
+
+        $list=array();
+        $monthdates = [];
+        $maxDays = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+        for($d=1; $d<=$maxDays; $d++)
+        {
+            $times = mktime(12, 0, 0, $month, $d, $year);
+            if (date('m', $times) == $month)
+                $list[] = date('d', $times);
+                $monthdates[] = date('Y-m-d', $times);
+        }
+
+        $attendence_Data = [];
+
+        foreach (($monthdates) as $key => $monthdate_arr) {
+
+            $attendencedata = Attendance::where('employee_id', '=', $Employeedata->id)->where('date', '=', $monthdate_arr)->first();
+            if($attendencedata != ""){
+
+                if($attendencedata->status == 1){
+                    $status = 'P';
+                    $attendence_id = $attendencedata->id;
+
+                    $time1 = strtotime($attendencedata->checkin_time);
+                    $time2 = strtotime($attendencedata->checkout_time);
+                    $total_minits = ($time2 - $time1) / 60;
+
+                    $workinghour = $attendencedata->working_hour;
+                    $totalmins += $total_minits;
+
+                }else if($attendencedata->status == 2){
+                    $status = 'A';
+                    $attendence_id = $attendencedata->id;
+                    $workinghour = '';
+                    $total_minits = 0;
+                    $totalmins += 0;
+                }
+            }else {
+                $attendence_id = 0;
+                $status = '';
+                $workinghour = '';
+                $total_minits = 0;
+                $totalmins += 0;
+            }
+            
+            
+            
+
+
+            $attendence_Data[] = array(
+                'employee' => $Employeedata->name,
+                'employeeid' => $Employeedata->id,
+                'attendence_status' => $status,
+                'date' => date("d-m-Y",strtotime($monthdate_arr)),
+                'attendence_id' => $attendence_id,
+                'workinghour' => $workinghour,
+                'total_minits' => $total_minits
+            );
+        }
+
+        $hours = floor($totalmins / 60);
+        $min = $totalmins - ($hours * 60);
+        $total_time = $hours."Hours ".$min."Mins";
+
+        $c_month = date("M",strtotime($today));
+
+        $hour_salary = $Employeedata->salaray_per_hour;
+        $one_min_salary = ($Employeedata->salaray_per_hour) / 60;
+        $total_min_salary = $totalmins * $one_min_salary;
+        $total_salary = number_format((float)$total_min_salary, 2, '.', '');
+
+        return view('page.backend.employee.view', compact('Employeedata', 'today', 'timenow', 'attendence_Data', 'list', 'year', 'month', 'curent_month', 'c_month', 'total_time', 'total_salary'));
     }
 }

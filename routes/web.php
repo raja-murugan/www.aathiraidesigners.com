@@ -45,6 +45,10 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::middleware(['auth:sanctum', 'verified'])->put('/zworktechtechnology/employee/delete/{unique_key}', [EmployeeController::class, 'delete'])->name('employee.delete');
     // CHECK DUPLICATE
     Route::middleware(['auth:sanctum', 'verified'])->post('/zworktechtechnology/employee/checkduplicate', [EmployeeController::class, 'checkduplicate'])->name('employee.checkduplicate');
+    // EDIT
+    Route::middleware(['auth:sanctum', 'verified'])->get('/zworktechtechnology/employee/view/{unique_key}', [EmployeeController::class, 'view'])->name('employee.view');
+    // DATAE FILTER
+    Route::middleware(['auth:sanctum', 'verified'])->put('/zworktechtechnology/employee/datefilter', [EmployeeController::class, 'datefilter'])->name('employee.datefilter');
  });
 
 // ATTENDANCE CONTROLLER

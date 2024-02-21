@@ -294,26 +294,26 @@ class AttendanceController extends Controller
             $data->checkin_time = $request->get('time');
             $data->working_hour = '';
 
-
-        //  dd($request->checkin_photo);
-
-                $checkin_photo = $request->checkin_photo;
-                $folderPath = "assets/backend/checkin/";
-                $image_parts = explode(";base64,", $checkin_photo);
-                $image_type_aux = explode("image/", $image_parts[0]);
-                $image_type = $image_type_aux[1];
-                $image_base64 = base64_decode($image_parts[1]);
-                $fileName = $employeename . '_' . $random_no . '_' . 'emploee' . '.webp';
-                $customerimgfile = $folderPath . $fileName;
-                file_put_contents($customerimgfile, $image_base64);
-                $data->checkin_photo = $customerimgfile;
+            $checkin_photo = $request->checkin_photo;
+            $folderPath = "assets/backend/checkin/";
+            $image_parts = explode(";base64,", $checkin_photo);
+            $image_type_aux = explode("image/", $image_parts[0]);
+            $image_type = $image_type_aux[1];
+            $image_base64 = base64_decode($image_parts[1]);
+            $fileName = $employeename . '_' . $random_no . '_' . 'emploee' . '.webp';
+            $customerimgfile = $folderPath . $fileName;
+            file_put_contents($customerimgfile, $image_base64);
+            $data->checkin_photo = $customerimgfile;
 
             $data->status = 1;
             $data->save();
 
             return redirect()->route('attendance.index')->with('message', 'Added !');
+            
         }else {
+            
             return redirect()->route('attendance.index')->with('warning', 'Capture Your Photo !');
+
         }
     }
 
@@ -333,18 +333,17 @@ class AttendanceController extends Controller
             $checkindata->checkout_date = $request->get('date');
             $checkindata->checkout_time = $request->get('time');
 
-        //  dd($request->checkout_photo);
 
-                $checkout_photo = $request->checkout_photo;
-                $folderPath = "assets/backend/checkout/";
-                $image_parts = explode(";base64,", $checkout_photo);
-                $image_type_aux = explode("image/", $image_parts[0]);
-                $image_type = $image_type_aux[1];
-                $image_base64 = base64_decode($image_parts[1]);
-                $fileName = $employeename . '_' . $random_no . '_' . 'emploee' . '.webp';
-                $customerimgfile = $folderPath . $fileName;
-                file_put_contents($customerimgfile, $image_base64);
-                $checkindata->checkout_photo = $customerimgfile;
+            $checkout_photo = $request->checkout_photo;
+            $folderPath = "assets/backend/checkout/";
+            $image_parts = explode(";base64,", $checkout_photo);
+            $image_type_aux = explode("image/", $image_parts[0]);
+            $image_type = $image_type_aux[1];
+            $image_base64 = base64_decode($image_parts[1]);
+            $fileName = $employeename . '_' . $random_no . '_' . 'emploee' . '.webp';
+            $customerimgfile = $folderPath . $fileName;
+            file_put_contents($customerimgfile, $image_base64);
+            $checkindata->checkout_photo = $customerimgfile;
 
 
 
@@ -362,7 +361,9 @@ class AttendanceController extends Controller
 
             return redirect()->route('attendance.index')->with('message', 'Added !');
         }else {
+
             return redirect()->route('attendance.index')->with('warning', 'Capture Your Photo !');
+
         }
     }
 
