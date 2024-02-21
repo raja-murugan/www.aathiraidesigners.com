@@ -60,7 +60,7 @@
                                  @php 
                                  $date = $lists .' '. $c_month .' '. $year;
                                  @endphp
-                                    <th class="border" style="text-align:center;color: #7638ff;" >{{ $lists }}</th>
+                                    <th class="border" style="text-align:center;color: #198754;" >{{ $lists }}</th>
                                  @endforeach
                                     <th class="border" style="text-align:center;text-transform:uppercase;" >Total</th>
                                     <th class="border" style="text-align:center;text-transform:uppercase;">Total Salary</th>
