@@ -133,8 +133,109 @@
     });
 
 
-    
+    $(document).ready(function() {
+      $('.js-example-basic-single').select2();
 
+              $(".customerphoneno").keyup(function() {
+                var query = $(this).val();
+
+                if (query != '') {
+
+                    $.ajax({
+                        url: "{{ route('customer.checkduplicate') }}",
+                        type: 'POST',
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            query: query
+                        },
+                        dataType: 'json',
+                        success: function(response) {
+                            console.log(response['data']);
+                            if(response['data'] != null){
+                                alert('Customer Already Existed');
+                                $('.customerphoneno').val('');
+                            }
+                        }
+                    });
+                }
+              });
+
+              $(".productname").keyup(function() {
+                var query = $(this).val();
+
+                if (query != '') {
+
+                    $.ajax({
+                        url: "{{ route('product.checkduplicate') }}",
+                        type: 'POST',
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            query: query
+                        },
+                        dataType: 'json',
+                        success: function(response) {
+                            console.log(response['data']);
+                            if(response['data'] != null){
+                                alert('Product Name Already Existed');
+                                $('.productname').val('');
+                            }
+                        }
+                    });
+                }
+              });
+    });
+
+    var i = 1;
+    var j = 1;
+
+            $(document).on('click', '.addproducts', function() {
+              ++i;
+
+                $(".product_fields").append(
+                    '<tr>' +
+                    '<td class=""><input type="hidden" id="customer_products_id" name="customer_products_id[]" />' +
+                    '<select class="form-control  product_id select js-example-basic-single"  name="product_id[]" id="product_id' + i + '" required>' +
+                    '<option value="" selected disabled class="text-muted">Select Product</option></select>' +
+                    '</td>' +
+                    '<td><input type="text" class="form-control measurements" id="measurements" name="measurements[]" placeholder="Measurement" /></td>' +
+                    '<td><button class="additemplus_button addproducts" style="margin-right: 3px;" type="button" id="" value="Add"><i class="fe fe-plus-circle"></i></button>' +
+                    '<button class="additemminus_button remove-tr" type="button" id="" value="Add"><i class="fe fe-minus-circle"></i></button></td>' +
+                    '</tr>'
+                );
+                $(".product_fields").find('.js-example-basic-single').select2();
+
+
+                $.ajax({
+                    url: '/getproducts/',
+                    type: 'get',
+                    dataType: 'json',
+                    success: function(response) {
+                        //console.log(response['data']);
+                        var len = response['data'].length;
+
+                        var selectedValues = new Array();
+
+                        if (len > 0) {
+                            for (var i = 0; i < len; i++) {
+
+                                    var id = response['data'][i].id;
+                                    var name = response['data'][i].name;
+                                    var option = "<option value='" + id + "'>" + name +
+                                        "</option>";
+                                    selectedValues.push(option);
+                            }
+                        }
+                        ++j;
+                        $('#product_id' + j).append(selectedValues);
+                        //add_count.push(Object.keys(selectedValues).length);
+                    }
+                });
+
+            });
+    
+            $(document).on('click', '.remove-tr', function() {
+              $(this).parents('tr').remove();
+            });
   </script>
 
 

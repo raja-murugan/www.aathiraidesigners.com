@@ -171,7 +171,7 @@ class EmployeeController extends Controller
         if(request()->get('query'))
         {
             $query = request()->get('query');
-            $employeedata = Customer::where('phone_number', '=', $query)->first();
+            $employeedata = Employee::where('phone_number', '=', $query)->first();
 
             $userData['data'] = $employeedata;
             echo json_encode($userData);

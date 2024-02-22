@@ -32,7 +32,7 @@
          <div class="col-sm-12">
             <div class="card">
 
-                  <div class="card-body">
+                  <div class="card-body" >
 
                   <h5 style="text-transform:uppercase;text-align:center;margin-bottom:10px;">{{$curent_month}} - {{$year}}</h5>
                   <div class="row">
@@ -52,7 +52,7 @@
                                  </tbody>
                               </table>
                      </div>
-                     <div class="col-sm-10" style="overflow: auto;">
+                     <div class="col-sm-10"  style="overflow: auto;">
                         <table class="table" >
                            <thead>
                               <tr>

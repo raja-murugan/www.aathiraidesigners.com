@@ -43,7 +43,21 @@
                 @endif
 
             </ul>
+            @if(Auth::user()->role == 'Super-Admin')
+            <ul>
+                <li class="menu-title"><span>General</span></li>
+               <li class="{{ Route::is('product.index') ? 'active' : '' }}">
+                   <a href="{{ route('product.index') }}"><i class="fe fe-file-plus"></i> <span>Product</span></a>
+               </li>
+               
+                <li class="{{ Route::is('customer.index', 'customer.create') ? 'active' : '' }}">
+                    <a href="{{ route('customer.index') }}"><i class="fe fe-users"></i> <span>Customer</span></a>
+                </li>
 
+                
+               
+            </ul>
+            @endif
 
 
 

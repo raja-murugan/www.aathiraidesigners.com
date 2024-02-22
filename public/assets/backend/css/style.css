@@ -2888,7 +2888,7 @@ div#global-loader .whirly-loader:not(:required) {
   padding: 0 !important;
 }
 .select2-container .select2-selection--single {
-  height: 43px;
+  height: 40px;
 }
 
 .select2-container--default .select2-selection--single {
@@ -2896,8 +2896,8 @@ div#global-loader .whirly-loader:not(:required) {
   border-radius: 5px;
 }
 .select2-container--default .select2-selection--single .select2-selection__rendered {
-  color: #878A99;
-  line-height: 43px;
+  color: #333;
+  line-height: 38px;
   border-radius: 5px;
   padding-right: 30px;
   padding-left: 15px;
@@ -9180,6 +9180,19 @@ body[data-layout-mode=dark] .alertify .ajs-header {
   bottom: 4px;
   left: 50%;
 }
+
+.additemplus_button {
+  border-color: #7539ff;
+  background: #7638ff;
+  color: white;
+}
+
+.additemminus_button {
+  border-color: #d65562;
+  background: #db3040;
+  color: white;
+}
+
 
 .close {
   background: transparent;
