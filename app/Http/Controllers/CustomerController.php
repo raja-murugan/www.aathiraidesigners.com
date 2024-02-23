@@ -83,6 +83,7 @@ class CustomerController extends Controller
                 $CustomerProduct->customer_id = $customer_id;
                 $CustomerProduct->product_id = $product_id;
                 $CustomerProduct->measurements = $request->measurements[$key];
+                $CustomerProduct->status = 1;
                 $CustomerProduct->save();
             }
             
@@ -182,6 +183,24 @@ class CustomerController extends Controller
 
             $userData['data'] = $employeedata;
             echo json_encode($userData);
+        }
+    }
+
+
+
+
+    public function getCustomerProducts()
+    {
+        $customer_id = request()->get('customer_id');
+
+        $customerproducts = CustomerProduct::where('customer_id', '=', $customer_id)->where('status', '=', 1)->get();
+        
+        if (isset($customerproducts) & !empty($customerproducts)) {
+            echo json_encode($customerproducts);
+        }else{
+            echo json_encode(
+                array('status' => 'false')
+            );
         }
     }
 

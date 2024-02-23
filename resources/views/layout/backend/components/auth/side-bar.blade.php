@@ -23,16 +23,17 @@
                 <li class="menu-title"><span>Side Menu</span></li>
 
                 @if(Auth::user()->role == 'Super-Admin')
+
                 <li class="{{ Route::is('department.index') ? 'active' : '' }}">
-                    <a href="{{ route('department.index') }}"><i class="fe fe-book"></i> <span>Department</span></a>
+                    <a href="{{ route('department.index') }}"><i class="fe fe-grid"></i> <span>Department</span></a>
                 </li>
 
                 <li class="{{ Route::is('employee.index') ? 'active' : '' }}">
-                    <a href="{{ route('employee.index') }}"><i class="fe fe-users"></i> <span>Employee</span></a>
+                    <a href="{{ route('employee.index') }}"><i class="fe fe-user"></i> <span>Employee</span></a>
                 </li>
-
+                
                 <li class="{{ Route::is('attendance.index', 'attendance.datefilter', 'attendance.departmentwisefilter') ? 'active' : '' }}">
-                    <a href="{{ route('attendance.index') }}"><i class="fe fe-book-open"></i> <span>Attendance</span></a>
+                    <a href="{{ route('attendance.index') }}"><i class="fe fe-user-check"></i> <span>Attendance</span></a>
                 </li>
                 @endif
 
@@ -45,16 +46,20 @@
             </ul>
             @if(Auth::user()->role == 'Super-Admin')
             <ul>
-                <li class="menu-title"><span>General</span></li>
+                <li class="menu-title"><span>Billing</span></li>
+
                <li class="{{ Route::is('product.index') ? 'active' : '' }}">
-                   <a href="{{ route('product.index') }}"><i class="fe fe-file-plus"></i> <span>Product</span></a>
+                   <a href="{{ route('product.index') }}"><i class="fe fe-briefcase"></i> <span>Product</span></a>
                </li>
-               
-                <li class="{{ Route::is('customer.index', 'customer.create') ? 'active' : '' }}">
+
+               <li class="{{ Route::is('customer.index', 'customer.create') ? 'active' : '' }}">
                     <a href="{{ route('customer.index') }}"><i class="fe fe-users"></i> <span>Customer</span></a>
                 </li>
 
-                
+                <li class="{{ Route::is('billing.index', 'billing.datefilter', 'billing.create') ? 'active' : '' }}">
+                    <a href="{{ route('billing.index') }}"><i class="fe fe-clipboard"></i> <span>Billing</span></a>
+                </li>
+
                
             </ul>
             @endif

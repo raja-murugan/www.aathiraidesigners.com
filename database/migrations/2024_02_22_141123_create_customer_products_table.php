@@ -23,7 +23,7 @@ return new class extends Migration
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
 
             $table->string('measurements')->nullable();
-
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

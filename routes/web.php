@@ -6,6 +6,7 @@ use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\BillingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -139,5 +140,25 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 });
 
 
+ // BILLING CONTROLLER
+ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    // INDEX
+    Route::middleware(['auth:sanctum', 'verified'])->get('/zworktechtechnology/billing', [BillingController::class, 'index'])->name('billing.index');
+    // CREATE
+    Route::middleware(['auth:sanctum', 'verified'])->get('/zworktechtechnology/billing/create', [BillingController::class, 'create'])->name('billing.create');
+    // STORE
+    Route::middleware(['auth:sanctum', 'verified'])->post('/zworktechtechnology/billing/store', [BillingController::class, 'store'])->name('billing.store');
+    // EDIT
+    Route::middleware(['auth:sanctum', 'verified'])->get('/zworktechtechnology/billing/edit/{unique_key}', [BillingController::class, 'edit'])->name('billing.edit');
+    // EDIT
+    Route::middleware(['auth:sanctum', 'verified'])->put('/zworktechtechnology/billing/update/{unique_key}', [BillingController::class, 'update'])->name('billing.update');
+    // DELETE
+    Route::middleware(['auth:sanctum', 'verified'])->put('/zworktechtechnology/billing/delete/{unique_key}', [BillingController::class, 'delete'])->name('billing.delete');
+    // DATEFILTER
+    Route::middleware(['auth:sanctum', 'verified'])->put('/zworktechtechnology/billing/datefilter', [BillingController::class, 'datefilter'])->name('billing.datefilter');
+});
+
+
 
 Route::get('getproducts/', [ProductController::class, 'getproducts']);
+Route::get('/getCustomerProducts', [CustomerController::class, 'getCustomerProducts']);
