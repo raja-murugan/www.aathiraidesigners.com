@@ -62,6 +62,18 @@
 
                
             </ul>
+
+            <ul>
+                <li class="menu-title"><span>Income / Expense</span></li>
+
+               <li class="{{ Route::is('income.index') ? 'active' : '' }}">
+                   <a href="{{ route('income.index') }}"><i class="fe fe-briefcase"></i> <span>Income</span></a>
+               </li>
+
+               <li class="{{ Route::is('expense.index') ? 'active' : '' }}">
+                   <a href="{{ route('expense.index') }}"><i class="fe fe-briefcase"></i> <span>Expense</span></a>
+               </li>
+            </ul>
             @endif
 
 

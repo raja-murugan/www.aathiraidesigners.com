@@ -7,6 +7,8 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\BillingController;
+use App\Http\Controllers\IncomeController;
+use App\Http\Controllers\ExpenseController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -161,6 +163,37 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     // UPDATE DELIVERY STATUS
     Route::middleware(['auth:sanctum', 'verified'])->put('/zworktechtechnology/billing/updatedelivery/{unique_key}', [BillingController::class, 'updatedelivery'])->name('billing.updatedelivery');
 });
+
+
+// INCOME CONTROLLER
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    // INDEX
+    Route::middleware(['auth:sanctum', 'verified'])->get('/zworktechtechnology/income', [IncomeController::class, 'index'])->name('income.index');
+    // STORE
+    Route::middleware(['auth:sanctum', 'verified'])->post('/zworktechtechnology/income/store', [IncomeController::class, 'store'])->name('income.store');
+    // EDIT
+    Route::middleware(['auth:sanctum', 'verified'])->post('/zworktechtechnology/income/edit/{unique_key}', [IncomeController::class, 'edit'])->name('income.edit');
+    // DELETE
+    Route::middleware(['auth:sanctum', 'verified'])->put('/zworktechtechnology/income/delete/{unique_key}', [IncomeController::class, 'delete'])->name('income.delete');
+    // DATAE FILTER
+    Route::middleware(['auth:sanctum', 'verified'])->put('/zworktechtechnology/income/datefilter', [IncomeController::class, 'datefilter'])->name('income.datefilter');
+ });
+
+
+ 
+// EXPENSE CONTROLLER
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    // INDEX
+    Route::middleware(['auth:sanctum', 'verified'])->get('/zworktechtechnology/expense', [ExpenseController::class, 'index'])->name('expense.index');
+    // STORE
+    Route::middleware(['auth:sanctum', 'verified'])->post('/zworktechtechnology/expense/store', [ExpenseController::class, 'store'])->name('expense.store');
+    // EDIT
+    Route::middleware(['auth:sanctum', 'verified'])->post('/zworktechtechnology/expense/edit/{unique_key}', [ExpenseController::class, 'edit'])->name('expense.edit');
+    // DELETE
+    Route::middleware(['auth:sanctum', 'verified'])->put('/zworktechtechnology/expense/delete/{unique_key}', [ExpenseController::class, 'delete'])->name('expense.delete');
+    // DATAE FILTER
+    Route::middleware(['auth:sanctum', 'verified'])->put('/zworktechtechnology/expense/datefilter', [ExpenseController::class, 'datefilter'])->name('expense.datefilter');
+ });
 
 
 
