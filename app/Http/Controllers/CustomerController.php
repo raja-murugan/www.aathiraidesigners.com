@@ -6,6 +6,7 @@ use App\Models\Customer;
 use App\Models\Product;
 use App\Models\CustomerProduct;
 use App\Models\BillingProduct;
+use App\Models\Billing;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -34,16 +35,21 @@ class CustomerController extends Controller
                 if($CustomerProducts_arr->status == 1){
                     $status = 'Processing';
                 }else {
-                    $status = 'Delivered';
+                    $status = '';
                 }
 
                 $billing_product = BillingProduct::where('billing_product_id', '=', $CustomerProducts_arr->product_id)->where('customer_product_id', '=', $CustomerProducts_arr->id)->first();
                 if($billing_product != ""){
                     $quantity = $billing_product->billing_qty;
                     $rate = $billing_product->billing_rateperqty;
+                    $billingid = $billing_product->billing_id;
+
+                    $GetBilling_status = Billing::findOrFail($billingid);
+                    $billingstatus = $GetBilling_status->status;
                 }else {
                     $quantity = '';
                     $rate = '';
+                    $billingstatus = '';
                 }
                 $productsarr[] = array(
                     'product' => $productarr->name,
@@ -54,6 +60,7 @@ class CustomerController extends Controller
                     'status' => $status,
                     'quantity' => $quantity,
                     'rate' => $rate,
+                    'billingstatus' => $billingstatus,
                 );
             }
 
@@ -142,21 +149,21 @@ class CustomerController extends Controller
         $customer_id = $CustomerData->id;
 
 
-        $getInserted = CustomerProduct::where('customer_id', '=', $customer_id)->get();
-        $purchase_products = array();
-        foreach ($getInserted as $key => $getInserted_produts) {
-            $purchase_products[] = $getInserted_produts->id;
-        }
+        // $getInserted = CustomerProduct::where('customer_id', '=', $customer_id)->get();
+        // $purchase_products = array();
+        // foreach ($getInserted as $key => $getInserted_produts) {
+        //     $purchase_products[] = $getInserted_produts->id;
+        // }
 
-        $updated_products = $request->customer_products_id;
-        $updated_product_ids = array_filter($updated_products);
-        $different_ids = array_merge(array_diff($purchase_products, $updated_product_ids), array_diff($updated_product_ids, $purchase_products));
+        // $updated_products = $request->customer_products_id;
+        // $updated_product_ids = array_filter($updated_products);
+        // $different_ids = array_merge(array_diff($purchase_products, $updated_product_ids), array_diff($updated_product_ids, $purchase_products));
 
-        if (!empty($different_ids)) {
-            foreach ($different_ids as $key => $different_id) {
-                CustomerProduct::where('id', $different_id)->delete();
-            }
-        }
+        // if (!empty($different_ids)) {
+        //     foreach ($different_ids as $key => $different_id) {
+        //         CustomerProduct::where('id', $different_id)->delete();
+        //     }
+        // }
 
 
 
@@ -177,6 +184,7 @@ class CustomerController extends Controller
                     $CustomerProduct->customer_id = $customer_id;
                     $CustomerProduct->product_id = $request->product_id[$key];
                     $CustomerProduct->measurements = $request->measurements[$key];
+                    $CustomerProduct->status = 1;
                     $CustomerProduct->save();
                 }
             }

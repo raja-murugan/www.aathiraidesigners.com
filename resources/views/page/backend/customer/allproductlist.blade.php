@@ -55,10 +55,12 @@
                                           <span style="vertical-align: inherit;vertical-align: inherit;font-size: 14px;color:#000;font-weight: 400;line-height: 35px; ">{{ $productsarr['rate'] }}</span>
                                     </div>
                                     <div class="col-md-2 border">
-                                          @if($productsarr['status'] == 'Delivered')
-                                          <span style="vertical-align: inherit;vertical-align: inherit;font-size: 14px;color:green;font-weight: 400;line-height: 35px; ">{{ $productsarr['status'] }}</span>
-                                          @else
+                                          @if($productsarr['status'] == 'Processing')
                                           <span style="vertical-align: inherit;vertical-align: inherit;font-size: 14px;color:#000;font-weight: 400;line-height: 35px; ">{{ $productsarr['status'] }}</span>
+                                          @else
+                                                @if($productsarr['billingstatus'] == 1)
+                                          <span style="vertical-align: inherit;vertical-align: inherit;font-size: 14px;color:green;font-weight: 400;line-height: 35px; ">Delivered</span>
+                                                @endif
                                           @endif
                                           
                                     </div>
