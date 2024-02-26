@@ -6092,12 +6092,12 @@ table .badge {
 }
 
 .invoice-total-footer {
-  margin: 0 0 26px 0;
+  margin: 0 0 20px 0;
 }
 .invoice-total-footer h4 {
   margin-bottom: 0;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 14px;
   color: #3F4254;
 }
 .invoice-total-footer h4 span {
@@ -9185,6 +9185,7 @@ body[data-layout-mode=dark] .alertify .ajs-header {
   border-color: #7539ff;
   background: #7638ff;
   color: white;
+  margin-right:5px;
 }
 
 .additemminus_button {

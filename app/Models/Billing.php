@@ -18,10 +18,14 @@ class Billing extends Model
         'billno',
         'customer_id',
         'total_amount',
+        'discount_type',
         'discount',
+        'note',
+        'total_discountamount',
         'grand_total',
         'total_paid_amount',
         'total_balance_amount',
-        'soft_delete'
+        'status',
+        'soft_delete',
     ];
 }

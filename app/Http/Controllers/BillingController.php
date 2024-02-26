@@ -74,12 +74,18 @@ class BillingController extends Controller
                 'delivery_time' => $datas->delivery_time,
                 'billno' => $datas->billno,
                 'customer' => $customer->name,
+                'phone_number' => $customer->phone_number,
                 'customer_id' => $datas->customer_id,
                 'total_amount' => $datas->total_amount,
+                'discount_type' => $datas->discount_type,
                 'discount' => $datas->discount,
+                'note' => $datas->note,
+                'total_discountamount' => $datas->total_discountamount,
                 'grand_total' => $datas->grand_total,
                 'total_paid_amount' => $datas->total_paid_amount,
                 'total_balance_amount' => $datas->total_balance_amount,
+                'status' => $datas->status,
+                'id' => $datas->id,
                 'productsarr' => $productsarr,
                 'billing_payment_arr' => $billing_payment_arr,
             );
@@ -145,12 +151,18 @@ class BillingController extends Controller
                 'delivery_time' => $datas->delivery_time,
                 'billno' => $datas->billno,
                 'customer' => $customer->name,
+                'phone_number' => $customer->phone_number,
                 'customer_id' => $datas->customer_id,
                 'total_amount' => $datas->total_amount,
+                'discount_type' => $datas->discount_type,
                 'discount' => $datas->discount,
+                'note' => $datas->note,
+                'total_discountamount' => $datas->total_discountamount,
                 'grand_total' => $datas->grand_total,
                 'total_paid_amount' => $datas->total_paid_amount,
                 'total_balance_amount' => $datas->total_balance_amount,
+                'status' => $datas->status,
+                'id' => $datas->id,
                 'productsarr' => $productsarr,
                 'billing_payment_arr' => $billing_payment_arr,
             );
@@ -198,10 +210,13 @@ class BillingController extends Controller
         $data->billno = $request->get('billno');
         $data->customer_id = $request->get('customer_id');
         $data->total_amount = $request->get('total_amount');
+        $data->discount_type = $request->get('billingdiscount_type');
         $data->discount = $request->get('discount');
-        $data->grand_total = $request->get('grand_total');
-        $data->total_paid_amount = $request->get('total_paid_amount');
-        $data->total_balance_amount = $request->get('total_balance_amount');
+        $data->note = $request->get('billing_note');
+        $data->total_discountamount = $request->get('billing_discountamount');
+        $data->grand_total = $request->get('billing_grandtotalamount');
+        $data->total_paid_amount = $request->get('billing_paidamount');
+        $data->total_balance_amount = $request->get('billing_balanceamount');
 
         $data->save();
 
@@ -209,27 +224,67 @@ class BillingController extends Controller
 
         foreach ($request->get('billing_product_id') as $key => $billing_product_id) {
 
-            if($billing_product_id != ""){
-                $BillingProduct = new BillingProduct;
-                $BillingProduct->billing_id = $billing_id;
-                $BillingProduct->billing_product_id = $billing_product_id;
-                $BillingProduct->billing_measurement = $request->billing_measurement[$key];
-                $BillingProduct->billing_qty = $request->billing_qty[$key];
-                $BillingProduct->billing_rateperqty = $request->billing_rateperqty[$key];
-                $BillingProduct->billing_total = $request->billing_total[$key];
-                $BillingProduct->save();
+            if($billing_product_id > 0){
+
+                $CustomerProducts = CustomerProduct::where('customer_id', '=', $request->get('customer_id'))
+                                                ->where('product_id', '=', $billing_product_id)->where('id', '=', $request->customer_product_id[$key])->first();
+
+                if($CustomerProducts != ""){
+
+                    $CustomerProducts->customer_id = $request->get('customer_id');
+                    $CustomerProducts->product_id = $billing_product_id;
+                    $CustomerProducts->measurements = $request->billing_measurement[$key];
+                    $CustomerProducts->status = 2;
+                    $CustomerProducts->update();
+
+
+                    $BillingProduct = new BillingProduct;
+                    $BillingProduct->billing_id = $billing_id;
+                    $BillingProduct->billing_product_id = $billing_product_id;
+                    $BillingProduct->billing_measurement = $request->billing_measurement[$key];
+                    $BillingProduct->billing_qty = $request->billing_qty[$key];
+                    $BillingProduct->billing_rateperqty = $request->billing_rateperqty[$key];
+                    $BillingProduct->billing_total = $request->billing_total[$key];
+                    $BillingProduct->customer_product_id = $request->customer_product_id[$key];
+                    $BillingProduct->customer_id = $request->get('customer_id');
+                    $BillingProduct->save();
+
+                }else {
+                    $CustomerProduct = new CustomerProduct;
+                    $CustomerProduct->customer_id = $request->get('customer_id');
+                    $CustomerProduct->product_id = $billing_product_id;
+                    $CustomerProduct->measurements = $request->billing_measurement[$key];
+                    $CustomerProduct->status = 2;
+                    $CustomerProduct->save();
+
+                    $CustomerProductID = $CustomerProduct->id;
+
+
+                    $BillingProduct = new BillingProduct;
+                    $BillingProduct->billing_id = $billing_id;
+                    $BillingProduct->billing_product_id = $billing_product_id;
+                    $BillingProduct->billing_measurement = $request->billing_measurement[$key];
+                    $BillingProduct->billing_qty = $request->billing_qty[$key];
+                    $BillingProduct->billing_rateperqty = $request->billing_rateperqty[$key];
+                    $BillingProduct->billing_total = $request->billing_total[$key];
+                    $BillingProduct->customer_product_id = $CustomerProductID;
+                    $BillingProduct->customer_id = $request->get('customer_id');
+                    $BillingProduct->save();
+
+                  
+                }
             }
             
         }
 
 
-        if($request->get('payment_paid_amount') != ""){
+        if($request->get('billing_paidamount') != ""){
 
             $BillingPayment = new BillingPayment;
             $BillingPayment->billing_id = $billing_id;
             $BillingPayment->payment_term = $request->get('payment_term');
             $BillingPayment->payment_paid_date = $request->get('date');
-            $BillingPayment->payment_paid_amount = $request->get('payment_paid_amount');
+            $BillingPayment->payment_paid_amount = $request->get('billing_paidamount');
             $BillingPayment->payment_method = $request->get('payment_method');
             $BillingPayment->save();
         }
@@ -267,12 +322,16 @@ class BillingController extends Controller
         $BillingData->delivery_date = $request->get('delivery_date');
         $BillingData->delivery_time = $request->get('delivery_time');
         $BillingData->billno = $request->get('billno');
-        $BillingData->customer_id = $request->get('customer_id');
+        $BillingData->customer_id = $BillingData->customer_id;
         $BillingData->total_amount = $request->get('total_amount');
+        $BillingData->discount_type = $request->get('billingdiscount_type');
         $BillingData->discount = $request->get('discount');
-        $BillingData->grand_total = $request->get('grand_total');
-        $BillingData->total_paid_amount = $request->get('total_paid_amount');
-        $BillingData->total_balance_amount = $request->get('total_balance_amount');
+        $BillingData->note = $request->get('billing_note');
+        $BillingData->total_discountamount = $request->get('billing_discountamount');
+        $BillingData->grand_total = $request->get('billing_grandtotalamount');
+        $BillingData->total_paid_amount = $request->get('billing_paidamount');
+        $BillingData->total_balance_amount = $request->get('billing_balanceamount');
+        $BillingData->update();
 
         $billing_id = $BillingData->id;
 
@@ -286,6 +345,16 @@ class BillingController extends Controller
         $updated_products = $request->billingproducts_id;
         $updated_product_ids = array_filter($updated_products);
         $different_ids = array_merge(array_diff($purchase_products, $updated_product_ids), array_diff($updated_product_ids, $purchase_products));
+
+       
+        if (!empty($different_ids)) {
+            foreach ($different_ids as $key => $different_id) {
+                $getCustomerproductid = BillingProduct::where('id', '=', $different_id)->first();
+
+                CustomerProduct::where('id', $getCustomerproductid->customer_product_id)->update(['status' => 1]);
+            }
+        }
+
 
         if (!empty($different_ids)) {
             foreach ($different_ids as $key => $different_id) {
@@ -308,9 +377,27 @@ class BillingController extends Controller
                     $updateData->billing_total = $request->billing_total[$key];
                     $updateData->update();
 
+
+                    $CustomerProducts = CustomerProduct::where('customer_id', '=', $BillingData->customer_id)->where('id', '=', $request->customer_product_id[$key])->first();
+
+                    $CustomerProducts->product_id = $request->billing_product_id[$key];
+                    $CustomerProducts->measurements = $request->billing_measurement[$key];
+                    $CustomerProducts->status = 2;
+                    $CustomerProducts->update();
+
                 } else if ($billingproducts_id == '') {
 
                     if($request->billing_product_id[$key] != ""){
+
+                        $CustomerProduct = new CustomerProduct;
+                        $CustomerProduct->customer_id = $BillingData->customer_id;
+                        $CustomerProduct->product_id = $request->billing_product_id[$key];
+                        $CustomerProduct->measurements = $request->billing_measurement[$key];
+                        $CustomerProduct->status = 2;
+                        $CustomerProduct->save();
+
+                        $CustomerProductID = $CustomerProduct->id;
+
 
                         $BillingProduct = new BillingProduct;
                         $BillingProduct->billing_id = $billing_id;
@@ -319,6 +406,7 @@ class BillingController extends Controller
                         $BillingProduct->billing_qty = $request->billing_qty[$key];
                         $BillingProduct->billing_rateperqty = $request->billing_rateperqty[$key];
                         $BillingProduct->billing_total = $request->billing_total[$key];
+                        $BillingProduct->customer_product_id = $CustomerProductID;
                         $BillingProduct->save();
                     }
                 }
@@ -327,25 +415,23 @@ class BillingController extends Controller
 
 
 
-            foreach ($request->get('billingpayments_id') as $key => $billingpayments_id) {
-                if ($billingpayments_id > 0) {
+            foreach ($request->get('payment_id') as $key => $payment_id) {
+                if ($payment_id > 0) {
 
-                    $updatePaymentData = BillingPayment::where('id', '=', $billingpayments_id)->first();
+                    $updatePaymentData = BillingPayment::where('id', '=', $payment_id)->first();
                     $updatePaymentData->billing_id = $billing_id;
                     $updatePaymentData->payment_term = $request->payment_term[$key];
-                    $updatePaymentData->payment_paid_date = $request->payment_paid_date[$key];
-                    $updatePaymentData->payment_paid_amount = $request->payment_paid_amount[$key];
+                    $updatePaymentData->payment_paid_amount = $request->payable_amount[$key];
                     $updatePaymentData->payment_method = $request->payment_method[$key];
                     $updatePaymentData->update();
 
-                } else if ($billingpayments_id == '') {
+                } else if ($payment_id == '') {
 
 
                     $BillingPayment = new BillingPayment;
                     $BillingPayment->billing_id = $billing_id;
                     $BillingPayment->payment_term = $request->payment_term[$key];
-                    $BillingPayment->payment_paid_date = $request->payment_paid_date[$key];
-                    $BillingPayment->payment_paid_amount = $request->payment_paid_amount[$key];
+                    $BillingPayment->payment_paid_amount = $request->payable_amount[$key];
                     $BillingPayment->payment_method = $request->payment_method[$key];
                     $BillingPayment->save();
 
@@ -385,6 +471,48 @@ class BillingController extends Controller
         $data->update();
 
         return redirect()->route('billing.index')->with('warning', 'Deleted !');
+    }
+
+
+    public function paybalance(Request $request, $id)
+    {
+        $data = Billing::findOrFail($id);
+
+        if($request->get('pb_paidamount') != ""){
+
+            $BillingPayment = new BillingPayment;
+            $BillingPayment->billing_id = $id;
+            $BillingPayment->payment_term = $request->get('pb_term');
+            $BillingPayment->payment_paid_date = $request->get('pb_date');
+            $BillingPayment->payment_paid_amount = $request->get('pb_paidamount');
+            $BillingPayment->payment_method = $request->get('pb_paymentmethod');
+            $BillingPayment->save();
+
+
+            $payableAmount = $request->get('pb_paidamount');
+
+            $total_paid_amount = $data->total_paid_amount + $payableAmount;
+            $balance = $data->grand_total - $total_paid_amount;
+
+            $data->total_paid_amount = $total_paid_amount;
+            $data->total_balance_amount = $balance;
+            $data->update();
+        }
+
+        return redirect()->route('billing.index')->with('update', 'Updated Billing payment information has been added to your list.');
+
+    }
+
+
+    public function updatedelivery($unique_key)
+    {
+        $data = Billing::where('unique_key', '=', $unique_key)->first();
+
+        $data->status = 1;
+
+        $data->update();
+
+        return redirect()->route('billing.index')->with('message', 'Delivered !');
     }
 
 }

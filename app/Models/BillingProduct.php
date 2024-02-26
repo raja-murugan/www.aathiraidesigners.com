@@ -16,5 +16,7 @@ class BillingProduct extends Model
         'billing_qty',
         'billing_rateperqty',
         'billing_total',
+        'customer_product_id',
+        'customer_id'
     ];
 }

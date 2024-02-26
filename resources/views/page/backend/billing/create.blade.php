@@ -63,7 +63,7 @@
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                        <div class="form-group">
                                           <label >Customer <span class="text-danger">*</span></label>
-                                          <select  class="form-control  select js-example-basic-single billing_customerid" name="customer_id[]" id="customer_id" required>
+                                          <select  class="form-control  select js-example-basic-single billing_customerid" name="customer_id" id="customer_id" required>
                                              <option value="" selected disabled class="text-muted"> Select Customer </option>
                                              @foreach ($customers as $customers_arr)
                                                 <option value="{{ $customers_arr->id }}">{{ $customers_arr->name }}</option>
@@ -86,9 +86,9 @@
                                                    <th style="width:25%">Product</th>
                                                    <th style="width:25%">Measurement</th>
                                                    <th style="width:10%">Qty</th>
-                                                   <th style="width:16%">Rate / Qty</th>
-                                                   <th style="width:16%">Total</th>
-                                                   <th style="width:8%" class="no-sort">Action</th>
+                                                   <th style="width:14%">Rate / Qty</th>
+                                                   <th style="width:19%">Total</th>
+                                                   <th style="width:7%" class="no-sort">Action</th>
                                                 </tr>
                                              </thead>
                                              <tbody class="billingold_products"></div>
@@ -97,6 +97,7 @@
                                                 <tr>
                                                    <td>
                                                       <input type="hidden" id="billingproducts_id" name="billingproducts_id[]" />
+                                                      <input type="hidden" class="form-control customer_product_id" id="customer_product_id1" name="customer_product_id[]" />
                                                             <select
                                                                 class="form-control  billing_product_id select js-example-basic-single"
                                                                 name="billing_product_id[]" id="billing_product_id1" required>
@@ -117,22 +118,115 @@
                                                           name="billing_qty[]" placeholder="Qty" /></td>
 
                                                    <td><input type="text" class="form-control billing_rateperqty" id="billing_rateperqty"
-                                                          name="billing_rateperqty[]" placeholder="Rate / Qty" /></td>
+                                                          name="billing_rateperqty[]" placeholder="Rate / Qty" />
+                                                         </td>
 
                                                    <td><input type="text" class="form-control billing_total" id="billing_total"
-                                                          name="billing_total[]" readonly /></td>
+                                                          name="billing_total[]" readonly />
+                                                      </td>
 
                                                    <td class="align-items-center">
                                                          <button class="additemplus_button addbillingproducts" type="button" id="" value="Add"><i class="fe fe-plus-circle"></i></button>
+                                                         <button class="additemminus_button remove-billingtr" type="button" id="" value="Add"><i class="fe fe-minus-circle"></i></button>
                                                    </td>
                                                 </tr>
 
+                                             </tbody>
+                                             <tbody>
+                                                <tr>
+                                                   <td></td>
+                                                   <td></td>
+                                                   <td></td>
+                                                   <td style="text-align:right;font-size:15px;">Total</td>
+                                                   <td><input type="text" class="form-control total_amount"  name="total_amount" id="total_amount" readonly></td>
+                                                </tr>
                                              </tbody>
                                           </table>
                                        </div>
                               </div>
 
 
+
+                              <div class="row">
+                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                       <div class="form-group">
+                                          <label >Discount Type<span class="text-danger">*</span></label>
+                                          <select  class="form-control  select js-example-basic-single billingdiscount_type" name="billingdiscount_type" id="billingdiscount_type" required>
+                                             <option value="none" selected > Select </option>
+                                                <option value="Percentage">Percentage(%)</option>
+                                                <option value="Fixed">Fixed</option>
+                                          </select>
+                                       </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-6 col-sm-12">
+                                       <div class="form-group">
+                                          <label >Discount Amount<span class="text-danger">*</span></label>
+                                          <input type="text" class="form-control billingdiscount"  name="discount" id="discount" placeholder="0">
+                                       </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-6 col-sm-12">
+                                       <div class="form-group">
+                                          <label >Payment Method<span class="text-danger">*</span></label>
+                                          <select  class="form-control  select js-example-basic-single payment_method" name="payment_method" id="payment_method" required>
+                                             <option value="" disabled  selected > Select </option>
+                                                <option value="GPay">GPay</option>
+                                                <option value="Cash">Cash</option>
+                                                <option value="PhonePay">PhonePay</option>
+                                          </select>
+                                       </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-6 col-sm-12" hidden>
+                                       <div class="form-group">
+                                          <label >Term<span class="text-danger">*</span></label>
+                                          <select  class="form-control  payment_term" name="payment_term" id="payment_term" required>
+                                                <option value="Term I" selected>Term I</option>
+                                          </select>
+                                       </div>
+                                    </div>
+                              </div>
+
+                             
+
+
+                              <div class="form-group-item border-0 p-0 py-3">
+                                            <div class="row">
+                                                <div class="col-xl-6 col-lg-12">
+                                                    <div class="form-group-bank">
+                                                        <div class="form-group notes-form-group-info">
+                                                            <label>Notes <span class="text-danger">*</span></label>
+                                                            <textarea class="form-control" placeholder="Enter Notes" name="billing_note" id="billing_note" required></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-6 col-lg-12">
+                                                    <div class="form-group-bank">
+                                                        <div class="invoice-total-box">
+
+                                                            <div class="invoice-total-footer">
+                                                                <h4 style="text-transform:uppercase;">Total <span class="billing_totalamount">  </span></h4>
+                                                            </div>
+                                                            <div class="invoice-total-footer">
+                                                                <h4 style="text-transform:uppercase;">Discount <span class="billing_discount">  </span></h4>
+                                                                <input type="hidden" class="form-control billing_discountamount" name="billing_discountamount" id="billing_discountamount">
+
+                                                            </div>
+                                                            <div class="invoice-total-footer">
+                                                                <h4 style="text-transform:uppercase;color:green;">Grand Total <span class="billing_grandtotal">  </span></h4>
+                                                                <input type="hidden" class="form-control billing_grandtotalamount" name="billing_grandtotalamount" id="billing_grandtotalamount">
+                                                            </div>
+                                                            <div class="invoice-total-footer py-2">
+                                                                <h4 style="text-transform:uppercase;">Paid Amount <span class="">
+                                                               <input type="text" class="form-control billing_paidamount" required  name="billing_paidamount" id="billing_paidamount" placeholder="Enter Payable Amount"> </span></h4>
+                                                            </div>
+                                                            <div class="invoice-total-footer">
+                                                                <h4 style="text-transform:uppercase;color:red;">Balance<span class="billing_balance"> </span></h4>
+                                                                <input type="hidden" class="form-control billing_balanceamount"  name="billing_balanceamount" id="billing_balanceamount" >
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
 
 
@@ -155,7 +249,7 @@
 
                            <div class="text-end" style="margin-top:3%">
                                           <input type="submit" class="btn btn-primary" />
-                                          <a href="{{ route('customer.index') }}" class="btn btn-cancel btn-danger" >Cancel</a>
+                                          <a href="{{ route('billing.index') }}" class="btn btn-cancel btn-danger" >Cancel</a>
                            </div>
                        
       

@@ -63,14 +63,44 @@
                                  <td>{{ $Billing_datas['total_balance_amount'] }}</td>
                                  <td>
                                     <ul class="list-unstyled hstack gap-1 mb-0">
+                                       @if ($Billing_datas['status'] != 1)
+                                          <li>
+                                             <a href="{{ route('billing.edit', ['unique_key' => $Billing_datas['unique_key']]) }}"
+                                                class="badge bg-warning-light" style="color:#28084b;">Edit</a>
+                                          </li>
+                                          <li>
+                                             <a href="#delete{{ $Billing_datas['unique_key'] }}" data-bs-toggle="modal"
+                                             data-bs-target=".billingdelete-modal-xl{{ $Billing_datas['unique_key'] }}" class="badge bg-danger-light" style="color: #28084b;">Delete</a>
+                                          </li>
+                                       @endif  
+
+
+                                       @if ($Billing_datas['total_balance_amount'] != 0)
                                        <li>
-                                          <a href="{{ route('billing.edit', ['unique_key' => $Billing_datas['unique_key']]) }}"
-                                             class="badge bg-warning-light" style="color:#28084b;">Edit</a>
+                                          <a href="#paybalance{{ $Billing_datas['unique_key'] }}" data-bs-toggle="modal" data-id="{{ $Billing_datas['id'] }}"
+                                          data-bs-target=".paybalance-modal-xl{{ $Billing_datas['unique_key'] }}" class="badge bg-primary-light paybalance{{ $Billing_datas['id'] }}" style="color: #28084b;">Pay Balance</a>
                                        </li>
-                                       <li>
-                                          <a href="#delete{{ $Billing_datas['unique_key'] }}" data-bs-toggle="modal"
-                                          data-bs-target=".billingdelete-modal-xl{{ $Billing_datas['unique_key'] }}" class="badge bg-danger-light" style="color: #28084b;">Delete</a>
-                                       </li>
+                                       @endif
+
+
+                                       @if ($Billing_datas['total_balance_amount'] == 0)
+                                          @if ($Billing_datas['status'] != 1)
+                                             <li>
+                                                <a href="#updatedelivery{{ $Billing_datas['unique_key'] }}" data-bs-toggle="modal" data-id="{{ $Billing_datas['id'] }}"
+                                                data-bs-target=".updatedelivery-modal-xl{{ $Billing_datas['unique_key'] }}" 
+                                                class="badge updatedelivery{{ $Billing_datas['id'] }}" style="color: #fff;background: #64b426;">Update Delivery</a>
+                                             </li>
+                                          @else
+                                                <li>
+                                                   <a  class="badge" style="color: #28084b;background: #b4d6b8;">Delivered</a>
+                                                </li>
+                                          @endif
+                                       @endif
+
+                                          <li>
+                                             <a href="#viewbilling{{ $Billing_datas['unique_key'] }}" data-bs-toggle="modal"
+                                             data-bs-target=".viewbilling-modal-xl{{ $Billing_datas['unique_key'] }}" class="badge" style="color: #28084b;background: #729cd8;">View</a>
+                                          </li>
                                     </ul>
 
                                  </td>
@@ -82,6 +112,32 @@
                                     aria-labelledby="billingdeleteLargeModalLabel{{ $Billing_datas['unique_key'] }}"
                                     aria-hidden="true">
                                     @include('page.backend.billing.delete')
+                              </div>
+
+                              @if ($Billing_datas['total_balance_amount'] != 0)
+
+                              <div class="modal fade paybalance-modal-xl{{ $Billing_datas['unique_key'] }}"
+                                    tabindex="-1" role="dialog"data-bs-backdrop="static"
+                                    aria-labelledby="paybalanceLargeModalLabel{{ $Billing_datas['unique_key'] }}"
+                                    aria-hidden="true">
+                                    @include('page.backend.billing.paybalance')
+                              </div>
+                              @endif
+
+                              @if ($Billing_datas['total_balance_amount'] == 0)
+                              <div class="modal fade updatedelivery-modal-xl{{ $Billing_datas['unique_key'] }}"
+                                    tabindex="-1" role="dialog"data-bs-backdrop="static"
+                                    aria-labelledby="updatedeliveryLargeModalLabel{{ $Billing_datas['unique_key'] }}"
+                                    aria-hidden="true">
+                                    @include('page.backend.billing.updatedelivery')
+                              </div>
+                              @endif
+
+                              <div class="modal fade viewbilling-modal-xl{{ $Billing_datas['unique_key'] }}"
+                                    tabindex="-1" role="dialog"data-bs-backdrop="static"
+                                    aria-labelledby="viewbillingLargeModalLabel{{ $Billing_datas['unique_key'] }}"
+                                    aria-hidden="true">
+                                    @include('page.backend.billing.view')
                               </div>
                            @endforeach
                            </tbody>

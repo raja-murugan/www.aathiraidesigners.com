@@ -27,6 +27,11 @@ return new class extends Migration
             $table->string('billing_rateperqty')->nullable();
             $table->string('billing_total')->nullable();
 
+            $table->unsignedBigInteger('customer_product_id')->nullable();
+
+            $table->unsignedBigInteger('customer_id');
+            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

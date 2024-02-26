@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Customer;
 use App\Models\Product;
 use App\Models\CustomerProduct;
+use App\Models\BillingProduct;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -30,14 +31,34 @@ class CustomerController extends Controller
             foreach ($CustomerProduct as $key => $CustomerProducts_arr) {
 
                 $productarr = Product::findOrFail($CustomerProducts_arr->product_id);
+                if($CustomerProducts_arr->status == 1){
+                    $status = 'Processing';
+                }else {
+                    $status = 'Delivered';
+                }
+
+                $billing_product = BillingProduct::where('billing_product_id', '=', $CustomerProducts_arr->product_id)->where('customer_product_id', '=', $CustomerProducts_arr->id)->first();
+                if($billing_product != ""){
+                    $quantity = $billing_product->billing_qty;
+                    $rate = $billing_product->billing_rateperqty;
+                }else {
+                    $quantity = '';
+                    $rate = '';
+                }
                 $productsarr[] = array(
                     'product' => $productarr->name,
                     'measurements' => $CustomerProducts_arr->measurements,
                     'product_id' => $CustomerProducts_arr->product_id,
                     'customer_id' => $CustomerProducts_arr->customer_id,
                     'id' => $CustomerProducts_arr->id,
+                    'status' => $status,
+                    'quantity' => $quantity,
+                    'rate' => $rate,
                 );
             }
+
+            $total_products = CustomerProduct::where('customer_id', '=', $datas->id)->count();
+            $delivered_products = CustomerProduct::where('customer_id', '=', $datas->id)->where('status', '=', 2)->count();
 
             $Customer_data[] = array(
                 'unique_key' => $datas->unique_key,
@@ -45,6 +66,8 @@ class CustomerController extends Controller
                 'phone_number' => $datas->phone_number,
                 'id' => $datas->id,
                 'productsarr' => $productsarr,
+                'total_products' => $total_products,
+                'delivered_products' => $delivered_products,
             );
 
         }
@@ -97,7 +120,7 @@ class CustomerController extends Controller
     public function edit($unique_key)
     {
         $CustomerData = Customer::where('unique_key', '=', $unique_key)->first();
-        $CustomerProducts = CustomerProduct::where('customer_id', '=', $CustomerData->id)->get();
+        $CustomerProducts = CustomerProduct::where('customer_id', '=', $CustomerData->id)->where('status', '=', 1)->get();
 
         $products = Product::where('soft_delete', '!=', 1)->latest('created_at')->get();
         $today = Carbon::now()->format('Y-m-d');

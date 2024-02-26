@@ -51,6 +51,7 @@
 
 
                                           <div class="table-responsive no-pagination">
+                                          <!-- <button class="additemplus_button addproducts" type="button" id="" value="Add">Add</button> -->
                                             <table class="table table-center table-hover">
                                                 <thead class="thead-light">
                                                     <tr>

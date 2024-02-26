@@ -251,13 +251,15 @@ var l = 1;
                 $(".billing_products").append(
                     '<tr>' +
                     '<td class=""><input type="hidden" id="billingproducts_id" name="billingproducts_id[]" />' +
+                    ' <input type="hidden" class="form-control customer_product_id" id="customer_product_id' + k + '" name="customer_product_id[]" />' +
                     '<select class="form-control  billing_product_id select js-example-basic-single"  name="billing_product_id[]" id="billing_product_id' + k + '" required>' +
                     '<option value="" selected disabled class="text-muted">Select Product</option></select>' +
                     '</td>' +
                     '<td><input type="text" class="form-control billing_measurement" id="billing_measurement" name="billing_measurement[]" placeholder="Measurement" /></td>' +
                     '<td><input type="text" class="form-control billing_qty" id="billing_qty" name="billing_qty[]" placeholder="qty" /></td>' +
                     '<td><input type="text" class="form-control billing_rateperqty" id="billing_rateperqty" name="billing_rateperqty[]" placeholder="Rate / Qty" /></td>' +
-                    '<td><input type="text" class="form-control billing_total" id="billing_total" name="billing_total[]" /></td>' +
+                    '<td><input type="text" class="form-control billing_total" id="billing_total" name="billing_total[]" />' +
+                    '</td>' +
                     '<td><button class="additemplus_button addbillingproducts" style="margin-right: 3px;" type="button" id="" value="Add"><i class="fe fe-plus-circle"></i></button>' +
                     '<button class="additemminus_button remove-billingtr" type="button" id="" value="Add"><i class="fe fe-minus-circle"></i></button></td>' +
                     '</tr>'
@@ -298,93 +300,398 @@ var l = 1;
             });
 
 
-$(document.body).on("change", ".billing_customerid", function() {  
-  var customer_id = this.value;
+          $(document.body).on("change", ".billing_customerid", function() {  
+            var customer_id = this.value;
 
-      $.ajax({
-          url: '/getCustomerProducts/',
-          type: 'get',
-          data: {
-            _token: "{{ csrf_token() }}",
-            customer_id: customer_id,
-          },
-          dataType: 'json',
-          success: function(response) {
-            $('.billingold_products').html('');
+                $.ajax({
+                    url: '/getCustomerProducts/',
+                    type: 'get',
+                    data: {
+                      _token: "{{ csrf_token() }}",
+                      customer_id: customer_id,
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                      $('.billingold_products').html('');
 
-              console.log(response);
-              if (response.status !== 'false') {
+                        console.log(response);
+                        if (response.status !== 'false') {
 
-                var len = response.length;
-                var h = -1;
-                for (var i = 0; i < len; i++) {
-
-                    var column_0 = $('<td/>', {
-                    html: '<input type="hidden" id="billingproducts_id" name="billingproducts_id[]"/><input type="hidden" id="hiddenproducts_id' + i + '" name="hiddenproducts_id[]" class="hiddenproducts_id" value="' + response[i].product_id + '"/>' +
-                            '<select class="form-control  billing_product_id select js-example-basic-single"  name="billing_product_id[]" id="billing_product_id' + i + '" required>' +
-                            '<option value="" selected disabled class="text-muted">Select Product</option></select>',
-                    });
-
-                    var column_1 = $('<td/>', {
-                    html: '<input type="text" class="form-control billing_measurement" id="billing_measurement" name="billing_measurement[]" placeholder="Measurement" value="' + response[i].measurements + '"/>',
-                    });
-
-                    var column_2 = $('<td/>', {
-                    html: '<input type="text" class="form-control billing_qty" id="billing_qty" name="billing_qty[]" placeholder="Qty" />',
-                    });
-
-                    var column_3 = $('<td/>', {
-                    html: '<input type="text" class="form-control billing_rateperqty" id="billing_rateperqty" name="billing_rateperqty[]" placeholder="Rate / Qty" />',
-                    });
-
-                    var column_4 = $('<td/>', {
-                    html: '<input type="text" class="form-control billing_total" id="billing_total" name="billing_total[]" readonly />',
-                    });
-
-                    var column_5 = $('<td/>', {
-                    html: '<button class="additemminus_button remove-billingtr" type="button" id="" value="Add"><i class="fe fe-minus-circle"></i></button>',
-                    });
-
-                    var row = $('<tr id=stages_tr/>', {}).append(column_0,
-                                    column_1, column_2, column_3, column_4, column_5);
-
-                                $('.billingold_products').append(row);
-
-
-
-                          $.ajax({
-                          url: '/getproducts/',
-                          type: 'get',
-                          dataType: 'json',
-                          success: function(response) {
-                                //console.log(response['data']);
-                                var len = response['data'].length;
-
-                                var selectedValues = new Array();
-                                ++h;
-                                if (len > 0) {
-                                    for (var i = 0; i < len; i++) {
-                                      var product_id = $('#hiddenproducts_id' + h).val();
-
-                                            var id = response['data'][i].id;
-                                            var name = response['data'][i].name;
-                                            var option = '<option value="'+ id +'" '+ (id == product_id ? ' selected ' : '') +'>'+ name +'</option>';
-                                            selectedValues.push(option);
-                                    }
-                                }
-                               
-                                $('#billing_product_id' + h).append(selectedValues);
-                                //add_count.push(Object.keys(selectedValues).length);
+                          var len = response.length;
+                          var h = -1;
+                          for (var i = 0; i < len; i++) {
+                            if(response[i].measurements != null){
+                                var Measurement = response[i].measurements;
+                            }else {
+                              var Measurement = '';
                             }
-                          });
-                }
 
+                              var column_0 = $('<td/>', {
+                              html: '<input type="hidden" id="billingproducts_id" name="billingproducts_id[]"/><input type="hidden" id="hiddenproducts_id' + i + '" name="hiddenproducts_id[]" class="hiddenproducts_id" value="' + response[i].product_id + '"/>' +
+                                    '<input type="hidden" class="form-control customer_product_id" id="customer_product_id' + i + '" name="customer_product_id[]" <input type="hidden" class="form-control customer_product_id" id="customer_product_id' + i + '" name="customer_product_id[]" value="' + response[i].id + '"/>' +
+                                      '<select class="form-control  billing_product_id select js-example-basic-single"  name="billing_product_id[]" id="billing_product_id' + i + '" required>' +
+                                      '<option value="" selected disabled class="text-muted">Select Product</option></select>',
+                              });
+
+                              var column_1 = $('<td/>', {
+                              html: '<input type="text" class="form-control billing_measurement" id="billing_measurement" name="billing_measurement[]" placeholder="Measurement" value="' + Measurement + '"/>',
+                              });
+
+                              var column_2 = $('<td/>', {
+                              html: '<input type="text" class="form-control billing_qty" id="billing_qty" name="billing_qty[]" placeholder="Qty" />',
+                              });
+
+                              var column_3 = $('<td/>', {
+                              html: '<input type="text" class="form-control billing_rateperqty" id="billing_rateperqty" name="billing_rateperqty[]" placeholder="Rate / Qty" />',
+                              });
+
+                              var column_4 = $('<td/>', {
+                              html: '<input type="text" class="form-control billing_total" id="billing_total" name="billing_total[]" readonly />',
+                              });
+
+                              var column_5 = $('<td/>', {
+                              html: '<button class="additemplus_button addbillingproducts" type="button" id="" value="Add"><i class="fe fe-plus-circle"></i></button>' +
+                                    '<button class="additemminus_button remove-billingtr" type="button" id="" value="Add"><i class="fe fe-minus-circle"></i></button>',
+                              });
+
+                              var row = $('<tr id=stages_tr/>', {}).append(column_0,
+                                              column_1, column_2, column_3, column_4, column_5);
+
+                                          $('.billingold_products').append(row);
+
+
+
+                                    $.ajax({
+                                    url: '/getproducts/',
+                                    type: 'get',
+                                    dataType: 'json',
+                                    success: function(response) {
+                                          //console.log(response['data']);
+                                          var len = response['data'].length;
+
+                                          var selectedValues = new Array();
+                                          ++h;
+                                          if (len > 0) {
+                                              for (var i = 0; i < len; i++) {
+                                                var product_id = $('#hiddenproducts_id' + h).val();
+
+                                                      var id = response['data'][i].id;
+                                                      var name = response['data'][i].name;
+                                                      var option = '<option value="'+ id +'" '+ (id == product_id ? ' selected ' : '') +'>'+ name +'</option>';
+                                                      selectedValues.push(option);
+                                              }
+                                          }
+                                        
+                                          $('#billing_product_id' + h).append(selectedValues);
+                                          //add_count.push(Object.keys(selectedValues).length);
+                                      }
+                                    });
+                          }
+
+                        }
+                        
+                        
+                    }
+                });
+          });    
+          
+          
+
+
+        $(document).on("keyup", "input[name*=billing_rateperqty]", function() {
+
+              var billing_rateperqty = $(this).val();
+              var billing_qty = $(this).parents('tr').find('.billing_qty').val();
+              var total = billing_qty * billing_rateperqty;
+              $(this).parents('tr').find('.billing_total').val(total);
+
+              var sum = 0;
+              $(".billing_total").each(function() {
+                  sum += +$(this).val();
+              });
+
+              $(".total_amount").val(sum.toFixed(2));
+              $('.billing_totalamount').text('₹ ' + sum.toFixed(2));
+
+
+              var billingdiscount_type = $("#billingdiscount_type").val();
+              var billingdiscount = $('.billingdiscount').val();
+
+              if(billingdiscount_type == 'Fixed'){
+
+                    $('.billing_discountamount').val(billingdiscount);
+                    $('.billing_discount').text('₹ ' + billingdiscount);
+
+                    var total_amount = $(".total_amount").val();
+                    var discountq_price = Number(total_amount) - Number(billingdiscount);
+                    $('.billing_grandtotalamount').val(discountq_price.toFixed(2));
+                    $('.billing_grandtotal').text('₹ ' + discountq_price.toFixed(2));
+
+              }else if(billingdiscount_type == 'Percentage'){
+
+                    var total_amount = $(".total_amount").val();
+                    var discountPercentageAmount = (billingdiscount / 100) * total_amount;
+                    $('.billing_discountamount').val(discountPercentageAmount);
+                    $('.billing_discount').text('₹ ' + discountPercentageAmount);
+
+                    var discountq_price = Number(total_amount) - Number(discountPercentageAmount);
+                    $('.billing_grandtotalamount').val(discountq_price.toFixed(2));
+                    $('.billing_grandtotal').text('₹ ' + discountq_price.toFixed(2));
+
+              }else if(billingdiscount_type == 'none'){
+
+                    $('.billingdiscount').val(0);
+                    $('.billing_discountamount').val(0);
+                    $('.billing_discount').text('₹ ' + 0);
+                    var total_amount = $(".total_amount").val();
+
+                    $('.billing_grandtotalamount').val(total_amount);
+                    $('.billing_grandtotal').text('₹ ' + total_amount);
               }
-              
-              
+
+
+
+                var billing_paidamount = $('.billing_paidamount').val();
+                var billing_grandtotalamount = $('.billing_grandtotalamount').val();
+                var balance_amount = Number(billing_grandtotalamount) - Number(billing_paidamount);
+                $('.billing_balanceamount').val(balance_amount.toFixed(2));
+                $('.billing_balance').text('₹ ' + balance_amount.toFixed(2));       
+        }); 
+
+          
+
+        $(document).on("keyup", "input[name*=billing_qty]", function() {
+
+              var billing_qty = $(this).val();
+              var billing_rateperqty = $(this).parents('tr').find('.billing_rateperqty').val();
+              var total = billing_qty * billing_rateperqty;
+              $(this).parents('tr').find('.billing_total').val(total);
+
+              var sum = 0;
+              $(".billing_total").each(function() {
+                  sum += +$(this).val();
+              });
+
+              $(".total_amount").val(sum.toFixed(2));
+              $('.billing_totalamount').text('₹ ' + sum.toFixed(2));
+
+              var billingdiscount_type = $("#billingdiscount_type").val();
+              var billingdiscount = $('.billingdiscount').val();
+
+              if(billingdiscount_type == 'Fixed'){
+
+                    $('.billing_discountamount').val(billingdiscount);
+                    $('.billing_discount').text('₹ ' + billingdiscount);
+
+                    var total_amount = $(".total_amount").val();
+                    var discountq_price = Number(total_amount) - Number(billingdiscount);
+                    $('.billing_grandtotalamount').val(discountq_price.toFixed(2));
+                    $('.billing_grandtotal').text('₹ ' + discountq_price.toFixed(2));
+
+              }else if(billingdiscount_type == 'Percentage'){
+
+                    var total_amount = $(".total_amount").val();
+                    var discountPercentageAmount = (billingdiscount / 100) * total_amount;
+                    $('.billing_discountamount').val(discountPercentageAmount);
+                    $('.billing_discount').text('₹ ' + discountPercentageAmount);
+
+                    var discountq_price = Number(total_amount) - Number(discountPercentageAmount);
+                    $('.billing_grandtotalamount').val(discountq_price.toFixed(2));
+                    $('.billing_grandtotal').text('₹ ' + discountq_price.toFixed(2));
+
+              }else if(billingdiscount_type == 'none'){
+
+                    $('.billingdiscount').val(0);
+                    $('.billing_discountamount').val(0);
+                    $('.billing_discount').text('₹ ' + 0);
+                    var total_amount = $(".total_amount").val();
+
+                    $('.billing_grandtotalamount').val(total_amount);
+                    $('.billing_grandtotal').text('₹ ' + total_amount);
+              }
+
+
+
+                var billing_paidamount = $('.billing_paidamount').val();
+                var billing_grandtotalamount = $('.billing_grandtotalamount').val();
+                var balance_amount = Number(billing_grandtotalamount) - Number(billing_paidamount);
+                $('.billing_balanceamount').val(balance_amount.toFixed(2));
+                $('.billing_balance').text('₹ ' + balance_amount.toFixed(2));       
+        }); 
+
+
+
+        $("#billingdiscount_type").on('change', function() {
+              var billingdiscount_type = this.value;
+
+              if(billingdiscount_type == 'Fixed'){
+
+                $('.billingdiscount').val('');
+                $('.billing_discountamount').val(0);
+                $('.billing_discount').text('₹ ' + 0);
+
+              }else if(billingdiscount_type == 'Percentage'){
+
+                $('.billingdiscount').val('');
+                $('.billing_discountamount').val(0);
+                $('.billing_discount').text('₹ ' + 0);
+
+              }else if(billingdiscount_type == 'none'){
+
+                $('.billingdiscount').val('');
+                $('.billing_discountamount').val(0);
+                $('.billing_discount').text('₹ ' + 0);
+
+                var total_amount = $(".total_amount").val();
+                $('.billing_grandtotalamount').val(total_amount);
+                $('.billing_grandtotal').text('₹ ' + total_amount);
+
+                var billing_paidamount = $('.billing_paidamount').val();
+                var billing_grandtotalamount = $('.billing_grandtotalamount').val();
+                var balance_amount = Number(billing_grandtotalamount) - Number(billing_paidamount);
+                $('.billing_balanceamount').val(balance_amount.toFixed(2));
+                $('.billing_balance').text('₹ ' + balance_amount.toFixed(2));    
+                
+              }
+        }); 
+
+
+      $(document).on("keyup", 'input.billingdiscount', function() {
+          var billingdiscount = $(this).val();
+          var billingdiscount_type = $("#billingdiscount_type").val();
+
+          if(billingdiscount_type == 'Fixed'){
+
+                $('.billing_discountamount').val(billingdiscount);
+                $('.billing_discount').text('₹ ' + billingdiscount);
+
+                var total_amount = $(".total_amount").val();
+                var discountq_price = Number(total_amount) - Number(billingdiscount);
+                $('.billing_grandtotalamount').val(discountq_price.toFixed(2));
+                $('.billing_grandtotal').text('₹ ' + discountq_price.toFixed(2));
+
+                var billing_paidamount = $('.billing_paidamount').val();
+                var billing_grandtotalamount = $('.billing_grandtotalamount').val();
+                var balance_amount = Number(billing_grandtotalamount) - Number(billing_paidamount);
+                $('.billing_balanceamount').val(balance_amount.toFixed(2));
+                $('.billing_balance').text('₹ ' + balance_amount.toFixed(2));   
+
+          }else if(billingdiscount_type == 'Percentage'){
+
+                var total_amount = $(".total_amount").val();
+                var discountPercentageAmount = (billingdiscount / 100) * total_amount;
+                $('.billing_discountamount').val(discountPercentageAmount);
+                $('.billing_discount').text('₹ ' + discountPercentageAmount);
+
+                var discountq_price = Number(total_amount) - Number(discountPercentageAmount);
+                $('.billing_grandtotalamount').val(discountq_price.toFixed(2));
+                $('.billing_grandtotal').text('₹ ' + discountq_price.toFixed(2));
+
+                var billing_paidamount = $('.billing_paidamount').val();
+                var billing_grandtotalamount = $('.billing_grandtotalamount').val();
+                var balance_amount = Number(billing_grandtotalamount) - Number(billing_paidamount);
+                $('.billing_balanceamount').val(balance_amount.toFixed(2));
+                $('.billing_balance').text('₹ ' + balance_amount.toFixed(2));   
+
+          }else if(billingdiscount_type == 'none'){
+
+                $('.billingdiscount').val(0);
+                $('.billing_discountamount').val(0);
+                $('.billing_discount').text('₹ ' + 0);
+                var total_amount = $(".total_amount").val();
+
+                $('.billing_grandtotalamount').val(total_amount);
+                $('.billing_grandtotal').text('₹ ' + total_amount);
+
+                var billing_paidamount = $('.billing_paidamount').val();
+                var billing_grandtotalamount = $('.billing_grandtotalamount').val();
+                var balance_amount = Number(billing_grandtotalamount) - Number(billing_paidamount);
+                $('.billing_balanceamount').val(balance_amount.toFixed(2));
+                $('.billing_balance').text('₹ ' + balance_amount.toFixed(2));   
           }
+      }); 
+
+
+
+      $(document).on("keyup", 'input.billing_paidamount', function() {
+
+          var billing_paidamount = $(this).val();
+          var billing_grandtotalamount = $(".billing_grandtotalamount").val();
+          var billing_balanceamount = Number(billing_grandtotalamount) - Number(billing_paidamount);
+          $('.billing_balanceamount').val(billing_balanceamount.toFixed(2));
+          $('.billing_balance').text('₹ ' + billing_balanceamount.toFixed(2));
+
       });
-});       
+
+      $(document).on("keyup", 'input.billing_paidamount', function() {
+            var billing_paidamount = $(this).val();
+            var billing_grandtotalamount = $(".billing_grandtotalamount").val();
+
+            if (Number(billing_paidamount) > Number(billing_grandtotalamount)) {
+                alert('You are entering Maximum Amount of Total');
+                $('.billing_paidamount').val('');
+                $('.billing_balanceamount').val('');
+                $('.billing_balance').text('');
+            }
+        });
+
+
+
+      $(document).on('click', '.remove-billingtr', function() {
+        $(this).parents('tr').remove();
+
+        var sum = 0;
+              $(".billing_total").each(function() {
+                  sum += +$(this).val();
+              });
+
+              $(".total_amount").val(sum.toFixed(2));
+              $('.billing_totalamount').text('₹ ' + sum.toFixed(2));
+
+              var billingdiscount_type = $("#billingdiscount_type").val();
+              var billingdiscount = $('.billingdiscount').val();
+
+              if(billingdiscount_type == 'Fixed'){
+
+                    $('.billing_discountamount').val(billingdiscount);
+                    $('.billing_discount').text('₹ ' + billingdiscount);
+
+                    var total_amount = $(".total_amount").val();
+                    var discountq_price = Number(total_amount) - Number(billingdiscount);
+                    $('.billing_grandtotalamount').val(discountq_price.toFixed(2));
+                    $('.billing_grandtotal').text('₹ ' + discountq_price.toFixed(2));
+
+              }else if(billingdiscount_type == 'Percentage'){
+
+                    var total_amount = $(".total_amount").val();
+                    var discountPercentageAmount = (billingdiscount / 100) * total_amount;
+                    $('.billing_discountamount').val(discountPercentageAmount);
+                    $('.billing_discount').text('₹ ' + discountPercentageAmount);
+
+                    var discountq_price = Number(total_amount) - Number(discountPercentageAmount);
+                    $('.billing_grandtotalamount').val(discountq_price.toFixed(2));
+                    $('.billing_grandtotal').text('₹ ' + discountq_price.toFixed(2));
+
+              }else if(billingdiscount_type == 'none'){
+
+                    $('.billingdiscount').val(0);
+                    $('.billing_discountamount').val(0);
+                    $('.billing_discount').text('₹ ' + 0);
+                    var total_amount = $(".total_amount").val();
+
+                    $('.billing_grandtotalamount').val(total_amount);
+                    $('.billing_grandtotal').text('₹ ' + total_amount);
+              }
+
+
+
+                var billing_paidamount = $('.billing_paidamount').val();
+                var billing_grandtotalamount = $('.billing_grandtotalamount').val();
+                var balance_amount = Number(billing_grandtotalamount) - Number(billing_paidamount);
+                $('.billing_balanceamount').val(balance_amount.toFixed(2));
+                $('.billing_balance').text('₹ ' + balance_amount.toFixed(2));   
+      });
+
   </script>
 
 

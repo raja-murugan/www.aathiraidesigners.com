@@ -156,6 +156,10 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::middleware(['auth:sanctum', 'verified'])->put('/zworktechtechnology/billing/delete/{unique_key}', [BillingController::class, 'delete'])->name('billing.delete');
     // DATEFILTER
     Route::middleware(['auth:sanctum', 'verified'])->put('/zworktechtechnology/billing/datefilter', [BillingController::class, 'datefilter'])->name('billing.datefilter');
+    // PAY BALANCE
+    Route::middleware(['auth:sanctum', 'verified'])->put('/zworktechtechnology/billing/paybalance/{id}', [BillingController::class, 'paybalance'])->name('billing.paybalance');
+    // UPDATE DELIVERY STATUS
+    Route::middleware(['auth:sanctum', 'verified'])->put('/zworktechtechnology/billing/updatedelivery/{unique_key}', [BillingController::class, 'updatedelivery'])->name('billing.updatedelivery');
 });
 
 
