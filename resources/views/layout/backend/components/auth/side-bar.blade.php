@@ -20,7 +20,7 @@
             </ul>
 
             <ul>
-                <li class="menu-title"><span>Side Menu</span></li>
+                <li class="menu-title"><span>Human Resources</span></li>
 
                 @if(Auth::user()->role == 'Super-Admin')
 
@@ -31,7 +31,7 @@
                 <li class="{{ Route::is('employee.index') ? 'active' : '' }}">
                     <a href="{{ route('employee.index') }}"><i class="fe fe-user"></i> <span>Employee</span></a>
                 </li>
-                
+
                 <li class="{{ Route::is('attendance.index', 'attendance.datefilter', 'attendance.departmentwisefilter') ? 'active' : '' }}">
                     <a href="{{ route('attendance.index') }}"><i class="fe fe-user-check"></i> <span>Attendance</span></a>
                 </li>
@@ -60,7 +60,7 @@
                     <a href="{{ route('billing.index') }}"><i class="fe fe-clipboard"></i> <span>Billing</span></a>
                 </li>
 
-               
+
             </ul>
 
             <ul>

@@ -9,7 +9,7 @@
 
 <body class="">
 
-    <div class="main-wrapper">
+    <div class="main-wrapper" style="background-image: url({{ asset('assets/backend/img/login.jpg') }}); background-repeat: no-repeat; background-size: cover;">
 
         <section class="main main-wrapper">
             @yield('content')

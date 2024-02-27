@@ -11,9 +11,11 @@
                      @method('PUT')
                      @csrf
                      <div class="row">
-                        <div class="col-lg-6 col-md-6">
+                        <div class="col-lg-12 col-md-12">
+                            <p>I am writing to confirm that the custom billing products you selected have been successfully processed and are now ready for delivery.</p>
+                        </div>
+                        <div class="col-lg-12 col-md-12" style="margin-top: 10px;">
                            <div class="form-group">
-                              <label>Date <span class="text-danger">*</span></label>
                               <input type="date" class="form-control" value="{{ $today }}" name="pb_date">
                            </div>
                         </div>
