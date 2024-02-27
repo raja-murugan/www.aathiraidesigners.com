@@ -9,6 +9,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\BillingController;
 use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\PayoffController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -194,6 +195,25 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     // DATAE FILTER
     Route::middleware(['auth:sanctum', 'verified'])->put('/zworktechtechnology/expense/datefilter', [ExpenseController::class, 'datefilter'])->name('expense.datefilter');
  });
+
+
+ // PAYOFF CONTROLLER
+ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    // INDEX
+    Route::middleware(['auth:sanctum', 'verified'])->get('/zworktechtechnology/payoff', [PayoffController::class, 'index'])->name('payoff.index');
+    // CREATE
+    Route::middleware(['auth:sanctum', 'verified'])->get('/zworktechtechnology/payoff/create', [PayoffController::class, 'create'])->name('payoff.create');
+    // STORE
+    Route::middleware(['auth:sanctum', 'verified'])->post('/zworktechtechnology/payoff/store', [PayoffController::class, 'store'])->name('payoff.store');
+    // EDIT
+    Route::middleware(['auth:sanctum', 'verified'])->get('/zworktechtechnology/payoff/edit/{unique_key}', [PayoffController::class, 'edit'])->name('payoff.edit');
+    // EDIT
+    Route::middleware(['auth:sanctum', 'verified'])->put('/zworktechtechnology/payoff/update/{unique_key}', [PayoffController::class, 'update'])->name('payoff.update');
+    // DELETE
+    Route::middleware(['auth:sanctum', 'verified'])->put('/zworktechtechnology/payoff/delete/{unique_key}', [PayoffController::class, 'delete'])->name('payoff.delete');
+    // DATEFILTER
+    Route::middleware(['auth:sanctum', 'verified'])->put('/zworktechtechnology/payoff/datefilter', [PayoffController::class, 'datefilter'])->name('payoff.datefilter');
+});
 
 
 

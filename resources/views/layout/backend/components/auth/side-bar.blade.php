@@ -35,6 +35,10 @@
                 <li class="{{ Route::is('attendance.index', 'attendance.datefilter', 'attendance.departmentwisefilter') ? 'active' : '' }}">
                     <a href="{{ route('attendance.index') }}"><i class="fe fe-user-check"></i> <span>Attendance</span></a>
                 </li>
+
+                <li class="{{ Route::is('payoff.index', 'payoff.datefilter', 'payoff.create') ? 'active' : '' }}">
+                    <a href="{{ route('payoff.index') }}"><i class="fe fe-package"></i> <span>Payoff</span></a>
+                </li>
                 @endif
 
                 @if(Auth::user()->role == 'Admin')
