@@ -1,4 +1,4 @@
-{{-- @extends('layout.backend.guest')
+@extends('layout.backend.guest')
 
 @section('content')
 <div class="main-wrapper login-body">
@@ -73,4 +73,4 @@
     </div>
 </div>
 
-@endsection --}}
+@endsection

@@ -45,10 +45,11 @@
                               <tr>
                                  <th style="width:5%">S.No</th>
                                  <th style="width:10%">BillNo</th>
-                                 <th style="width:20%">Customer</th>
-                                 <th style="width:15%">Grand Total</th>
-                                 <th style="width:15%">PaidAmount</th>
-                                 <th style="width:15%">Due</th>
+                                 <th style="width:15%">Customer</th>
+                                 <th style="width:10%">Delivery Date</th>
+                                 <th style="width:20%">Acounting Value</th>
+                                 <th style="width:10%">Paid Value</th>
+                                 <th style="width:10%">Due Value</th>
                                  <th style="width:20%">Action</th>
                               </tr>
                            </thead>
@@ -57,8 +58,9 @@
                               <tr>
                                  <td>{{ ++$keydata }}</td>
                                  <td>{{ $Billing_datas['billno'] }}</td>
-                                 <td>{{ $Billing_datas['customer'] }}</td>
-                                 <td>{{ $Billing_datas['grand_total'] }}</td>
+                                 <td>{{ $Billing_datas['customer'] }}<br><span style="color: lightgray">{{ $Billing_datas['phone_number'] }}</span></td>
+                                 <td>{{ $Billing_datas['delivery_date'] }}</td>
+                                 <td>{{ $Billing_datas['total_amount'] }} - {{ $Billing_datas['discount'] }} = <span style="color: red">{{ $Billing_datas['grand_total'] }} </span></td>
                                  <td>{{ $Billing_datas['total_paid_amount'] }}</td>
                                  <td>{{ $Billing_datas['total_balance_amount'] }}</td>
                                  <td>
@@ -72,7 +74,7 @@
                                              <a href="#delete{{ $Billing_datas['unique_key'] }}" data-bs-toggle="modal"
                                              data-bs-target=".billingdelete-modal-xl{{ $Billing_datas['unique_key'] }}" class="badge bg-danger-light" style="color: #28084b;">Delete</a>
                                           </li>
-                                       @endif  
+                                       @endif
 
 
                                        @if ($Billing_datas['total_balance_amount'] != 0)
@@ -87,7 +89,7 @@
                                           @if ($Billing_datas['status'] != 1)
                                              <li>
                                                 <a href="#updatedelivery{{ $Billing_datas['unique_key'] }}" data-bs-toggle="modal" data-id="{{ $Billing_datas['id'] }}"
-                                                data-bs-target=".updatedelivery-modal-xl{{ $Billing_datas['unique_key'] }}" 
+                                                data-bs-target=".updatedelivery-modal-xl{{ $Billing_datas['unique_key'] }}"
                                                 class="badge updatedelivery{{ $Billing_datas['id'] }}" style="color: #fff;background: #64b426;">Update Delivery</a>
                                              </li>
                                           @else
@@ -106,7 +108,7 @@
                                  </td>
                               </tr>
 
-                             
+
                               <div class="modal fade billingdelete-modal-xl{{ $Billing_datas['unique_key'] }}"
                                     tabindex="-1" role="dialog"data-bs-backdrop="static"
                                     aria-labelledby="billingdeleteLargeModalLabel{{ $Billing_datas['unique_key'] }}"

@@ -200,8 +200,8 @@
                     '<option value="" selected disabled class="text-muted">Select Product</option></select>' +
                     '</td>' +
                     '<td><input type="text" class="form-control measurements" id="measurements" name="measurements[]" placeholder="Measurement" /></td>' +
-                    '<td><button class="additemplus_button addproducts" style="margin-right: 3px;" type="button" id="" value="Add"><i class="fe fe-plus-circle"></i></button>' +
-                    '<button class="additemminus_button remove-tr" type="button" id="" value="Add"><i class="fe fe-minus-circle"></i></button></td>' +
+                    '<td><button class="btn additemplus_button addproducts" style="margin-right: 3px;" type="button" id="" value="Add"><i class="fe fe-plus-circle"></i></button>' +
+                    '<button class="btn additemminus_button remove-tr" type="button" id="" value="Add"><i class="fe fe-minus-circle"></i></button></td>' +
                     '</tr>'
                 );
                 $(".product_fields").find('.js-example-basic-single').select2();
@@ -234,7 +234,7 @@
                 });
 
             });
-    
+
             $(document).on('click', '.remove-tr', function() {
               $(this).parents('tr').remove();
             });
@@ -258,10 +258,10 @@ var l = 1;
                     '<td><input type="text" class="form-control billing_measurement" id="billing_measurement" name="billing_measurement[]" placeholder="Measurement" /></td>' +
                     '<td><input type="text" class="form-control billing_qty" id="billing_qty" name="billing_qty[]" placeholder="qty" /></td>' +
                     '<td><input type="text" class="form-control billing_rateperqty" id="billing_rateperqty" name="billing_rateperqty[]" placeholder="Rate / Qty" /></td>' +
-                    '<td><input type="text" class="form-control billing_total" id="billing_total" name="billing_total[]" />' +
+                    '<td><input type="text" class="form-control billing_total" id="billing_total" name="billing_total[]" placeholder="total"  />' +
                     '</td>' +
-                    '<td><button class="additemplus_button addbillingproducts" style="margin-right: 3px;" type="button" id="" value="Add"><i class="fe fe-plus-circle"></i></button>' +
-                    '<button class="additemminus_button remove-billingtr" type="button" id="" value="Add"><i class="fe fe-minus-circle"></i></button></td>' +
+                    '<td><button class=" btn additemplus_button addbillingproducts" style="margin-right: 3px;" type="button" id="" value="Add"><i class="fe fe-plus-circle"></i></button>' +
+                    '<button class=" btn additemminus_button remove-billingtr" type="button" id="" value="Add"><i class="fe fe-minus-circle"></i></button></td>' +
                     '</tr>'
                 );
                 $(".billing_products").find('.js-example-basic-single').select2();
@@ -300,7 +300,7 @@ var l = 1;
             });
 
 
-          $(document.body).on("change", ".billing_customerid", function() {  
+          $(document.body).on("change", ".billing_customerid", function() {
             var customer_id = this.value;
 
                 $.ajax({
@@ -350,8 +350,8 @@ var l = 1;
                               });
 
                               var column_5 = $('<td/>', {
-                              html: '<button class="additemplus_button addbillingproducts" type="button" id="" value="Add"><i class="fe fe-plus-circle"></i></button>' +
-                                    '<button class="additemminus_button remove-billingtr" type="button" id="" value="Add"><i class="fe fe-minus-circle"></i></button>',
+                              html: '<button class="btn additemplus_button addbillingproducts" type="button" id="" value="Add"><i class="fe fe-plus-circle"></i></button>' +
+                                    '<button class="btn additemminus_button remove-billingtr" type="button" id="" value="Add"><i class="fe fe-minus-circle"></i></button>',
                               });
 
                               var row = $('<tr id=stages_tr/>', {}).append(column_0,
@@ -381,7 +381,7 @@ var l = 1;
                                                       selectedValues.push(option);
                                               }
                                           }
-                                        
+
                                           $('#billing_product_id' + h).append(selectedValues);
                                           //add_count.push(Object.keys(selectedValues).length);
                                       }
@@ -389,13 +389,13 @@ var l = 1;
                           }
 
                         }
-                        
-                        
+
+
                     }
                 });
-          });    
-          
-          
+          });
+
+
 
 
         $(document).on("keyup", "input[name*=billing_rateperqty]", function() {
@@ -455,10 +455,10 @@ var l = 1;
                 var billing_grandtotalamount = $('.billing_grandtotalamount').val();
                 var balance_amount = Number(billing_grandtotalamount) - Number(billing_paidamount);
                 $('.billing_balanceamount').val(balance_amount.toFixed(2));
-                $('.billing_balance').text('₹ ' + balance_amount.toFixed(2));       
-        }); 
+                $('.billing_balance').text('₹ ' + balance_amount.toFixed(2));
+        });
 
-          
+
 
         $(document).on("keyup", "input[name*=billing_qty]", function() {
 
@@ -516,8 +516,8 @@ var l = 1;
                 var billing_grandtotalamount = $('.billing_grandtotalamount').val();
                 var balance_amount = Number(billing_grandtotalamount) - Number(billing_paidamount);
                 $('.billing_balanceamount').val(balance_amount.toFixed(2));
-                $('.billing_balance').text('₹ ' + balance_amount.toFixed(2));       
-        }); 
+                $('.billing_balance').text('₹ ' + balance_amount.toFixed(2));
+        });
 
 
 
@@ -550,10 +550,10 @@ var l = 1;
                 var billing_grandtotalamount = $('.billing_grandtotalamount').val();
                 var balance_amount = Number(billing_grandtotalamount) - Number(billing_paidamount);
                 $('.billing_balanceamount').val(balance_amount.toFixed(2));
-                $('.billing_balance').text('₹ ' + balance_amount.toFixed(2));    
-                
+                $('.billing_balance').text('₹ ' + balance_amount.toFixed(2));
+
               }
-        }); 
+        });
 
 
       $(document).on("keyup", 'input.billingdiscount', function() {
@@ -574,7 +574,7 @@ var l = 1;
                 var billing_grandtotalamount = $('.billing_grandtotalamount').val();
                 var balance_amount = Number(billing_grandtotalamount) - Number(billing_paidamount);
                 $('.billing_balanceamount').val(balance_amount.toFixed(2));
-                $('.billing_balance').text('₹ ' + balance_amount.toFixed(2));   
+                $('.billing_balance').text('₹ ' + balance_amount.toFixed(2));
 
           }else if(billingdiscount_type == 'Percentage'){
 
@@ -591,7 +591,7 @@ var l = 1;
                 var billing_grandtotalamount = $('.billing_grandtotalamount').val();
                 var balance_amount = Number(billing_grandtotalamount) - Number(billing_paidamount);
                 $('.billing_balanceamount').val(balance_amount.toFixed(2));
-                $('.billing_balance').text('₹ ' + balance_amount.toFixed(2));   
+                $('.billing_balance').text('₹ ' + balance_amount.toFixed(2));
 
           }else if(billingdiscount_type == 'none'){
 
@@ -607,9 +607,9 @@ var l = 1;
                 var billing_grandtotalamount = $('.billing_grandtotalamount').val();
                 var balance_amount = Number(billing_grandtotalamount) - Number(billing_paidamount);
                 $('.billing_balanceamount').val(balance_amount.toFixed(2));
-                $('.billing_balance').text('₹ ' + balance_amount.toFixed(2));   
+                $('.billing_balance').text('₹ ' + balance_amount.toFixed(2));
           }
-      }); 
+      });
 
 
 
@@ -689,7 +689,7 @@ var l = 1;
                 var billing_grandtotalamount = $('.billing_grandtotalamount').val();
                 var balance_amount = Number(billing_grandtotalamount) - Number(billing_paidamount);
                 $('.billing_balanceamount').val(balance_amount.toFixed(2));
-                $('.billing_balance').text('₹ ' + balance_amount.toFixed(2));   
+                $('.billing_balance').text('₹ ' + balance_amount.toFixed(2));
       });
 
   </script>

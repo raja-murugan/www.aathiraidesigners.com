@@ -20,7 +20,7 @@
         <li class="nav-item dropdown">
             <a href="javascript:void(0)" class="user-link  nav-link" data-bs-toggle="dropdown">
                 <span class="user-img">
-                    <img src="{{ asset('assets/backend/img/profiles/avatar-07.jpg') }}" alt="img" class="profilesidebar">
+                    <img src="{{ asset('assets/backend/img/profile.jpg') }}" alt="img" class="profilesidebar">
                     <span class="animate-circle"></span>
                 </span>
                 <span class="user-content">
