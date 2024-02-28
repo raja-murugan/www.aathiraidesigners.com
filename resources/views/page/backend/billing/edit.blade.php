@@ -149,25 +149,24 @@
 
 
                               <div class="row">
-                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="col-lg-4 col-md-6 col-sm-12" hidden>
                                        <div class="form-group">
                                           <label >Discount Type<span class="text-danger">*</span></label>
                                           <select  class="form-control  select js-example-basic-single billingdiscount_type" name="billingdiscount_type" id="billingdiscount_type" required>
                                              <option value="none" selected > Select </option>
-                                                <option value="Percentage"@if ('Percentage' === $BillingData->discount_type) selected='selected' @endif>Percentage(%)</option>
                                                 <option value="Fixed"@if ('Fixed' === $BillingData->discount_type) selected='selected' @endif>Fixed</option>
                                           </select>
                                        </div>
                                     </div>
-                                    <div class="col-lg-3 col-md-6 col-sm-12">
+                                    <div class="col-lg-4 col-md-4 col-sm-12">
                                        <div class="form-group">
                                           <label >Discount Amount<span class="text-danger">*</span></label>
                                           <input type="text" class="form-control billingdiscount"  name="discount" id="discount" placeholder="0"  value="{{ $BillingData->discount }}">
                                        </div>
                                     </div>
-                                    
-                              </div>
 
+
+                                    <div class="col-lg-8 col-md-8 col-sm-12">
                                                    <div class="row mb-4">
                                                       <div class="form-group">
                                                      
@@ -229,7 +228,11 @@
                                                             </table>
                                                         </div>
                                                       </div>
-                                                    </div>
+                                                   </div>
+                                    </div>
+                              </div>
+
+                                                   
 
 
                               <div class="form-group-item border-0 p-0 py-3">

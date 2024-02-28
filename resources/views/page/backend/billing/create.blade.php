@@ -81,10 +81,10 @@
                                                     <thead
                                                         style="background: linear-gradient(320deg, #DDCEFF 0%, #DBECFF 100%);">
                                                         <tr>
-                                                            <th style="width:15%">Product</th>
-                                                            <th style="width:50%">Measurement</th>
+                                                            <th style="width:25%">Product</th>
+                                                            <th style="width:30%">Measurement</th>
                                                             <th style="width:10%">Qty</th>
-                                                            <th style="width:10%">Rate / Qty</th>
+                                                            <th style="width:15%">Rate / Qty</th>
                                                             <th style="width:15%">Total</th>
                                                             <th style="width:10%" class="no-sort">Action</th>
                                                         </tr>
@@ -102,18 +102,10 @@
                                                         <select
                                                             class="form-control  billing_product_id select js-example-basic-single"
                                                             name="billing_product_id[]" id="billing_product_id1" required>
-                                                            <option value="" selected disabled class="text-muted">
-                                                                Select Product
-                                                            </option>
-                                                            @foreach ($products as $products_arr)
-                                                                <option value="{{ $products_arr->id }}">
-                                                                    {{ $products_arr->name }}
-                                                                </option>
-                                                            @endforeach
                                                         </select>
                                                     </td>
                                                     <td><input type="text" class="form-control billing_measurement"
-                                                            id="billing_measurement" name="billing_measurement[]"
+                                                            id="billing_measurement1" name="billing_measurement[]"
                                                             placeholder="Measurement" /></td>
 
                                                     <td><input type="text" class="form-control billing_qty"
@@ -162,7 +154,7 @@
                                                     class="form-control  select js-example-basic-single billingdiscount_type"
                                                     name="billingdiscount_type" id="billingdiscount_type" required>
                                                     <option value="none"> Select </option>
-                                                    <option value="Percentage">Percentage(%)</option>
+                                                    <option value="Percentage" >Percentage(%)</option>
                                                     <option value="Fixed" selected>Fixed</option>
                                                 </select>
                                             </div>

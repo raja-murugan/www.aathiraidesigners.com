@@ -50,7 +50,21 @@
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                        <div class="form-group">
                                           <label >Month<span class="text-danger">*</span></label>
-                                          <input type="date" class="form-control"  name="delivery_date" id="delivery_date"  required>
+                                          <select class="form-control js-example-basic-single salary_month select" name="salary_month" id="salary_month"required>
+                                             <option value="" selected hidden class="text-muted">Select Month </option>
+                                             <option value="01">January</option>
+                                             <option value="02">February</option>
+                                             <option value="03">March</option>
+                                             <option value="04">April</option>
+                                             <option value="05">May</option>
+                                             <option value="06">June</option>
+                                             <option value="07">July</option>
+                                             <option value="08">August</option>
+                                             <option value="09">September</option>
+                                             <option value="10">October</option>
+                                             <option value="11">November</option>
+                                             <option value="12">December</option>
+                                          </select>
                                        </div>
                                     </div>
                                                   
@@ -63,62 +77,18 @@
                               <div class="form-group-item">
                                        <div class="table-responsive no-pagination">
                                           <table class="table table-center table-hover">
-                                             <thead  style="background: linear-gradient(320deg, #DDCEFF 0%, #DBECFF 100%);">
+                                             <thead id="headsalary_detailrow" style="background: linear-gradient(320deg, #DDCEFF 0%, #DBECFF 100%);display:none">
                                                 <tr>
-                                                   <th style="width:25%">Product</th>
-                                                   <th style="width:25%">Measurement</th>
-                                                   <th style="width:10%">Qty</th>
-                                                   <th style="width:14%">Rate / Qty</th>
-                                                   <th style="width:19%">Total</th>
-                                                   <th style="width:7%" class="no-sort">Action</th>
+                                                   <th style="width:18%">Employee</th>
+                                                   <th style="width:16%">Working Hours</th>
+                                                   <th style="width:13%">Salary Amount</th>
+                                                   <th style="width:13%">Paid Salary</th>
+                                                   <th style="width:13%">Balance</th>
+                                                   <th style="width:13%">Amount</th>
+                                                   <th style="width:13%">Note</th>
                                                 </tr>
                                              </thead>
-                                             <tbody class="billingold_products"></div>
-                                             <tbody class="billing_products">
-
-                                                <tr>
-                                                   <td>
-                                                      <input type="hidden" id="billingproducts_id" name="billingproducts_id[]" />
-                                                      <input type="hidden" class="form-control customer_product_id" id="customer_product_id1" name="customer_product_id[]" />
-                                                            <select
-                                                                class="form-control  billing_product_id select js-example-basic-single"
-                                                                name="billing_product_id[]" id="billing_product_id1" required>
-                                                                <option value="" selected disabled class="text-muted">
-                                                                    Select Product
-                                                                </option>
-                                                               
-                                                            </select>
-                                                   </td>
-                                                   <td><input type="text" class="form-control billing_measurement" id="billing_measurement"
-                                                          name="billing_measurement[]" placeholder="Measurement" /></td>
-
-                                                   <td><input type="text" class="form-control billing_qty" id="billing_qty"
-                                                          name="billing_qty[]" placeholder="Qty" /></td>
-
-                                                   <td><input type="text" class="form-control billing_rateperqty" id="billing_rateperqty"
-                                                          name="billing_rateperqty[]" placeholder="Rate / Qty" />
-                                                         </td>
-
-                                                   <td><input type="text" class="form-control billing_total" id="billing_total"
-                                                          name="billing_total[]" readonly />
-                                                      </td>
-
-                                                   <td class="align-items-center">
-                                                         <button class="additemplus_button addbillingproducts" type="button" id="" value="Add"><i class="fe fe-plus-circle"></i></button>
-                                                         <button class="additemminus_button remove-billingtr" type="button" id="" value="Add"><i class="fe fe-minus-circle"></i></button>
-                                                   </td>
-                                                </tr>
-
-                                             </tbody>
-                                             <tbody>
-                                                <tr>
-                                                   <td></td>
-                                                   <td></td>
-                                                   <td></td>
-                                                   <td style="text-align:right;font-size:15px;">Total</td>
-                                                   <td><input type="text" class="form-control total_amount"  name="total_amount" id="total_amount" readonly></td>
-                                                </tr>
-                                             </tbody>
+                                             <tbody id="payoffsalary"></div>
                                           </table>
                                        </div>
                               </div>
@@ -134,7 +104,71 @@
 
 
 
+                        <script>
+$(document).ready(function() {
+     $('.salary_month').on('change', function () {
+        var salary_month = $(this).val();
+        var salary_year = $(".salary_year").val();
+        //alert(salary_month);
+        $.ajax({
+            url: '/gettotal_salary/',
+            type: 'get',
+            data: {
+                salary_month: salary_month,
+                salary_year: salary_year
+            },
+            dataType: 'json',
+            success: function(response) {
+                console.log(response);
+                var len = response.length;
+                $('#payoffsalary').html('');
+                for (var i = 0; i < len; i++) {
 
+                        var column_0 = $('<td/>', {
+                            html: '<input type="" value="' + response[i].employee + '" class="form-control" readonly/><input type="hidden" id="employee_id" name="employee_id[]" value="' + response[i].employeeid + '"/>',
+                        });
+                        var column_1 = $('<td/>', {
+                            html: '<input type="text" id="working_hours" name="working_hours[]" value="' + response[i].total_time + '" class="form-control" readonly/><input type="hidden" id="perhoursalary" name="perhoursalary[]" value="' + response[i].hour_salary + '" class="form-control" readonly/>',
+                        });
+                        var column_2 = $('<td/>', {
+                            html: '<input type="text" id="salary_amount" name="salary_amount[]" style="background: #d6dec4;"  value="' + response[i].total_salary + '" readonly class="form-control salary_amount"/>',
+                        });
+                        var column_3 = $('<td/>', {
+                            html: '<input type="text" id="paid_salary" value="' + response[i].paid_salary + '" name="paid_salary[]" style="color:green" value="" readonly class="form-control paid_salary"/>',
+                        });
+                        var column_4 = $('<td/>', {
+                            html: '<input type="text" id="balance_salary" value="' + response[i].balanceSalaryAmount + '" name="balance_salary[]" style="color:red;" value="" readonly class="form-control balance_salary"/>',
+                        });
+                        var column_5 = $('<td/>', {
+                            html: '<input type="text" id="amountgiven" name="amountgiven[]"  class="form-control amountgiven" ' + response[i].readonly + '  placeholder="' + response[i].placeholder + '"/>',
+                        });
+                        var column_6 = $('<td/>', {
+                            html: '<textarea name="note[]" id="note" class="form-control" ' + response[i].readonly + '  placeholder="' + response[i].noteplaceholder + '"></textarea>',
+                        });
+
+                        var row = $('<tr id=salrydetailrow/>', {}).append(column_0, column_1, column_2,
+                            column_3, column_4, column_5, column_6);
+
+                        $('#payoffsalary').append(row);
+                        $('#headsalary_detailrow').show();
+                }
+            }
+        });
+    });
+
+    $(document).on("keyup", "input[name*=amountgiven]", function() {
+        var amountgiven = $(this).val();
+        var balance_salary = $(this).parents('tr').find('.balance_salary').val();
+        if (Number(amountgiven) > Number(balance_salary)) {
+            alert('!Paid Amount is More than of Total!');
+            $(this).parents('tr').find('.amountgiven').val('');
+        }
+    });
+});
+
+
+
+</script>
 
 
 

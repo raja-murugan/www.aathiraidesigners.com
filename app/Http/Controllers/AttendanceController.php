@@ -185,7 +185,6 @@ class AttendanceController extends Controller
     }
 
 
-
     public function departmentwisefilter(Request $request)
     {
         $department_name = $request->get('department_name');
@@ -311,6 +310,26 @@ class AttendanceController extends Controller
             return redirect()->route('attendance.index')->with('message', 'Added !');
             
         }else {
+
+            // $today = Carbon::now()->format('Y-m-d');
+            // $timenow = Carbon::now()->format('H:i');
+            // $employeename = $request->get('employee');
+            // $employee_id = $request->get('employee_id');
+
+            // $random_no =  rand(100,999);
+
+            // $data = new Attendance();
+            // $data->month = date('m', strtotime($request->get('date')));
+            // $data->year = date('Y', strtotime($request->get('date')));
+            // $data->date = $request->get('date');
+            // $data->employee_id = $request->get('employee_id');
+            // $data->checkin_date = $request->get('date');
+            // $data->checkin_time = $request->get('time');
+            // $data->working_hour = '';
+
+            // $data->status = 1;
+            // $data->save();
+
             
             return redirect()->route('attendance.index')->with('warning', 'Capture Your Photo !');
 
@@ -361,6 +380,30 @@ class AttendanceController extends Controller
 
             return redirect()->route('attendance.index')->with('message', 'Added !');
         }else {
+
+
+            // $today = Carbon::now()->format('Y-m-d');
+            // $timenow = Carbon::now()->format('H:i');
+
+            // $employeename = $request->get('employee');
+            // $employee_id = $request->get('employee_id');
+            // $random_no =  rand(100,999);
+
+            // $checkindata = Attendance::where('checkin_date', '=', $request->get('date'))->where('employee_id', '=', $employee_id)->where('status', '=', 1)->first();
+            // $checkindata->checkout_date = $request->get('date');
+            // $checkindata->checkout_time = $request->get('time');
+
+            // $time1 = strtotime($checkindata->checkin_time);
+            // $time2 = strtotime($request->get('time'));
+            // $difference = ($time2 - $time1) / 60;
+
+            // $hours = floor($difference / 60);
+            // $min = $difference - ($hours * 60);
+            // $total_time = $hours."Hours ".$min."Mins";
+
+            // $checkindata->working_hour = $total_time;
+            // $checkindata->status = 1;
+            // $checkindata->update();
 
             return redirect()->route('attendance.index')->with('warning', 'Capture Your Photo !');
 

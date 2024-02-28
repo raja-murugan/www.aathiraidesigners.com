@@ -226,50 +226,35 @@ class BillingController extends Controller
 
             if($billing_product_id > 0){
 
+
+                    $BillingProduct = new BillingProduct;
+                    $BillingProduct->billing_id = $billing_id;
+                    $BillingProduct->billing_product_id = $billing_product_id;
+                    $BillingProduct->billing_measurement = $request->billing_measurement[$key];
+                    $BillingProduct->billing_qty = $request->billing_qty[$key];
+                    $BillingProduct->billing_rateperqty = $request->billing_rateperqty[$key];
+                    $BillingProduct->billing_total = $request->billing_total[$key];
+                    $BillingProduct->customer_id = $request->get('customer_id');
+                    $BillingProduct->save();
+
+
+
                 $CustomerProducts = CustomerProduct::where('customer_id', '=', $request->get('customer_id'))
-                                                ->where('product_id', '=', $billing_product_id)->where('id', '=', $request->customer_product_id[$key])->first();
+                                                ->where('product_id', '=', $billing_product_id)->first();
 
                 if($CustomerProducts != ""){
 
                     $CustomerProducts->customer_id = $request->get('customer_id');
                     $CustomerProducts->product_id = $billing_product_id;
                     $CustomerProducts->measurements = $request->billing_measurement[$key];
-                    $CustomerProducts->status = 2;
                     $CustomerProducts->update();
-
-
-                    $BillingProduct = new BillingProduct;
-                    $BillingProduct->billing_id = $billing_id;
-                    $BillingProduct->billing_product_id = $billing_product_id;
-                    $BillingProduct->billing_measurement = $request->billing_measurement[$key];
-                    $BillingProduct->billing_qty = $request->billing_qty[$key];
-                    $BillingProduct->billing_rateperqty = $request->billing_rateperqty[$key];
-                    $BillingProduct->billing_total = $request->billing_total[$key];
-                    $BillingProduct->customer_product_id = $request->customer_product_id[$key];
-                    $BillingProduct->customer_id = $request->get('customer_id');
-                    $BillingProduct->save();
 
                 }else {
                     $CustomerProduct = new CustomerProduct;
                     $CustomerProduct->customer_id = $request->get('customer_id');
                     $CustomerProduct->product_id = $billing_product_id;
                     $CustomerProduct->measurements = $request->billing_measurement[$key];
-                    $CustomerProduct->status = 2;
                     $CustomerProduct->save();
-
-                    $CustomerProductID = $CustomerProduct->id;
-
-
-                    $BillingProduct = new BillingProduct;
-                    $BillingProduct->billing_id = $billing_id;
-                    $BillingProduct->billing_product_id = $billing_product_id;
-                    $BillingProduct->billing_measurement = $request->billing_measurement[$key];
-                    $BillingProduct->billing_qty = $request->billing_qty[$key];
-                    $BillingProduct->billing_rateperqty = $request->billing_rateperqty[$key];
-                    $BillingProduct->billing_total = $request->billing_total[$key];
-                    $BillingProduct->customer_product_id = $CustomerProductID;
-                    $BillingProduct->customer_id = $request->get('customer_id');
-                    $BillingProduct->save();
 
                   
                 }
@@ -347,13 +332,6 @@ class BillingController extends Controller
         $different_ids = array_merge(array_diff($purchase_products, $updated_product_ids), array_diff($updated_product_ids, $purchase_products));
 
        
-        if (!empty($different_ids)) {
-            foreach ($different_ids as $key => $different_id) {
-                $getCustomerproductid = BillingProduct::where('id', '=', $different_id)->first();
-
-                CustomerProduct::where('id', $getCustomerproductid->customer_product_id)->update(['status' => 1]);
-            }
-        }
 
 
         if (!empty($different_ids)) {
@@ -378,7 +356,7 @@ class BillingController extends Controller
                     $updateData->update();
 
 
-                    $CustomerProducts = CustomerProduct::where('customer_id', '=', $BillingData->customer_id)->where('id', '=', $request->customer_product_id[$key])->first();
+                    $CustomerProducts = CustomerProduct::where('customer_id', '=', $BillingData->customer_id)->where('product_id', '=', $request->billing_product_id[$key])->first();
 
                     $CustomerProducts->product_id = $request->billing_product_id[$key];
                     $CustomerProducts->measurements = $request->billing_measurement[$key];
@@ -393,11 +371,7 @@ class BillingController extends Controller
                         $CustomerProduct->customer_id = $BillingData->customer_id;
                         $CustomerProduct->product_id = $request->billing_product_id[$key];
                         $CustomerProduct->measurements = $request->billing_measurement[$key];
-                        $CustomerProduct->status = 2;
                         $CustomerProduct->save();
-
-                        $CustomerProductID = $CustomerProduct->id;
-
 
                         $BillingProduct = new BillingProduct;
                         $BillingProduct->billing_id = $billing_id;
@@ -406,7 +380,6 @@ class BillingController extends Controller
                         $BillingProduct->billing_qty = $request->billing_qty[$key];
                         $BillingProduct->billing_rateperqty = $request->billing_rateperqty[$key];
                         $BillingProduct->billing_total = $request->billing_total[$key];
-                        $BillingProduct->customer_product_id = $CustomerProductID;
                         $BillingProduct->save();
                     }
                 }

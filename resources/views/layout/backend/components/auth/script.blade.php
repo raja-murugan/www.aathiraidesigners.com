@@ -255,7 +255,7 @@ var l = 1;
                     '<select class="form-control  billing_product_id select js-example-basic-single"  name="billing_product_id[]" id="billing_product_id' + k + '" required>' +
                     '<option value="" selected disabled class="text-muted">Select Product</option></select>' +
                     '</td>' +
-                    '<td><input type="text" class="form-control billing_measurement" id="billing_measurement" name="billing_measurement[]" placeholder="Measurement" /></td>' +
+                    '<td><input type="text" class="form-control billing_measurement" id="billing_measurement' + k + '" name="billing_measurement[]" placeholder="Measurement" /></td>' +
                     '<td><input type="text" class="form-control billing_qty" id="billing_qty" name="billing_qty[]" placeholder="qty" /></td>' +
                     '<td><input type="text" class="form-control billing_rateperqty" id="billing_rateperqty" name="billing_rateperqty[]" placeholder="Rate / Qty" /></td>' +
                     '<td><input type="text" class="form-control billing_total" id="billing_total" name="billing_total[]" placeholder="total"  />' +
@@ -266,10 +266,14 @@ var l = 1;
                 );
                 $(".billing_products").find('.js-example-basic-single').select2();
 
-
+                var billing_customerid = $(".billing_customerid").val();
                 $.ajax({
-                    url: '/getproducts/',
+                    url: '/getcustomerwiseproducts/',
                     type: 'get',
+                    data: {
+                      _token: "{{ csrf_token() }}",
+                      billing_customerid: billing_customerid,
+                    },
                     dataType: 'json',
                     success: function(response) {
                         //console.log(response['data']);
@@ -293,107 +297,274 @@ var l = 1;
                     }
                 });
 
+
+
+                if(k == '2'){
+                                $('#billing_product_id' + k).on('change', function() {
+                                  var billing_product_id = this.value;
+
+                                  $.ajax({
+                                    url: '/getmeasurementforproduct/',
+                                    type: 'get',
+                                    data: {
+                                      _token: "{{ csrf_token() }}",
+                                      billing_product_id: billing_product_id,
+                                      billing_customerid: billing_customerid,
+                                    },
+                                    dataType: 'json',
+                                    success: function(response) {
+                                          $('#billing_measurement' + 2).val('');
+                                          $('#billing_measurement' + 2).val(response['data']);
+                                        }
+                                    });
+                                });
+                }
+
+
+                if(k == '3'){
+                                $('#billing_product_id' + k).on('change', function() {
+                                  var billing_product_id = this.value;
+
+                                  $.ajax({
+                                    url: '/getmeasurementforproduct/',
+                                    type: 'get',
+                                    data: {
+                                      _token: "{{ csrf_token() }}",
+                                      billing_product_id: billing_product_id,
+                                      billing_customerid: billing_customerid,
+                                    },
+                                    dataType: 'json',
+                                    success: function(response) {
+                                          $('#billing_measurement' + 3).val('');
+                                          $('#billing_measurement' + 3).val(response['data']);
+                                        }
+                                    });
+                                });
+                }
+
+                if(k == '4'){
+                                $('#billing_product_id' + k).on('change', function() {
+                                  var billing_product_id = this.value;
+
+                                  $.ajax({
+                                    url: '/getmeasurementforproduct/',
+                                    type: 'get',
+                                    data: {
+                                      _token: "{{ csrf_token() }}",
+                                      billing_product_id: billing_product_id,
+                                      billing_customerid: billing_customerid,
+                                    },
+                                    dataType: 'json',
+                                    success: function(response) {
+                                          $('#billing_measurement' + 4).val('');
+                                          $('#billing_measurement' + 4).val(response['data']);
+                                        }
+                                    });
+                                });
+                }
+
+
+                if(k == '5'){
+                                $('#billing_product_id' + k).on('change', function() {
+                                  var billing_product_id = this.value;
+
+                                  $.ajax({
+                                    url: '/getmeasurementforproduct/',
+                                    type: 'get',
+                                    data: {
+                                      _token: "{{ csrf_token() }}",
+                                      billing_product_id: billing_product_id,
+                                      billing_customerid: billing_customerid,
+                                    },
+                                    dataType: 'json',
+                                    success: function(response) {
+                                          $('#billing_measurement' + 5).val('');
+                                          $('#billing_measurement' + 5).val(response['data']);
+                                        }
+                                    });
+                                });
+                }
+
+                if(k == '6'){
+                                $('#billing_product_id' + k).on('change', function() {
+                                  var billing_product_id = this.value;
+
+                                  $.ajax({
+                                    url: '/getmeasurementforproduct/',
+                                    type: 'get',
+                                    data: {
+                                      _token: "{{ csrf_token() }}",
+                                      billing_product_id: billing_product_id,
+                                      billing_customerid: billing_customerid,
+                                    },
+                                    dataType: 'json',
+                                    success: function(response) {
+                                          $('#billing_measurement' + 6).val('');
+                                          $('#billing_measurement' + 6).val(response['data']);
+                                        }
+                                    });
+                                });
+                }
+
             });
 
-            $(document).on('click', '.remove-billingtr', function() {
-              $(this).parents('tr').remove();
-            });
+            
 
 
-          $(document.body).on("change", ".billing_customerid", function() {
-            var customer_id = this.value;
+            $(document.body).on("change", ".billing_customerid", function() {
+              var billing_customerid = this.value;
 
-                $.ajax({
-                    url: '/getCustomerProducts/',
+              $.ajax({
+                    url: '/getcustomerwiseproducts/',
                     type: 'get',
                     data: {
                       _token: "{{ csrf_token() }}",
-                      customer_id: customer_id,
+                      billing_customerid: billing_customerid,
                     },
                     dataType: 'json',
                     success: function(response) {
-                      $('.billingold_products').html('');
+                      console.log(response['data']);
+                      var output = response['data'].length;
 
-                        console.log(response);
-                        if (response.status !== 'false') {
+                      $('#billing_product_id' + 1).empty();
 
-                          var len = response.length;
-                          var h = -1;
-                          for (var i = 0; i < len; i++) {
-                            if(response[i].measurements != null){
-                                var Measurement = response[i].measurements;
-                            }else {
-                              var Measurement = '';
-                            }
-
-                              var column_0 = $('<td/>', {
-                              html: '<input type="hidden" id="billingproducts_id" name="billingproducts_id[]"/><input type="hidden" id="hiddenproducts_id' + i + '" name="hiddenproducts_id[]" class="hiddenproducts_id" value="' + response[i].product_id + '"/>' +
-                                    '<input type="hidden" class="form-control customer_product_id" id="customer_product_id' + i + '" name="customer_product_id[]" <input type="hidden" class="form-control customer_product_id" id="customer_product_id' + i + '" name="customer_product_id[]" value="' + response[i].id + '"/>' +
-                                      '<select class="form-control  billing_product_id select js-example-basic-single"  name="billing_product_id[]" id="billing_product_id' + i + '" required>' +
-                                      '<option value="" selected disabled class="text-muted">Select Product</option></select>',
-                              });
-
-                              var column_1 = $('<td/>', {
-                              html: '<input type="text" class="form-control billing_measurement" id="billing_measurement" name="billing_measurement[]" placeholder="Measurement" value="' + Measurement + '"/>',
-                              });
-
-                              var column_2 = $('<td/>', {
-                              html: '<input type="text" class="form-control billing_qty" id="billing_qty" name="billing_qty[]" placeholder="Qty" />',
-                              });
-
-                              var column_3 = $('<td/>', {
-                              html: '<input type="text" class="form-control billing_rateperqty" id="billing_rateperqty" name="billing_rateperqty[]" placeholder="Rate / Qty" />',
-                              });
-
-                              var column_4 = $('<td/>', {
-                              html: '<input type="text" class="form-control billing_total" id="billing_total" name="billing_total[]" readonly />',
-                              });
-
-                              var column_5 = $('<td/>', {
-                              html: '<button class="btn additemplus_button addbillingproducts" type="button" id="" value="Add"><i class="fe fe-plus-circle"></i></button>' +
-                                    '<button class="btn additemminus_button remove-billingtr" type="button" id="" value="Add"><i class="fe fe-minus-circle"></i></button>',
-                              });
-
-                              var row = $('<tr id=stages_tr/>', {}).append(column_0,
-                                              column_1, column_2, column_3, column_4, column_5);
-
-                                          $('.billingold_products').append(row);
+                          var $select = $('#billing_product_id' + 1).append(
+                            $('<option>', {
+                                value: '0',
+                                text: 'Select'
+                            }));
+                          $('#billing_product_id' + 1).append($select);
 
 
+                            for (var i = 0; i < output; i++) {
+                                $('#billing_product_id' + 1).append($('<option>', {
+                                    value: response['data'][i].id,
+                                    text: response['data'][i].name
+                                }));
 
-                                    $.ajax({
-                                    url: '/getproducts/',
+
+                                $('#billing_product_id' + 1).on('change', function() {
+                                  var billing_product_id = this.value;
+
+                                  $.ajax({
+                                    url: '/getmeasurementforproduct/',
                                     type: 'get',
+                                    data: {
+                                      _token: "{{ csrf_token() }}",
+                                      billing_product_id: billing_product_id,
+                                      billing_customerid: billing_customerid,
+                                    },
                                     dataType: 'json',
                                     success: function(response) {
-                                          //console.log(response['data']);
-                                          var len = response['data'].length;
-
-                                          var selectedValues = new Array();
-                                          ++h;
-                                          if (len > 0) {
-                                              for (var i = 0; i < len; i++) {
-                                                var product_id = $('#hiddenproducts_id' + h).val();
-
-                                                      var id = response['data'][i].id;
-                                                      var name = response['data'][i].name;
-                                                      var option = '<option value="'+ id +'" '+ (id == product_id ? ' selected ' : '') +'>'+ name +'</option>';
-                                                      selectedValues.push(option);
-                                              }
-                                          }
-
-                                          $('#billing_product_id' + h).append(selectedValues);
-                                          //add_count.push(Object.keys(selectedValues).length);
-                                      }
+                                          $('#billing_measurement' + 1).val('');
+                                          $('#billing_measurement' + 1).val(response['data']);
+                                        }
                                     });
-                          }
-
-                        }
+                                });
 
 
+
+                            }
                     }
                 });
-          });
+            });
+
+
+
+          // $(document.body).on("change", ".billing_customerid", function() {
+          //   var customer_id = this.value;
+
+          //       $.ajax({
+          //           url: '/getCustomerProducts/',
+          //           type: 'get',
+          //           data: {
+          //             _token: "{{ csrf_token() }}",
+          //             customer_id: customer_id,
+          //           },
+          //           dataType: 'json',
+          //           success: function(response) {
+          //             $('.billingold_products').html('');
+
+          //               console.log(response);
+          //               if (response.status !== 'false') {
+
+          //                 var len = response.length;
+          //                 var h = -1;
+          //                 for (var i = 0; i < len; i++) {
+          //                   if(response[i].measurements != null){
+          //                       var Measurement = response[i].measurements;
+          //                   }else {
+          //                     var Measurement = '';
+          //                   }
+
+          //                     var column_0 = $('<td/>', {
+          //                     html: '<input type="hidden" id="billingproducts_id" name="billingproducts_id[]"/><input type="hidden" id="hiddenproducts_id' + i + '" name="hiddenproducts_id[]" class="hiddenproducts_id" value="' + response[i].product_id + '"/>' +
+          //                           '<input type="hidden" class="form-control customer_product_id" id="customer_product_id' + i + '" name="customer_product_id[]" <input type="hidden" class="form-control customer_product_id" id="customer_product_id' + i + '" name="customer_product_id[]" value="' + response[i].id + '"/>' +
+          //                             '<select class="form-control  billing_product_id select js-example-basic-single"  name="billing_product_id[]" id="billing_product_id' + i + '" required>' +
+          //                             '<option value="" selected disabled class="text-muted">Select Product</option></select>',
+          //                     });
+
+          //                     var column_1 = $('<td/>', {
+          //                     html: '<input type="text" class="form-control billing_measurement" id="billing_measurement" name="billing_measurement[]" placeholder="Measurement" value="' + Measurement + '"/>',
+          //                     });
+
+          //                     var column_2 = $('<td/>', {
+          //                     html: '<input type="text" class="form-control billing_qty" id="billing_qty" name="billing_qty[]" placeholder="Qty" />',
+          //                     });
+
+          //                     var column_3 = $('<td/>', {
+          //                     html: '<input type="text" class="form-control billing_rateperqty" id="billing_rateperqty" name="billing_rateperqty[]" placeholder="Rate / Qty" />',
+          //                     });
+
+          //                     var column_4 = $('<td/>', {
+          //                     html: '<input type="text" class="form-control billing_total" id="billing_total" name="billing_total[]" readonly />',
+          //                     });
+
+          //                     var column_5 = $('<td/>', {
+          //                     html: '<button class="btn additemplus_button addbillingproducts" type="button" id="" value="Add"><i class="fe fe-plus-circle"></i></button>' +
+          //                           '<button class="btn additemminus_button remove-billingtr" type="button" id="" value="Add"><i class="fe fe-minus-circle"></i></button>',
+          //                     });
+
+          //                     var row = $('<tr id=stages_tr/>', {}).append(column_0,
+          //                                     column_1, column_2, column_3, column_4, column_5);
+
+          //                                 $('.billingold_products').append(row);
+
+
+
+          //                           $.ajax({
+          //                           url: '/getproducts/',
+          //                           type: 'get',
+          //                           dataType: 'json',
+          //                           success: function(response) {
+          //                                 //console.log(response['data']);
+          //                                 var len = response['data'].length;
+
+          //                                 var selectedValues = new Array();
+          //                                 ++h;
+          //                                 if (len > 0) {
+          //                                     for (var i = 0; i < len; i++) {
+          //                                       var product_id = $('#hiddenproducts_id' + h).val();
+
+          //                                             var id = response['data'][i].id;
+          //                                             var name = response['data'][i].name;
+          //                                             var option = '<option value="'+ id +'" '+ (id == product_id ? ' selected ' : '') +'>'+ name +'</option>';
+          //                                             selectedValues.push(option);
+          //                                     }
+          //                                 }
+
+          //                                 $('#billing_product_id' + h).append(selectedValues);
+          //                                 //add_count.push(Object.keys(selectedValues).length);
+          //                             }
+          //                           });
+          //                 }
+
+          //               }
+
+
+          //           }
+          //       });
+          // });
 
 
 

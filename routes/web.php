@@ -218,4 +218,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
 
 Route::get('getproducts/', [ProductController::class, 'getproducts']);
-Route::get('/getCustomerProducts', [CustomerController::class, 'getCustomerProducts']);
+
+Route::get('/getcustomerwiseproducts', [CustomerController::class, 'getcustomerwiseproducts']);
+Route::get('/getmeasurementforproduct', [CustomerController::class, 'getmeasurementforproduct']);
+Route::get('/gettotal_salary', [PayoffController::class, 'gettotal_salary']);

@@ -32,13 +32,8 @@ class CustomerController extends Controller
             foreach ($CustomerProduct as $key => $CustomerProducts_arr) {
 
                 $productarr = Product::findOrFail($CustomerProducts_arr->product_id);
-                if($CustomerProducts_arr->status == 1){
-                    $status = 'Processing';
-                }else {
-                    $status = '';
-                }
 
-                $billing_product = BillingProduct::where('billing_product_id', '=', $CustomerProducts_arr->product_id)->where('customer_product_id', '=', $CustomerProducts_arr->id)->first();
+                $billing_product = BillingProduct::where('billing_product_id', '=', $CustomerProducts_arr->product_id)->where('customer_id', '=', $datas->id)->first();
                 if($billing_product != ""){
                     $quantity = $billing_product->billing_qty;
                     $rate = $billing_product->billing_rateperqty;
@@ -57,7 +52,7 @@ class CustomerController extends Controller
                     'product_id' => $CustomerProducts_arr->product_id,
                     'customer_id' => $CustomerProducts_arr->customer_id,
                     'id' => $CustomerProducts_arr->id,
-                    'status' => $status,
+                    'status' => '',
                     'quantity' => $quantity,
                     'rate' => $rate,
                     'billingstatus' => $billingstatus,
@@ -113,7 +108,6 @@ class CustomerController extends Controller
                 $CustomerProduct->customer_id = $customer_id;
                 $CustomerProduct->product_id = $product_id;
                 $CustomerProduct->measurements = $request->measurements[$key];
-                $CustomerProduct->status = 1;
                 $CustomerProduct->save();
             }
             
@@ -127,7 +121,7 @@ class CustomerController extends Controller
     public function edit($unique_key)
     {
         $CustomerData = Customer::where('unique_key', '=', $unique_key)->first();
-        $CustomerProducts = CustomerProduct::where('customer_id', '=', $CustomerData->id)->where('status', '=', 1)->get();
+        $CustomerProducts = CustomerProduct::where('customer_id', '=', $CustomerData->id)->get();
 
         $products = Product::where('soft_delete', '!=', 1)->latest('created_at')->get();
         $today = Carbon::now()->format('Y-m-d');
@@ -149,21 +143,21 @@ class CustomerController extends Controller
         $customer_id = $CustomerData->id;
 
 
-        // $getInserted = CustomerProduct::where('customer_id', '=', $customer_id)->get();
-        // $purchase_products = array();
-        // foreach ($getInserted as $key => $getInserted_produts) {
-        //     $purchase_products[] = $getInserted_produts->id;
-        // }
+        $getInserted = CustomerProduct::where('customer_id', '=', $customer_id)->get();
+        $purchase_products = array();
+        foreach ($getInserted as $key => $getInserted_produts) {
+            $purchase_products[] = $getInserted_produts->id;
+        }
 
-        // $updated_products = $request->customer_products_id;
-        // $updated_product_ids = array_filter($updated_products);
-        // $different_ids = array_merge(array_diff($purchase_products, $updated_product_ids), array_diff($updated_product_ids, $purchase_products));
+        $updated_products = $request->customer_products_id;
+        $updated_product_ids = array_filter($updated_products);
+        $different_ids = array_merge(array_diff($purchase_products, $updated_product_ids), array_diff($updated_product_ids, $purchase_products));
 
-        // if (!empty($different_ids)) {
-        //     foreach ($different_ids as $key => $different_id) {
-        //         CustomerProduct::where('id', $different_id)->delete();
-        //     }
-        // }
+        if (!empty($different_ids)) {
+            foreach ($different_ids as $key => $different_id) {
+                CustomerProduct::where('id', $different_id)->delete();
+            }
+        }
 
 
 
@@ -184,7 +178,6 @@ class CustomerController extends Controller
                     $CustomerProduct->customer_id = $customer_id;
                     $CustomerProduct->product_id = $request->product_id[$key];
                     $CustomerProduct->measurements = $request->measurements[$key];
-                    $CustomerProduct->status = 1;
                     $CustomerProduct->save();
                 }
             }
@@ -220,19 +213,59 @@ class CustomerController extends Controller
 
 
 
-    public function getCustomerProducts()
-    {
-        $customer_id = request()->get('customer_id');
+    // public function getCustomerProducts()
+    // {
+    //     $customer_id = request()->get('customer_id');
 
-        $customerproducts = CustomerProduct::where('customer_id', '=', $customer_id)->where('status', '=', 1)->get();
+    //     $customerproducts = CustomerProduct::where('customer_id', '=', $customer_id)->where('status', '=', 1)->get();
         
-        if (isset($customerproducts) & !empty($customerproducts)) {
-            echo json_encode($customerproducts);
-        }else{
-            echo json_encode(
-                array('status' => 'false')
-            );
+    //     if (isset($customerproducts) & !empty($customerproducts)) {
+    //         echo json_encode($customerproducts);
+    //     }else{
+    //         echo json_encode(
+    //             array('status' => 'false')
+    //         );
+    //     }
+    // }
+
+
+    public function getcustomerwiseproducts()
+    {
+        $customer_id = request()->get('billing_customerid');
+
+        $customerproducts = CustomerProduct::where('customer_id', '=', $customer_id)->get();
+        if($customerproducts != ""){
+
+            $Customer_data = [];
+            foreach ($customerproducts as $key => $CustomerProducts_arr) {
+    
+                $productarr = Product::findOrFail($CustomerProducts_arr->product_id);
+    
+                $Customer_data[] = array(
+                    'id' => $productarr->id,
+                    'name' => $productarr->name,
+                );
+            }
+            $userData['data'] = $Customer_data;
+            echo json_encode($userData);
+
+        }else {
+            $GetProduct = Product::where('soft_delete', '!=', 1)->get();
+            $userData['data'] = $GetProduct;
+            echo json_encode($userData);
+
         }
+    }
+
+
+    public function getmeasurementforproduct()
+    {
+        $customer_id = request()->get('billing_customerid');
+        $billing_product_id = request()->get('billing_product_id');
+
+        $Getmeasurement = CustomerProduct::where('customer_id', '=', $customer_id)->where('product_id', '=', $billing_product_id)->first();
+        $userData['data'] = $Getmeasurement->measurements;
+        echo json_encode($userData);
     }
 
 
