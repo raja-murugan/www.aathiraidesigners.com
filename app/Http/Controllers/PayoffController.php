@@ -173,34 +173,148 @@ class PayoffController extends Controller
         $today = $request->get('from_date');
         $timenow = Carbon::now()->format('H:i');
 
-        $data = Payoff::where('soft_delete', '!=', 1)->where('date', '=', $today)->orderBy('id', 'DESC')->get();
+
+        $time = strtotime($today);
+        $curent_month = date("F",$time);
+
+
+        $month = date("m",strtotime($today));
+        $year = date("Y",strtotime($today));
+
+        $list=array();
+        $monthdates = [];
+        $maxDays = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+        for($d=1; $d<=$maxDays; $d++)
+        {
+            $times = mktime(12, 0, 0, $month, $d, $year);
+            if (date('m', $times) == $month)
+                $list[] = date('d', $times);
+                $monthdates[] = date('Y-m-d', $times);
+        }
+
+
 
         $Payoff_data = [];
-        foreach ($data as $key => $datas) {
-            
+        $totalmins = 0;
+        foreach (($monthdates) as $key => $monthdate_arr) {
+            $employees = Employee::where('soft_delete', '!=', 1)->get();
+            foreach ($employees as $key => $employees_arr) {
 
-            $employee = Employee::findOrFail($datas->employee_id);
+                $attendencedata = Attendance::where('employee_id', '=', $employees_arr->id)->where('date', '=', $monthdate_arr)->first();
+                if($attendencedata != ""){
 
-            $Payoff_data[] = array(
-                'unique_key' => $datas->unique_key,
-                'date' => $datas->date,
-                'time' => $datas->time,
-                'month' => $datas->month,
-                'year' => $datas->year,
-                'employee_id' => $datas->employee_id,
-                'employee' => $employee->name,
-                'total_working_hour' => $datas->total_working_hour,
-                'perhoursalary' => $datas->perhoursalary,
-                'salaryamount' => $datas->salaryamount,
-                'totalpaidsalary' => $datas->totalpaidsalary,
-                'balancesalary' => $datas->balancesalary,
-                'note' => $datas->note,
-                'id' => $datas->id,
-            );
+                    if($attendencedata->status == 1){
+                        $status = 'P';
+                        $attendence_id = $attendencedata->id;
 
+                        if($attendencedata->checkout_time != ""){
+                            $time1 = strtotime($attendencedata->checkin_time);
+                            $time2 = strtotime($attendencedata->checkout_time);
+                            $total_minits = ($time2 - $time1) / 60;
+        
+                            $workinghour = $attendencedata->working_hour;
+                            $totalmins += $total_minits;
+                        }else {
+                            $workinghour = '';
+                            $total_minits = 0;
+                            $totalmins += 0;
+                        }
+
+                        
+
+                    }else if($attendencedata->status == 2){
+                        $status = 'A';
+                        $attendence_id = $attendencedata->id;
+                        $workinghour = '';
+                        $total_minits = 0;
+                        $totalmins += 0;
+                    }
+                }else {
+                    $attendence_id = 0;
+                    $status = '';
+                    $workinghour = '';
+                    $total_minits = 0;
+                    $totalmins += 0;
+                }
+
+
+                $Payoff_data[] = array(
+                    'employee' => $employees_arr->name,
+                    'employeeid' => $employees_arr->id,
+                    'attendence_status' => $status,
+                    'date' => date("d-m-Y",strtotime($monthdate_arr)),
+                    'attendence_id' => $attendence_id,
+                    'workinghour' => $workinghour,
+                    'totalmins' => $totalmins
+                );
+            }
         }
+
+
+        $employeesarr = Employee::where('soft_delete', '!=', 1)->get();
+        $TotalData = [];
+        foreach ($employeesarr as $key => $employeesarray) {
+            $totalmins = 0;
+
+            $attendencedatas = Attendance::where('employee_id', '=', $employeesarray->id)->where('month', '=', $month)->where('year', '=', $year)->get();
+            foreach ($attendencedatas as $key => $attendencedatass) {
+
+                if($attendencedatass->status == 1){
+                    $status = 'P';
+                    if($attendencedatass->checkout_time != ""){
+                        $time1 = strtotime($attendencedatass->checkin_time);
+                        $time2 = strtotime($attendencedatass->checkout_time);
+                        $total_minits = ($time2 - $time1) / 60;
+    
+                        $totalmins += $total_minits;
+                    }else {
+                        $total_minits = 0;
+                        $totalmins += 0;
+                    }
+                }else if($attendencedatass->status == 2){
+                    $status = 'A';
+                    $total_minits = 0;
+                    $totalmins += 0;
+                }
+            }
+
+            $hours = floor($totalmins / 60);
+            $min = $totalmins - ($hours * 60);
+            $total_time = $hours."Hours ".$min."Mins";
+
+            $hour_salary = $employeesarray->salaray_per_hour;
+            $one_min_salary = ($employeesarray->salaray_per_hour) / 60;
+            $total_min_salary = $totalmins * $one_min_salary;
+            $total_salary = number_format((float)$total_min_salary, 2, '.', '');
+
+
+            $paidsalary = Payoff::where('employee_id', '=', $employeesarray->id)->where('month', '=', $month)->where('year', '=', $year)->first();
+            if($paidsalary != ""){
+                $paid_salary = $paidsalary->totalpaidsalary;
+                $balanceSalaryAmount = $paidsalary->balancesalary;
+            }else {
+                $paid_salary = 0;
+                $balanceSalaryAmount = 0;
+            }
+
+
+            $TotalData[] = array(
+                'employeeid' => $employeesarray->id,
+                'total_time' => $total_time,
+                'status' => $status,
+                'total_salary' => $total_salary,
+                'paid_salary' => $paid_salary,
+                'balanceSalaryAmount' => $balanceSalaryAmount,
+                'month' => $month,
+                'year' => $year,
+            );
+        }
+
+        $c_month = date("M",strtotime($today));
+
+        $Employee = Employee::where('soft_delete', '!=', 1)->get();
        
-        return view('page.backend.payoff.index', compact('Payoff_data', 'today', 'timenow'));
+        return view('page.backend.payoff.index', compact('Payoff_data', 'today', 'timenow', 'curent_month', 'year', 'list', 'c_month', 'month', 'Employee', 'TotalData'));
 
     }
 
