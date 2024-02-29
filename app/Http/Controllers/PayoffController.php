@@ -507,25 +507,18 @@ class PayoffController extends Controller
             }
 
 
-            
-
-
-            if($total_salary == 0){
+            if($balanceSalaryAmount == 0){
+                $readonly = 'readonly';
+                $placeholder = '';
+                $noteplaceholder = '';
+            }else {
                 $placeholder = 'Amount';
                 $readonly = '';
                 $noteplaceholder = 'Enter Note';
-            }else {
-                if($balanceSalaryAmount == 0){
-                    $readonly = 'readonly';
-                    $placeholder = '';
-                    $noteplaceholder = '';
-                }else {
-                    $readonly = '';
-                    $placeholder = 'Amount';
-                    $noteplaceholder = 'Enter Note';
-                    
-                }
             }
+
+
+          
 
             
                 $atendance_output[] = array(
@@ -552,5 +545,33 @@ class PayoffController extends Controller
 
 
         echo json_encode($atendance_output);
+    }
+
+
+
+    public function getEmployeePayoffs()
+    {
+        $employeeID = request()->get('employeeID');
+        $month = request()->get('month');
+        $year = request()->get('year');
+
+        $PayoffData = Payoffdata::where('employee_id', '=', $employeeID)->where('month', '=', $month)->where('year', '=', $year)->get();
+        $Payoffs = [];
+        foreach ($PayoffData as $key => $PayoffDatas) {
+
+            $employee = Employee::findOrFail($employeeID);
+
+            $Payoffs[] = array(
+                'employee' => $employee->name,
+                'employeeid' => $employee->id,
+                'date' => $PayoffDatas->date,
+                'paidsalary' => $PayoffDatas->paidsalary,
+            );
+        }
+
+
+        echo json_encode($Payoffs);
+
+
     }
 }
