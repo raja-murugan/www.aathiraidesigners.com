@@ -507,7 +507,7 @@ class PayoffController extends Controller
             }
 
 
-            if($balanceSalaryAmount == 0){
+            if($paid_salary == $total_salary){
                 $readonly = 'readonly';
                 $placeholder = '';
                 $noteplaceholder = '';
@@ -518,7 +518,22 @@ class PayoffController extends Controller
             }
 
 
-          
+            // if($paid_salary == $total_salary){
+            //     $placeholder = 'Amount';
+            //     $readonly = '';
+            //     $noteplaceholder = 'Enter Note';
+            // }else {
+            //     if($balanceSalaryAmount == 0){
+            //         $readonly = 'readonly';
+            //         $placeholder = '';
+            //         $noteplaceholder = '';
+            //     }else {
+            //         $readonly = '';
+            //         $placeholder = 'Amount';
+            //         $noteplaceholder = 'Enter Note';
+                    
+            //     }
+            // }
 
             
                 $atendance_output[] = array(
