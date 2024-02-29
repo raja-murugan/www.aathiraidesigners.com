@@ -440,7 +440,18 @@ class PayoffController extends Controller
         $today = Carbon::now()->format('Y-m-d');
         $employeedata = Employee::findOrFail($id);
 
-        return view('page.backend.payoff.edit', compact('GetPayoff', 'GetPayoffData', 'today', 'employeedata', 'id', 'month', 'year'));
+        if($GetPayoff != ""){
+            $totalsalary = $GetPayoff->salaryamount;
+            $paidsalary = $GetPayoff->totalpaidsalary;
+            $balancesalary = $GetPayoff->balancesalary;
+        }else {
+            $totalsalary = '';
+            $paidsalary = '';
+            $balancesalary = '';
+        }
+        
+
+        return view('page.backend.payoff.edit', compact('GetPayoff', 'GetPayoffData', 'today', 'employeedata', 'id', 'month', 'year', 'totalsalary', 'paidsalary', 'balancesalary'));
     }
 
 

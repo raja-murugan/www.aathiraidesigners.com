@@ -39,19 +39,19 @@
                                     <div class="col-lg-3 col-md-3 col-sm-3">
                                        <div class="form-group">
                                           <label >Salary Amount <span class="text-danger">*</span></label>
-                                          <input type="text" value="{{$GetPayoff->salaryamount}}" class="form-control payoffedit_total" name="payoffedit_total"  readonly style="color: #dc3545; font-weight: 700;">
+                                          <input type="text" value="{{$totalsalary}}" class="form-control payoffedit_total" name="payoffedit_total"  readonly style="color: #dc3545; font-weight: 700;">
                                        </div>
                                     </div>  
                                     <div class="col-lg-3 col-md-3 col-sm-3">
                                        <div class="form-group">
                                           <label >Paid Amount<span class="text-danger">*</span></label>
-                                          <input type="text" value="{{$GetPayoff->totalpaidsalary}}" name="payoffedit_totalpaid" class="form-control payoffedit_totalpaid" required readonly style="color: green; font-weight: 700;">
+                                          <input type="text" value="{{$paidsalary}}" name="payoffedit_totalpaid" class="form-control payoffedit_totalpaid" required readonly style="color: green; font-weight: 700;">
                                        </div>
                                     </div> 
                                     <div class="col-lg-3 col-md-3 col-sm-3">
                                        <div class="form-group">
                                           <label >Balance Amount<span class="text-danger">*</span></label>
-                                          <input type="text" value="{{$GetPayoff->balancesalary}}" name="payoffedit_totalbal" class="form-control payoffedit_totalbal" required readonly style="color: red; font-weight: 700;">
+                                          <input type="text" value="{{$balancesalary}}" name="payoffedit_totalbal" class="form-control payoffedit_totalbal" required readonly style="color: red; font-weight: 700;">
                                        </div>
                                     </div> 
                                                    
@@ -72,6 +72,7 @@
                                                          </tr>
                                                       </thead>
                                                       <tbody class="payoffeditdata">
+                                                        @if(count($GetPayoffData) > 0)
                                                       @foreach ($GetPayoffData as $index => $GetPayoffDatas)
                                                          <tr>
 
@@ -89,6 +90,7 @@
                                                             </td>
                                                          </tr>
                                                          @endforeach
+                                                         @endif
                                                       </div>
                                                    </table>
                                                 </div>
