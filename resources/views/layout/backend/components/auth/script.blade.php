@@ -133,6 +133,53 @@
     });
 
 
+
+    $('.salaryedit').on('show.bs.modal', function (e) {
+          var $modal = $(this);
+          var employeeID = $(e.relatedTarget).data('id');
+          var month = $(e.relatedTarget).data('month');
+          var year = $(e.relatedTarget).data('year');
+          
+          console.log(employeeID);
+
+
+                $.ajax({
+                    url: '/getEmployeePayoffs/',
+                    type: 'get',
+                    data: {
+                      _token: "{{ csrf_token() }}",
+                      employeeID: employeeID,
+                      month: month,
+                      year: year,
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                      console.log(response);
+
+                      var len = response.length;
+                      for (var i = 0; i < len; i++) {
+                        $('.payoff_employee').val(response[i].employee);
+
+
+
+                              var column_0 = $('<div/>', {
+                              html: '<input type="text" style="background: #e0ddeb;" class="form-control term" id="term">',
+                              });
+
+                              var column_1 = $('<div/>', {
+                              html: response[i].paidsalary,
+                              });
+
+                              var row = $('<div class="row"/>', {}).append(column_0, column_1);
+                              $('.payoff_edits').append(row);
+                      }
+                     
+                    }
+                });
+
+    });
+
+
     $(document).ready(function() {
       $('.js-example-basic-single').select2();
 
@@ -267,7 +314,7 @@ var l = 1;
                 $(".billing_products").find('.js-example-basic-single').select2();
 
                 var billing_customerid = $(".billing_customerid").val();
-                $.ajax({
+                  $.ajax({
                     url: '/getcustomerwiseproducts/',
                     type: 'get',
                     data: {
@@ -295,7 +342,7 @@ var l = 1;
                         $('#billing_product_id' + l).append(selectedValues);
                         //add_count.push(Object.keys(selectedValues).length);
                     }
-                });
+                  });
 
 
 
@@ -862,6 +909,11 @@ var l = 1;
                 $('.billing_balanceamount').val(balance_amount.toFixed(2));
                 $('.billing_balance').text('₹ ' + balance_amount.toFixed(2));
       });
+
+
+
+
+
 
   </script>
 

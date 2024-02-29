@@ -43,7 +43,7 @@
 
                      <h5 style="text-transform:uppercase;text-align:center;margin-bottom:10px;">{{$curent_month}} - {{$year}}</h5>
                      <div class="row">
-                        <div class="col-sm-2">
+                        <div class="col-sm-3 col-lg-2 col-md-2">
                               <table class="table" style="background: #b7a9d8;">
                                  <thead>
                                        <tr>
@@ -62,7 +62,7 @@
                                     </tbody>
                                  </table>
                         </div>
-                        <div class="col-sm-10"  style="overflow: auto;">
+                        <div class="col-sm-9 col-lg-10 col-md-10"  style="overflow: auto;">
                            <table class="table" >
                            <thead>
                                  <tr>
@@ -134,10 +134,10 @@
                                                    <a href="#salaryedit{{ $TotalDatas['employeeid'] }}" data-bs-toggle="modal" 
                                                    data-bs-target=".salaryedit-modal-xl{{ $TotalDatas['employeeid'] }}" data-month="{{ $TotalDatas['month'] }}"
                                                     data-id="{{ $TotalDatas['employeeid'] }}" data-year="{{ $TotalDatas['year'] }}"
-                                                            class="btn  salaryedit{{ $TotalDatas['employeeid'] }}" style="background: #dc5764;color:white;">Edit</a>
+                                                            class="btn " style="background: #dc5764;color:white;">Edit</a>
                                                 </td>
 
-                                                <div class="modal fade salaryedit-modal-xl{{ $TotalDatas['employeeid'] }}"
+                                                <div class="modal salaryedit fade salaryedit-modal-xl{{ $TotalDatas['employeeid'] }}"
                                                    tabindex="-1" role="dialog" data-bs-backdrop="static"
                                                    aria-labelledby="deleteLargeModalLabel{{ $TotalDatas['employeeid'] }}"
                                                    aria-hidden="true">

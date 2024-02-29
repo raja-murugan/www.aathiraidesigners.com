@@ -104,7 +104,7 @@
 
 
 
-                        <script>
+<script>
 $(document).ready(function() {
      $('.salary_month').on('change', function () {
         var salary_month = $(this).val();

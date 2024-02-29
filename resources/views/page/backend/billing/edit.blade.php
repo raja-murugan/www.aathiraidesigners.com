@@ -79,98 +79,98 @@
 
                                           <br/>
 
-                              <div class="form-group-item">
-                                       <div class="table-responsive no-pagination">
-                                          <table class="table table-center table-hover">
-                                             <thead  style="background: linear-gradient(320deg, #DDCEFF 0%, #DBECFF 100%);">
-                                                <tr>
-                                                   <th style="width:25%">Product</th>
-                                                   <th style="width:25%">Measurement</th>
-                                                   <th style="width:10%">Qty</th>
-                                                   <th style="width:14%">Rate / Qty</th>
-                                                   <th style="width:19%">Total</th>
-                                                   <th style="width:7%" class="no-sort">Action</th>
-                                                </tr>
-                                             </thead>
-                                             <tbody class="billingold_products">
-                                             @foreach ($BillingProducts as $index => $BillingProductsarr)
-                                                <tr>
-                                                   <td>
-                                                      <input type="hidden" id="billingproducts_id" name="billingproducts_id[]" value="{{ $BillingProductsarr->id }}"/>
-                                                      <input type="hidden" class="form-control customer_product_id" id="customer_product_id1" name="customer_product_id[]" value="{{ $BillingProductsarr->customer_product_id }}"/>
-                                                            <select
-                                                                class="form-control  billing_product_id select js-example-basic-single"
-                                                                name="billing_product_id[]" id="billing_product_id1" required>
-                                                                <option value="" selected disabled class="text-muted">
-                                                                    Select Product
-                                                                </option>
-                                                                @foreach ($products as $products_arr)
-                                                                    <option value="{{ $products_arr->id }}"@if ($products_arr->id === $BillingProductsarr->billing_product_id) selected='selected' @endif>
-                                                                        {{ $products_arr->name }}
-                                                                    </option>
-                                                                @endforeach
-                                                            </select>
-                                                   </td>
-                                                   <td><input type="text" class="form-control billing_measurement" id="billing_measurement"
-                                                          name="billing_measurement[]" placeholder="Measurement" value="{{ $BillingProductsarr->billing_measurement }}"/></td>
+                                             <div class="form-group-item">
+                                                <div class="table-responsive no-pagination">
+                                                   <table class="table table-center table-hover">
+                                                      <thead  style="background: linear-gradient(320deg, #DDCEFF 0%, #DBECFF 100%);">
+                                                         <tr>
+                                                            <th style="width:25%">Product</th>
+                                                            <th style="width:25%">Measurement</th>
+                                                            <th style="width:10%">Qty</th>
+                                                            <th style="width:14%">Rate / Qty</th>
+                                                            <th style="width:19%">Total</th>
+                                                            <th style="width:7%" class="no-sort">Action</th>
+                                                         </tr>
+                                                      </thead>
+                                                      <tbody class="billingold_products">
+                                                      @foreach ($BillingProducts as $index => $BillingProductsarr)
+                                                         <tr>
+                                                            <td>
+                                                               <input type="hidden" id="billingproducts_id" name="billingproducts_id[]" value="{{ $BillingProductsarr->id }}"/>
+                                                               <input type="hidden" class="form-control customer_product_id" id="customer_product_id1" name="customer_product_id[]" value="{{ $BillingProductsarr->customer_product_id }}"/>
+                                                                     <select
+                                                                        class="form-control  billing_product_id select js-example-basic-single"
+                                                                        name="billing_product_id[]" id="billing_product_id1" required>
+                                                                        <option value="" selected disabled class="text-muted">
+                                                                           Select Product
+                                                                        </option>
+                                                                        @foreach ($products as $products_arr)
+                                                                           <option value="{{ $products_arr->id }}"@if ($products_arr->id === $BillingProductsarr->billing_product_id) selected='selected' @endif>
+                                                                                 {{ $products_arr->name }}
+                                                                           </option>
+                                                                        @endforeach
+                                                                     </select>
+                                                            </td>
+                                                            <td><input type="text" class="form-control billing_measurement" id="billing_measurement"
+                                                                  name="billing_measurement[]" placeholder="Measurement" value="{{ $BillingProductsarr->billing_measurement }}"/></td>
 
-                                                   <td><input type="text" class="form-control billing_qty" id="billing_qty"
-                                                          name="billing_qty[]" placeholder="Qty" value="{{ $BillingProductsarr->billing_qty }}"/></td>
+                                                            <td><input type="text" class="form-control billing_qty" id="billing_qty"
+                                                                  name="billing_qty[]" placeholder="Qty" value="{{ $BillingProductsarr->billing_qty }}"/></td>
 
-                                                   <td><input type="text" class="form-control billing_rateperqty" id="billing_rateperqty"
-                                                          name="billing_rateperqty[]" placeholder="Rate / Qty" value="{{ $BillingProductsarr->billing_rateperqty }}"/>
-                                                         </td>
+                                                            <td><input type="text" class="form-control billing_rateperqty" id="billing_rateperqty"
+                                                                  name="billing_rateperqty[]" placeholder="Rate / Qty" value="{{ $BillingProductsarr->billing_rateperqty }}"/>
+                                                                  </td>
 
-                                                   <td><input type="text" class="form-control billing_total" id="billing_total"
-                                                          name="billing_total[]" readonly value="{{ $BillingProductsarr->billing_total }}"/>
-                                                      </td>
+                                                            <td><input type="text" class="form-control billing_total" id="billing_total"
+                                                                  name="billing_total[]" readonly value="{{ $BillingProductsarr->billing_total }}"/>
+                                                               </td>
 
-                                                   <td class="align-items-center">
-                                                         <button class="additemplus_button addbillingproducts" type="button" id="" value="Add"><i class="fe fe-plus-circle"></i></button>
-                                                         <button class="additemminus_button remove-billingtr" type="button" id="" value="Add"><i class="fe fe-minus-circle"></i></button>
-                                                   </td>
-                                                </tr>
-                                                @endforeach
+                                                            <td class="align-items-center">
+                                                                  <button class="additemplus_button addbillingproducts" type="button" id="" value="Add"><i class="fe fe-plus-circle"></i></button>
+                                                                  <button class="additemminus_button remove-billingtr" type="button" id="" value="Add"><i class="fe fe-minus-circle"></i></button>
+                                                            </td>
+                                                         </tr>
+                                                         @endforeach
+                                                      </div>
+                                                      <tbody class="billing_products"></tbody>
+                                                      <tbody>
+                                                         <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td style="text-align:right;font-size:15px;">Total</td>
+                                                            <td><input type="text" class="form-control total_amount"  name="total_amount" id="total_amount" value="{{ $BillingData->total_amount }}" readonly></td>
+                                                         </tr>
+                                                      </tbody>
+                                                   </table>
+                                                </div>
                                              </div>
-                                             <tbody class="billing_products"></tbody>
-                                             <tbody>
-                                                <tr>
-                                                   <td></td>
-                                                   <td></td>
-                                                   <td></td>
-                                                   <td style="text-align:right;font-size:15px;">Total</td>
-                                                   <td><input type="text" class="form-control total_amount"  name="total_amount" id="total_amount" value="{{ $BillingData->total_amount }}" readonly></td>
-                                                </tr>
-                                             </tbody>
-                                          </table>
-                                       </div>
-                              </div>
 
 
 
-                              <div class="row">
-                                    <div class="col-lg-4 col-md-6 col-sm-12" hidden>
-                                       <div class="form-group">
-                                          <label >Discount Type<span class="text-danger">*</span></label>
-                                          <select  class="form-control  select js-example-basic-single billingdiscount_type" name="billingdiscount_type" id="billingdiscount_type" required>
-                                             <option value="none" selected > Select </option>
-                                                <option value="Fixed"@if ('Fixed' === $BillingData->discount_type) selected='selected' @endif>Fixed</option>
-                                          </select>
-                                       </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-12">
-                                       <div class="form-group">
-                                          <label >Discount Amount<span class="text-danger">*</span></label>
-                                          <input type="text" class="form-control billingdiscount"  name="discount" id="discount" placeholder="0"  value="{{ $BillingData->discount }}">
-                                       </div>
-                                    </div>
+                                          <div class="row">
+                                             <div class="col-lg-4 col-md-6 col-sm-12" hidden>
+                                                <div class="form-group">
+                                                   <label >Discount Type<span class="text-danger">*</span></label>
+                                                   <select  class="form-control  select js-example-basic-single billingdiscount_type" name="billingdiscount_type" id="billingdiscount_type" required>
+                                                      <option value="none" selected > Select </option>
+                                                         <option value="Fixed"@if ('Fixed' === $BillingData->discount_type) selected='selected' @endif>Fixed</option>
+                                                   </select>
+                                                </div>
+                                             </div>
+                                             <div class="col-lg-4 col-md-4 col-sm-12">
+                                                <div class="form-group">
+                                                   <label >Discount Amount<span class="text-danger">*</span></label>
+                                                   <input type="text" class="form-control billingdiscount"  name="discount" id="discount" placeholder="0"  value="{{ $BillingData->discount }}">
+                                                </div>
+                                             </div>
 
 
-                                    <div class="col-lg-8 col-md-8 col-sm-12">
-                                                   <div class="row mb-4">
-                                                      <div class="form-group">
+                                             <div class="col-lg-8 col-md-8 col-sm-12">
+                                                <div class="row mb-4">
+                                                   <div class="form-group">
                                                      
-                                                        <div class="col-sm-9">
+                                                         <div class="col-sm-9">
                                                             <table class="table-fixed col-12 " id="">
                                                                 <tr>
                                                                     <th>Terms</th>
@@ -226,16 +226,16 @@
                                                                 
 
                                                             </table>
-                                                        </div>
                                                       </div>
                                                    </div>
-                                    </div>
-                              </div>
+                                                </div>
+                                             </div>
+                                          </div>
 
                                                    
 
 
-                              <div class="form-group-item border-0 p-0 py-3">
+                                          <div class="form-group-item border-0 p-0 py-3">
                                             <div class="row">
                                                 <div class="col-xl-6 col-lg-12">
                                                     <div class="form-group-bank">
@@ -273,7 +273,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                          </div>
 
 
 
