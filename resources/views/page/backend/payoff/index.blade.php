@@ -43,7 +43,7 @@
 
                      <h5 style="text-transform:uppercase;text-align:center;margin-bottom:10px;">{{$curent_month}} - {{$year}}</h5>
                      <div class="row">
-                        <div class="col-sm-3 col-lg-2 col-md-2">
+                        <div class="col-sm-3 col-lg-3 col-md-3">
                               <table class="table" style="background: #b7a9d8;">
                                  <thead>
                                        <tr>
@@ -62,7 +62,7 @@
                                     </tbody>
                                  </table>
                         </div>
-                        <div class="col-sm-9 col-lg-10 col-md-10"  style="overflow: auto;">
+                        <div class="col-sm-9 col-lg-9 col-md-9"  style="overflow: auto;">
                            <table class="table" >
                            <thead>
                                  <tr>
