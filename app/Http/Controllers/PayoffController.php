@@ -433,6 +433,104 @@ class PayoffController extends Controller
     }
 
 
+    public function edit($id, $month, $year)
+    {
+        $GetPayoff = Payoff::where('employee_id', '=', $id)->where('month', '=', $month)->where('year', '=', $year)->first();
+        $GetPayoffData = Payoffdata::where('employee_id', '=', $id)->where('month', '=', $month)->where('year', '=', $year)->get();
+        $today = Carbon::now()->format('Y-m-d');
+        $employeedata = Employee::findOrFail($id);
+
+        return view('page.backend.payoff.edit', compact('GetPayoff', 'GetPayoffData', 'today', 'employeedata', 'id', 'month', 'year'));
+    }
+
+
+    public function update(Request $request, $id, $month, $year)
+    {
+        $GetPayoff = Payoff::where('employee_id', '=', $id)->where('month', '=', $month)->where('year', '=', $year)->first();
+        $GetPayoff->totalpaidsalary = $request->get('payoffedit_totalpaid');
+        $GetPayoff->balancesalary = $request->get('payoffedit_totalbal');
+        $GetPayoff->update();
+
+
+        $payoff_id = $GetPayoff->id;
+
+
+        $getInserted = Payoffdata::where('payoff_id', '=', $payoff_id)->get();
+        $purchase_products = array();
+        foreach ($getInserted as $key => $getInserted_produts) {
+            $purchase_products[] = $getInserted_produts->id;
+        }
+
+        $updated_products = $request->payoffdata_id;
+        $updated_product_ids = array_filter($updated_products);
+        $different_ids = array_merge(array_diff($purchase_products, $updated_product_ids), array_diff($updated_product_ids, $purchase_products));
+
+
+        if (!empty($different_ids)) {
+            foreach ($different_ids as $key => $different_id) {
+                Payoffdata::where('id', $different_id)->delete();
+            }
+        }
+
+        $timenow = Carbon::now()->format('H:i');
+
+        foreach ($request->get('payoffdata_id') as $key => $payoffdata_id) {
+            if ($payoffdata_id > 0) {
+
+                $updateData = Payoffdata::where('id', '=', $payoffdata_id)->first();
+
+                $updateData->payoff_id = $payoff_id;
+                $updateData->date = $request->payoffedit_date[$key];
+                $updateData->time = $timenow;
+                $updateData->paidsalary = $request->payoffedit_amount[$key];
+                $updateData->note = $request->payoffedit_note[$key];
+                $updateData->update();
+
+            } else if ($payoffdata_id == '') {
+
+                    $PayoffData = new Payoffdata();
+                    $PayoffData->payoff_id = $payoff_id;
+                    $PayoffData->date = $request->payoffedit_date[$key];
+                    $PayoffData->time = $timenow;
+                    $PayoffData->month = $month;
+                    $PayoffData->year = $year;
+                    $PayoffData->employee_id = $id;
+                    $PayoffData->total_working_hour = $GetPayoff->total_working_hour;
+                    $PayoffData->perhoursalary = $GetPayoff->perhoursalary;
+                    $PayoffData->salaryamount = $GetPayoff->salaryamount;
+                    $PayoffData->paidsalary = $request->payoffedit_amount[$key];
+                    $PayoffData->note = $request->payoffedit_note[$key];
+                    $PayoffData->save();
+            }
+        }
+
+
+        $total_paid = 0;
+            $getinsertedbilingP = Payoffdata::where('payoff_id', '=', $payoff_id)->get();
+            foreach ($getinsertedbilingP as $key => $getinsertedbilingPs) {
+                $total_paid += $getinsertedbilingPs->paidsalary;
+            }
+
+            
+            $newpayoff = Payoff::where('id', '=', $payoff_id)->first();
+
+            $total_amount = $newpayoff->salaryamount;
+            $balanceamount = $total_amount - $total_paid;
+
+            $newpayoff->totalpaidsalary = $total_paid;
+            $newpayoff->balancesalary = $balanceamount;
+            $newpayoff->update();
+
+
+
+
+
+        return redirect()->route('payoff.index')->with('update', 'Updated Payoff information has been added to your list.');
+
+
+    }
+
+
 
     public function gettotal_salary()
     {

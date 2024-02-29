@@ -1,45 +1,141 @@
-<div class="modal-dialog modal-dialog-centered modal-lg">
-    <div class="modal-content">
+@extends('layout.backend.auth')
 
-        <div class="modal-header border-0 pb-0">
-            <div class="form-header modal-header-title text-start mb-0">
-                <h6 class="mb-0">Update  Payoff</h6>
-            </div>
-            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                <span class="align-center" aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <form autocomplete="off" method="POST" enctype="multipart/form-data">
-            @csrf
-            <div class="modal-body">
-               <div class="row align-item-center">
-                  <div class="col-lg-4 col-md-4 col-sm-4">
-                     <div class="form-group">
-                        <label >Name</label>
-                        <input type="text"  class="form-control payoff_employee" value="" readonly>
-                     </div>
-                  </div>
-               </div>
+@section('content')
 
-                  <div class="row align-item-center">
-                     <div class="col-lg-12 col-md-12 col-sm-12">
-                           <div class="form-group ">
-                           <label >Salary</label>   
-                                    <div class="payoff_edits">  
-                                    </div>
+<div class="page-wrapper">
+   <div class="content container-fluid">
+
+
+      <div class="page-header">
+         <div class="content-page-header">
+            <h6>Update  Payoff</h6>
+         </div>
+      </div>
+
+
+      <div class="row">
+         <div class="col-sm-12">
+
+
+            <div class="card">
+               <div class="card-body">
+
+                     <form autocomplete="off" method="POST"  action="{{ route('payoff.update', ['id' => $id, 'month' => $month, 'year' => $year]) }}" enctype="multipart/form-data">
+                        @method('PUT')
+                        @csrf
+   
+
+                        <div class="row">
+                           <div class="col-md-12">
+                              <div class="form-group-item border-0 mb-0">
+                                 <div class="row align-item-center">
+                                 
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                       <div class="form-group">
+                                          <label >Employee <span class="text-danger">*</span></label>
+                                          <input type="text" value="{{$employeedata->name}}" class="form-control"  readonly style="text-transform:uppercase;">
+                                       </div>
+                                    </div>  
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                       <div class="form-group">
+                                          <label >Salary Amount <span class="text-danger">*</span></label>
+                                          <input type="text" value="{{$GetPayoff->salaryamount}}" class="form-control payoffedit_total" name="payoffedit_total"  readonly style="color: #dc3545; font-weight: 700;">
+                                       </div>
+                                    </div>  
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                       <div class="form-group">
+                                          <label >Paid Amount<span class="text-danger">*</span></label>
+                                          <input type="text" value="{{$GetPayoff->totalpaidsalary}}" name="payoffedit_totalpaid" class="form-control payoffedit_totalpaid" required readonly style="color: green; font-weight: 700;">
+                                       </div>
+                                    </div> 
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                       <div class="form-group">
+                                          <label >Balance Amount<span class="text-danger">*</span></label>
+                                          <input type="text" value="{{$GetPayoff->balancesalary}}" name="payoffedit_totalbal" class="form-control payoffedit_totalbal" required readonly style="color: red; font-weight: 700;">
+                                       </div>
+                                    </div> 
+                                                   
+                                 </div>
+                              </div>
+
+                                          <br/>
+
+                                             <div class="form-group-item">
+                                                <div class="table-responsive no-pagination">
+                                                   <table class="table table-center table-hover">
+                                                      <thead  style="background: linear-gradient(320deg, #DDCEFF 0%, #DBECFF 100%);">
+                                                         <tr>
+                                                            <th style="width:20%">Date</th>
+                                                            <th style="width:20%">Amount</th>
+                                                            <th style="width:30%">Note</th>
+                                                            <th style="width:10%" class="no-sort">Action</th>
+                                                         </tr>
+                                                      </thead>
+                                                      <tbody class="payoffeditdata">
+                                                      @foreach ($GetPayoffData as $index => $GetPayoffDatas)
+                                                         <tr>
+
+                                                            <td><input type="hidden" name="payoffdata_id[]" value="{{ $GetPayoffDatas->id }}" />
+                                                                <input type="date" class="form-control payoffedit_date" id="payoffedit_date"  name="payoffedit_date[]"  value="{{ $GetPayoffDatas->date }}"/></td>
+
+                                                            <td><input type="text" class="form-control payoffedit_amount" id="payoffedit_amount" name="payoffedit_amount[]"  value="{{ $GetPayoffDatas->paidsalary }}"/></td>
+
+                                                            <td><input type="text" class="form-control payoffedit_note" id="payoffedit_note" name="payoffedit_note[]"  value="{{ $GetPayoffDatas->note }}"/>
+                                                            </td>
+
+                                                            <td class="align-items-center">
+                                                                  <button class="btn additemplus_button addpayoffeditfields" type="button" id="" value="Add"><i class="fe fe-plus-circle"></i></button>
+                                                                  <button class="btn additemminus_button remove-payoffedit" type="button" id="" value="Add"><i class="fe fe-minus-circle"></i></button>
+                                                            </td>
+                                                         </tr>
+                                                         @endforeach
+                                                      </div>
+                                                   </table>
+                                                </div>
+                                             </div>
+
+                                                   
+
+
+
+
+
+
                            </div>
-                     </div>
-                  </div>
+                        </div>
 
 
 
+
+
+
+
+
+
+
+
+
+
+                           <div class="text-end" style="margin-top:3%">
+                                          <input type="submit" class="btn btn-primary" />
+                                          <a href="{{ route('payoff.index') }}" class="btn btn-cancel btn-danger" >Cancel</a>
+                           </div>
+                       
+      
+
+                     </form>
+
+               </div>
             </div>
 
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-primary" style="margin-right: 5px;">Update</button>
-                <button type="button" class="btn btn-cancel btn-danger" data-bs-dismiss="modal"
-                    aria-label="Close">Cancel</button>
-            </div>
-        </form>
-    </div>
+         </div>
+      </div>
+
+
+
+   </div>
 </div>
+
+
+@endsection
+

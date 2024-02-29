@@ -288,6 +288,28 @@
 
 
 
+
+            $(document).on('click', '.addpayoffeditfields', function() {
+
+                $(".payoffeditdata").append(
+                    '<tr>' +
+                    '<td class=""><input type="hidden" name="payoffdata_id[]" value="" />' +
+                    '<input type="date" class="form-control payoffedit_date" id="payoffedit_date"  name="payoffedit_date[]"  value=""/>' +
+                    '</td>' +
+                    '<td><input type="text" class="form-control payoffedit_amount" id="payoffedit_amount" name="payoffedit_amount[]"  value=""/></td>' +
+                    '<td><input type="text" class="form-control payoffedit_note" id="payoffedit_note" name="payoffedit_note[]"  value=""/></td>' +
+                    '<td><button class="btn additemplus_button addpayoffeditfields" style="margin-right: 3px;" type="button" id="" value="Add"><i class="fe fe-plus-circle"></i></button>' +
+                    '<button class="btn additemminus_button remove-payoffedit" type="button" id="" value="Add"><i class="fe fe-minus-circle"></i></button></td>' +
+                    '</tr>'
+                );
+            });
+
+            $(document).on('click', '.remove-payoffedit', function() {
+              $(this).parents('tr').remove();
+            });
+
+
+
 // Billing Products
 
 var k = 1;
@@ -908,6 +930,40 @@ var l = 1;
                 var balance_amount = Number(billing_grandtotalamount) - Number(billing_paidamount);
                 $('.billing_balanceamount').val(balance_amount.toFixed(2));
                 $('.billing_balance').text('₹ ' + balance_amount.toFixed(2));
+      });
+
+
+
+      $(document).on("keyup", "input[name*=payoffedit_amount]", function() {
+        var payoffedit_amount = $(this).val();
+
+        var totalAmount = 0;
+            $("input[name='payoffedit_amount[]']").each(function() {
+                totalAmount = Number(totalAmount) + Number($(this).val());
+                $('.payoffedit_totalpaid').val(totalAmount);
+            });
+            var payoffedit_total = $('.payoffedit_total').val();
+            var Balance = Number(payoffedit_total) - Number(totalAmount);
+            $('.payoffedit_totalbal').val(Balance.toFixed(2));
+      });
+
+
+      $(document).on("keyup", "input[name*=payoffedit_amount]", function() {
+        var payoffedit_amount = $(this).val();
+
+        var totalAmount = 0;
+            $("input[name='payoffedit_amount[]']").each(function() {
+                totalAmount = Number(totalAmount) + Number($(this).val());
+                $('.payoffedit_totalpaid').val(totalAmount);
+            });
+
+        var payoffedit_total = $('.payoffedit_total').val();
+        if (Number(totalAmount) > Number(payoffedit_total)) {
+          alert('!Paid Amount is More than of Total. Add Correct Values!');
+            $(this).parents('tr').find('.payoffedit_amount').val('');
+            $('.payoffedit_totalbal').val('');
+            $('.payoffedit_totalpaid').val('');
+        }
       });
 
 

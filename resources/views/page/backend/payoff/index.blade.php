@@ -130,19 +130,14 @@
                                                 <td class="border" style="text-align:center;">{{ $TotalDatas['total_salary'] }}</td>
                                                 <td class="border" style="text-align:center;">{{ $TotalDatas['paid_salary'] }}</td>
                                                 <td class="border" style="text-align:center;">{{ $TotalDatas['balanceSalaryAmount'] }}</td>
+
                                                 <td class="border" style="text-align:center;">
-                                                   <a href="#salaryedit{{ $TotalDatas['employeeid'] }}" data-bs-toggle="modal" 
-                                                   data-bs-target=".salaryedit-modal-xl{{ $TotalDatas['employeeid'] }}" data-month="{{ $TotalDatas['month'] }}"
-                                                    data-id="{{ $TotalDatas['employeeid'] }}" data-year="{{ $TotalDatas['year'] }}"
-                                                            class="btn " style="background: #dc5764;color:white;">Edit</a>
+
+                                                <a href="{{ route('payoff.edit', ['id' => $TotalDatas['employeeid'], 'month' => $TotalDatas['month'], 'year' => $TotalDatas['year']]) }}"
+                                                class="badge bg-warning-light" style="color:#28084b;">Edit</a>
                                                 </td>
 
-                                                <div class="modal salaryedit fade salaryedit-modal-xl{{ $TotalDatas['employeeid'] }}"
-                                                   tabindex="-1" role="dialog" data-bs-backdrop="static"
-                                                   aria-labelledby="deleteLargeModalLabel{{ $TotalDatas['employeeid'] }}"
-                                                   aria-hidden="true">
-                                                   @include('page.backend.payoff.edit')
-                                                </div>
+                                                
                                           @endif
                                        @endforeach
                                     </tr>

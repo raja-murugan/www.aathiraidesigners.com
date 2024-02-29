@@ -206,9 +206,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     // STORE
     Route::middleware(['auth:sanctum', 'verified'])->post('/zworktechtechnology/payoff/store', [PayoffController::class, 'store'])->name('payoff.store');
     // EDIT
-    Route::middleware(['auth:sanctum', 'verified'])->get('/zworktechtechnology/payoff/edit/{unique_key}', [PayoffController::class, 'edit'])->name('payoff.edit');
+    Route::middleware(['auth:sanctum', 'verified'])->get('/zworktechtechnology/payoff/edit/{id}/{month}/{year}', [PayoffController::class, 'edit'])->name('payoff.edit');
     // EDIT
-    Route::middleware(['auth:sanctum', 'verified'])->put('/zworktechtechnology/payoff/update/{unique_key}', [PayoffController::class, 'update'])->name('payoff.update');
+    Route::middleware(['auth:sanctum', 'verified'])->put('/zworktechtechnology/payoff/update/{id}/{month}/{year}', [PayoffController::class, 'update'])->name('payoff.update');
     // DELETE
     Route::middleware(['auth:sanctum', 'verified'])->put('/zworktechtechnology/payoff/delete/{unique_key}', [PayoffController::class, 'delete'])->name('payoff.delete');
     // DATEFILTER
