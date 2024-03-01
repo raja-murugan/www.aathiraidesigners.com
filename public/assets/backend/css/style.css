@@ -8687,7 +8687,7 @@ body[data-layout-mode=dark] .alertify .ajs-header {
 .card .card-header {
   border-color: #f0f1f5;
   background-color: #fff;
-  padding: 1.5rem;
+  padding: 1rem;
 }
 .card .card-header:first-child {
   border-top-left-radius: 20px;
@@ -8700,7 +8700,7 @@ body[data-layout-mode=dark] .alertify .ajs-header {
 }
 .card .card-body {
   position: relative;
-  padding: 1.5rem;
+  padding: 1rem;
 }
 @media (max-width: 1199.98px) {
   .card .card-body {
