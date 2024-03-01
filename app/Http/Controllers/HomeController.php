@@ -98,7 +98,6 @@ class HomeController extends Controller
                 'employee' => $AllEmployees_arr->name,
                 'checkin_time' => $checkin_time,
                 'checkout_time' => $checkout_time,
-                'checkin_photo' => $checkin_photo,
                 'total_time' => $total_time,
                 'status' => $status,
             );
@@ -245,7 +244,6 @@ class HomeController extends Controller
                 'employee' => $AllEmployees_arr->name,
                 'checkin_time' => $checkin_time,
                 'checkout_time' => $checkout_time,
-                'checkin_photo' => $checkin_photo,
                 'total_time' => $total_time,
                 'status' => $status,
             );
