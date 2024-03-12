@@ -3598,9 +3598,9 @@ span.select2-container.select2-container--default.select2-container--open {
   color: #fff;
 }
 
-.tab-content {
+/* .tab-content {
   padding-top: 20px;
-}
+} */
 
 .navtab-bg .nav-link {
   background-color: #edeff1;
@@ -3617,9 +3617,9 @@ span.select2-container.select2-container--default.select2-container--open {
   border-color: #333 #333 #fff;
 }
 .nav-tabs .nav-link.active {
-  color: #495057;
-  background-color: #fff;
-  border-color: #dee2e6 #dee2e6 #fff;
+  color: #fff;
+  background-color: #6839d0;
+  /* border-color: #dee2e6 #dee2e6 #fff; */
 }
 
 .navtab-bg .nav-item {

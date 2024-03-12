@@ -27,7 +27,8 @@
                            </div>
 
                                 <ul class="filter-list">
-                                    <li><a class="btn btn-primary" href="{{ route('payoff.create') }}"><i class="fa fa-plus-circle me-2" aria-hidden="true"></i>Add Payoff</a></li>
+                                    <li><a class="btn btn-primary" href="{{ route('payoff.create') }}"><i class="fa fa-plus-circle me-2" aria-hidden="true"></i>Add Hour Salary</a></li>
+                                    <li><a class="btn btn-success" href="{{ route('payoff.daysalarycreate') }}"><i class="fa fa-plus-circle me-2" aria-hidden="true"></i>Add Day Salary</a></li>
                                 </ul>
                             </div>
                     </div>

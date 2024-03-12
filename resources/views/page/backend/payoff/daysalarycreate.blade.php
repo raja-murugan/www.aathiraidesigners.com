@@ -8,7 +8,7 @@
 
       <div class="page-header">
          <div class="content-page-header">
-            <h6>Hour Salary payoff</h6>
+            <h6>Day Salary payoff</h6>
          </div>
       </div>
 
@@ -20,7 +20,7 @@
             <div class="card">
                <div class="card-body">
 
-                     <form autocomplete="off" method="POST" action="{{ route('payoff.store') }}" enctype="multipart/form-data">
+                     <form autocomplete="off" method="POST" action="{{ route('payoff.daysalary_store') }}" enctype="multipart/form-data">
                      @csrf
    
 
@@ -32,13 +32,13 @@
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                        <div class="form-group">
                                           <label >Date <span class="text-danger">*</span></label>
-                                          <input type="date" value="{{ $today }}" class="form-control"  name="date" id="date"  required>
+                                          <input type="date" value="{{ $today }}" class="form-control"  name="ds_date" id="ds_date"  required>
                                        </div>
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                        <div class="form-group">
                                           <label >Year <span class="text-danger">*</span></label>
-                                          <select class="form-control salary_year select" name="salary_year" id="salary_year" required>
+                                          <select class="form-control ds_salary_year select" name="ds_salary_year" id="ds_salary_year" required>
                                              <option value="" selected hidden class="text-muted">Select </option>
                                              @foreach ($years_arr as $years_array)
                                              <option value="{{ $years_array }} "@if ($years_array == $current_year) selected='selected' @endif>{{ $years_array }}</option>
@@ -50,7 +50,7 @@
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                        <div class="form-group">
                                           <label >Month<span class="text-danger">*</span></label>
-                                          <select class="form-control js-example-basic-single salary_month select" name="salary_month" id="salary_month"required>
+                                          <select class="form-control js-example-basic-single ds_salary_month select" name="ds_salary_month" id="ds_salary_month"required>
                                              <option value="" selected hidden class="text-muted">Select Month </option>
                                              <option value="01">January</option>
                                              <option value="02">February</option>
@@ -77,18 +77,19 @@
                               <div class="form-group-item">
                                        <div class="table-responsive no-pagination">
                                           <table class="table table-center table-hover">
-                                             <thead id="headsalary_detailrow" style="background: linear-gradient(320deg, #DDCEFF 0%, #DBECFF 100%);display:none">
+                                             <thead id="ds_headsalary_detailrow" style="background: linear-gradient(320deg, #DDCEFF 0%, #DBECFF 100%);display:none">
                                                 <tr>
                                                    <th style="width:18%">Employee</th>
-                                                   <th style="width:16%">Working Hours</th>
+                                                   <th style="width:5%">Working<br/> Days</th>
+                                                   <th style="width:15%">Total Hour</th>
                                                    <th style="width:13%">Salary Amount</th>
-                                                   <th style="width:13%">Paid Salary</th>
-                                                   <th style="width:13%">Balance</th>
-                                                   <th style="width:13%">Amount</th>
+                                                   <th style="width:12%">Paid Salary</th>
+                                                   <th style="width:12%">Balance</th>
+                                                   <th style="width:12%">Amount</th>
                                                    <th style="width:13%">Note</th>
                                                 </tr>
                                              </thead>
-                                             <tbody id="payoffsalary"></div>
+                                             <tbody id="ds_payoffsalary"></div>
                                           </table>
                                        </div>
                               </div>
@@ -106,12 +107,12 @@
 
 <script>
 $(document).ready(function() {
-     $('.salary_month').on('change', function () {
+     $('.ds_salary_month').on('change', function () {
         var salary_month = $(this).val();
-        var salary_year = $(".salary_year").val();
+        var salary_year = $(".ds_salary_year").val();
         //alert(salary_month);
         $.ajax({
-            url: '/gettotal_salary/',
+            url: '/gettotal_daysalary/',
             type: 'get',
             data: {
                 salary_month: salary_month,
@@ -121,49 +122,52 @@ $(document).ready(function() {
             success: function(response) {
                 console.log(response);
                 var len = response.length;
-                $('#payoffsalary').html('');
+                $('#ds_payoffsalary').html('');
                 for (var i = 0; i < len; i++) {
 
                         var column_0 = $('<td/>', {
-                            html: '<input type="" value="' + response[i].employee + '" class="form-control" readonly/><input type="hidden" id="employee_id" name="employee_id[]" value="' + response[i].employeeid + '"/>',
+                            html: '<input type="" value="' + response[i].employee + '" class="form-control" readonly/>' +
+                                    '<input type="hidden" id="employee_id" name="employee_id[]" value="' + response[i].employeeid + '"/>',
                         });
                         var column_1 = $('<td/>', {
-                            html: '<input type="text" id="working_hours" name="working_hours[]" value="' + response[i].total_time + '" class="form-control" readonly/><input type="hidden" id="perhoursalary" name="perhoursalary[]" value="' + response[i].hour_salary + '" class="form-control" readonly/>',
+                            html: '<input type="" value="' + response[i].present_dayscount + '" class="form-control" readonly/>' +
+                            '<input type="hidden" id="present_dayscount" name="present_dayscount[]" value="' + response[i].present_dayscount + '"/>',
                         });
                         var column_2 = $('<td/>', {
-                            html: '<input type="text" id="salary_amount" name="salary_amount[]" style="background: #d6dec4;"  value="' + response[i].total_salary + '" readonly class="form-control salary_amount"/>',
+                            html: '<input type="" value="' + response[i].total_time + '" class="form-control" style="color: #6b00ff;" readonly/>' +
+                                    '<input type="hidden" id="total_time" name="total_time[]" value="' + response[i].total_time + '"/>' +
+                                    '<input type="hidden" id="perdaysalary" name="perdaysalary[]" value="' + response[i].perdaysalary + '"/>',
                         });
                         var column_3 = $('<td/>', {
-                            html: '<input type="text" id="paid_salary" value="' + response[i].paid_salary + '" name="paid_salary[]" style="color:green" value="" readonly class="form-control paid_salary"/>',
+                            html: '<input type="" value="' + response[i].emp_salary + '" class="form-control" readonly/>' +
+                                    '<input type="hidden" id="emp_salary" name="emp_salary[]" value="' + response[i].emp_salary + '"/>',
                         });
                         var column_4 = $('<td/>', {
-                            html: '<input type="text" id="balance_salary" value="' + response[i].balanceSalaryAmount + '" name="balance_salary[]" style="color:red;" value="" readonly class="form-control balance_salary"/>',
+                            html: '<input type="" value="' + response[i].paid_salary + '" class="form-control" style="color: green;" readonly/>' +
+                                    '<input type="hidden" id="paid_salary" name="paid_salary[]" value="' + response[i].paid_salary + '"/>',
                         });
                         var column_5 = $('<td/>', {
-                            html: '<input type="text" id="amountgiven" name="amountgiven[]"  class="form-control amountgiven" ' + response[i].readonly + '  placeholder="' + response[i].placeholder + '"/>',
+                            html: '<input type="" value="' + response[i].balanceSalaryAmount + '" class="form-control" style="color: red;" readonly/>' +
+                                    '<input type="hidden" id="balanceSalaryAmount" name="balanceSalaryAmount[]" value="' + response[i].balanceSalaryAmount + '"/>',
                         });
                         var column_6 = $('<td/>', {
+                            html: '<input type="text" id="amountgiven" name="amountgiven[]"  class="form-control amountgiven" ' + response[i].readonly + '  placeholder="' + response[i].placeholder + '"/>',
+                        });
+                        var column_7 = $('<td/>', {
                             html: '<textarea name="note[]" id="note" class="form-control" ' + response[i].readonly + '  placeholder="' + response[i].noteplaceholder + '"></textarea>',
                         });
 
                         var row = $('<tr id=salrydetailrow/>', {}).append(column_0, column_1, column_2,
-                            column_3, column_4, column_5, column_6);
+                            column_3, column_4, column_5, column_6, column_7);
 
-                        $('#payoffsalary').append(row);
-                        $('#headsalary_detailrow').show();
+                        $('#ds_payoffsalary').append(row);
+                        $('#ds_headsalary_detailrow').show();
                 }
             }
         });
     });
 
-    $(document).on("keyup", "input[name*=amountgiven]", function() {
-        var amountgiven = $(this).val();
-        var balance_salary = $(this).parents('tr').find('.balance_salary').val();
-        if (Number(amountgiven) > Number(balance_salary)) {
-            alert('!Paid Amount is More than of Total!');
-            $(this).parents('tr').find('.amountgiven').val('');
-        }
-    });
+   
 });
 
 

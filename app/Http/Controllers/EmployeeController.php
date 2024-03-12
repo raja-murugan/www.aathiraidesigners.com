@@ -274,10 +274,27 @@ class EmployeeController extends Controller
 
         $c_month = date("M",strtotime($today));
 
-        $hour_salary = $Employeedata->salaray_per_hour;
-        $one_min_salary = ($Employeedata->salaray_per_hour) / 60;
-        $total_min_salary = $totalmins * $one_min_salary;
-        $total_salary = number_format((float)$total_min_salary, 2, '.', '');
+
+
+        if($Employeedata->department_id == 1){
+
+            $hour_salary = $Employeedata->salaray_per_hour;
+            $one_min_salary = ($Employeedata->salaray_per_hour) / 60;
+            $total_min_salary = $totalmins * $one_min_salary;
+            $total_salary = number_format((float)$total_min_salary, 2, '.', '');
+
+
+        }else if($Employeedata->department_id == 2){
+
+                $five_forty_mins = $Employeedata->salaray_per_hour;
+                $one_minute = ($Employeedata->salaray_per_hour) / 540;
+
+                $total_day_salary = $totalmins * $one_minute;
+                $total_salary = number_format((float)$total_day_salary, 2, '.', '');
+
+        }
+
+        
 
         return view('page.backend.employee.view', compact('Employeedata', 'today', 'timenow', 'attendence_Data', 'list', 'year', 'month', 'curent_month', 'c_month', 'total_time', 'total_salary'));
     }
@@ -370,11 +387,54 @@ class EmployeeController extends Controller
 
         $c_month = date("M",strtotime($today));
 
-        $hour_salary = $Employeedata->salaray_per_hour;
-        $one_min_salary = ($Employeedata->salaray_per_hour) / 60;
-        $total_min_salary = $totalmins * $one_min_salary;
-        $total_salary = number_format((float)$total_min_salary, 2, '.', '');
+        if($Employeedata->department_id == 1){
+
+            $hour_salary = $Employeedata->salaray_per_hour;
+            $one_min_salary = ($Employeedata->salaray_per_hour) / 60;
+            $total_min_salary = $totalmins * $one_min_salary;
+            $total_salary = number_format((float)$total_min_salary, 2, '.', '');
+
+
+        }else if($Employeedata->department_id == 2){
+
+                $five_forty_mins = $Employeedata->salaray_per_hour;
+                $one_minute = ($Employeedata->salaray_per_hour) / 540;
+
+                $total_day_salary = $totalmins * $one_minute;
+                $total_salary = number_format((float)$total_day_salary, 2, '.', '');
+
+        }
 
         return view('page.backend.employee.view', compact('Employeedata', 'today', 'timenow', 'attendence_Data', 'list', 'year', 'month', 'curent_month', 'c_month', 'total_time', 'total_salary'));
     }
+
+
+
+
+    public function departmentupdate()
+    {
+        $department = Department::where('soft_delete', '!=', 1)->orderBy('id', 'ASC')->get();
+        $Employee = Employee::where('soft_delete', '!=', 1)->get();
+
+        return view('page.backend.employee.departmentupdate', compact('department', 'Employee'));
+    }
+
+    public function update_emp_department(Request $request)
+    {
+        foreach ($request->get('employee_id') as $key => $employee_id) {
+
+            $department = $request->department[$employee_id];
+            $employee_salary = $request->employee_salary[$key];
+            if($department != ""){
+
+                DB::table('employees')->where('id', $employee_id)->update([
+                    'department_id' => $department,  'salaray_per_hour' => $employee_salary
+                ]);
+            }
+        }
+
+        return redirect()->route('employee.index')->with('info', 'Updated !');
+    }
+
+
 }

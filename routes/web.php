@@ -55,6 +55,10 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::middleware(['auth:sanctum', 'verified'])->get('/zworktechtechnology/employee/view/{unique_key}', [EmployeeController::class, 'view'])->name('employee.view');
     // DATAE FILTER
     Route::middleware(['auth:sanctum', 'verified'])->put('/zworktechtechnology/employee/datefilter', [EmployeeController::class, 'datefilter'])->name('employee.datefilter');
+    // CREATE
+    Route::middleware(['auth:sanctum', 'verified'])->get('/zworktechtechnology/employee/departmentupdate', [EmployeeController::class, 'departmentupdate'])->name('employee.departmentupdate');
+    // EDIT
+    Route::middleware(['auth:sanctum', 'verified'])->post('/zworktechtechnology/employee/update_emp_department', [EmployeeController::class, 'update_emp_department'])->name('employee.update_emp_department');
  });
 
 // ATTENDANCE CONTROLLER
@@ -203,8 +207,12 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::middleware(['auth:sanctum', 'verified'])->get('/zworktechtechnology/payoff', [PayoffController::class, 'index'])->name('payoff.index');
     // CREATE
     Route::middleware(['auth:sanctum', 'verified'])->get('/zworktechtechnology/payoff/create', [PayoffController::class, 'create'])->name('payoff.create');
+    // DAY SALARY CREATE
+    Route::middleware(['auth:sanctum', 'verified'])->get('/zworktechtechnology/payoff/daysalarycreate', [PayoffController::class, 'daysalarycreate'])->name('payoff.daysalarycreate');
     // STORE
     Route::middleware(['auth:sanctum', 'verified'])->post('/zworktechtechnology/payoff/store', [PayoffController::class, 'store'])->name('payoff.store');
+    // STORE
+    Route::middleware(['auth:sanctum', 'verified'])->post('/zworktechtechnology/payoff/daysalary_store', [PayoffController::class, 'daysalary_store'])->name('payoff.daysalary_store');
     // EDIT
     Route::middleware(['auth:sanctum', 'verified'])->get('/zworktechtechnology/payoff/edit/{id}/{month}/{year}', [PayoffController::class, 'edit'])->name('payoff.edit');
     // EDIT
@@ -217,9 +225,13 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
 
 
+
+
+
 Route::get('getproducts/', [ProductController::class, 'getproducts']);
 
 Route::get('/getcustomerwiseproducts', [CustomerController::class, 'getcustomerwiseproducts']);
 Route::get('/getmeasurementforproduct', [CustomerController::class, 'getmeasurementforproduct']);
 Route::get('/gettotal_salary', [PayoffController::class, 'gettotal_salary']);
+Route::get('/gettotal_daysalary', [PayoffController::class, 'gettotal_daysalary']);
 Route::get('/getEmployeePayoffs', [PayoffController::class, 'getEmployeePayoffs']);
