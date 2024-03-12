@@ -50,13 +50,13 @@
                                           <th class="border" style="padding-left:17px;font-weight:700;text-transform:uppercase;">Date</th>
                                        </tr>
                                        <tr>
-                                          <th class="border" style="padding: 17px;font-weight:700;text-transform:uppercase;">Day</th>
+                                          <th class="border" style="padding: 15px;font-weight:700;text-transform:uppercase;">Day</th>
                                        </tr>
                                     </thead>
                                     <tbody>
                                              @foreach ($Employee as $datas_emp)
                                                         <tr class="border"></tr>
-                                                        <td class="border" style="padding: 13px;font-weight:700;text-transform:uppercase;">{{$datas_emp->name}}</td>
+                                                        <td class="border" style="padding: 12px;font-weight:700;text-transform:uppercase;">{{$datas_emp->name}}</td>
                                                     @endforeach
                                                     
                                     </tbody>
