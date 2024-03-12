@@ -56,7 +56,7 @@
                                     <tbody>
                                              @foreach ($Employee as $datas_emp)
                                                         <tr class="border"></tr>
-                                                        <td class="border" style="padding: 11px;font-weight:700;text-transform:uppercase;">{{$datas_emp->name}}</td>
+                                                        <td class="border" style="padding: 13px;font-weight:700;text-transform:uppercase;">{{$datas_emp->name}}</td>
                                                     @endforeach
                                                     
                                     </tbody>
