@@ -56,7 +56,7 @@
                                     <tbody>
                                              @foreach ($Employee as $datas_emp)
                                                         <tr class="border"></tr>
-                                                        <td class="border" style="padding: 14px;font-weight:700;text-transform:uppercase;">{{$datas_emp->name}}</td>
+                                                        <td class="border" style="padding: 9px;font-weight:700;text-transform:uppercase;">{{$datas_emp->name}}</td>
                                                     @endforeach
                                                     
                                     </tbody>
@@ -97,7 +97,6 @@
                               </thead>
                               <tbody>
                                  @foreach ($Employee as $employee)
-
 
                                     <tr>
                                        @foreach ($Payoff_data as $Payoff_data_arr)
