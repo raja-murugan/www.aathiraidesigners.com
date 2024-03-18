@@ -22,7 +22,7 @@
 
             <div class="row">
                 <div style="display: flex"></div>
-                <div class="col-sm-8">
+                <div class="col-sm-12">
                     <div class="card">
                         <div class="card-body">
                             <div class="table-responsive">
@@ -79,7 +79,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-4" hidden>
                     <div class="card">
                         <div class="card-body">
                             <form autocomplete="off" method="POST" action="{{ route('department.store') }}"
