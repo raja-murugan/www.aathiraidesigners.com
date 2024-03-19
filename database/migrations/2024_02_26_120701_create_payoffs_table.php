@@ -27,6 +27,8 @@ return new class extends Migration
 
             
             $table->string('total_working_hour')->nullable();
+            $table->string('present_days')->nullable();
+            $table->string('total_ot')->nullable();
             $table->string('perhoursalary')->nullable();
             $table->string('salaryamount')->nullable();
             $table->string('totalpaidsalary')->nullable();

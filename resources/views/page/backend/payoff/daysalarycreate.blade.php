@@ -81,7 +81,7 @@
                                                 <tr>
                                                    <th style="width:18%">Employee</th>
                                                    <th style="width:5%">Working<br/> Days</th>
-                                                   <th style="width:15%">Total Hour</th>
+                                                   <th style="width:15%">OT Hour</th>
                                                    <th style="width:13%">Salary Amount</th>
                                                    <th style="width:12%">Paid Salary</th>
                                                    <th style="width:12%">Balance</th>
@@ -134,8 +134,8 @@ $(document).ready(function() {
                             '<input type="hidden" id="present_dayscount" name="present_dayscount[]" value="' + response[i].present_dayscount + '"/>',
                         });
                         var column_2 = $('<td/>', {
-                            html: '<input type="" value="' + response[i].total_time + '" class="form-control" style="color: #6b00ff;" readonly/>' +
-                                    '<input type="hidden" id="total_time" name="total_time[]" value="' + response[i].total_time + '"/>' +
+                            html: '<input type="" value="' + response[i].total_ot + '" class="form-control" style="color: #6b00ff;" readonly/>' +
+                                    '<input type="hidden" id="total_ot" name="total_ot[]" value="' + response[i].total_ot + '"/>' +
                                     '<input type="hidden" id="perdaysalary" name="perdaysalary[]" value="' + response[i].perdaysalary + '"/>',
                         });
                         var column_3 = $('<td/>', {

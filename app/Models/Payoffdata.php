@@ -17,6 +17,8 @@ class Payoffdata extends Model
         'year',
         'employee_id',
         'total_working_hour',
+        'present_days',
+        'total_ot',
         'perhoursalary',
         'salaryamount',
         'paidsalary',
