@@ -16,6 +16,7 @@ class Employee extends Model
         'department_id',
         'phone_number',
         'salaray_per_hour',
+        'ot_salary',
         'address',
         'photo',
         'aadhaar_card',

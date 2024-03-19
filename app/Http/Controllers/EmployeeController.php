@@ -34,6 +34,7 @@ class EmployeeController extends Controller
                 'phone_number' => $datas->phone_number,
                 'departmentname' => $departmentname->name,
                 'salaray_per_hour' => $datas->salaray_per_hour,
+                'ot_salary' => $datas->ot_salary,
                 'department_id' => $datas->department_id,
                 'address' => $datas->address,
                 'aadhaar_card' => $datas->aadhaar_card,
@@ -427,8 +428,14 @@ class EmployeeController extends Controller
             $employee_salary = $request->employee_salary[$key];
             if($department != ""){
 
+                if($request->ot_salary[$key] != ""){
+                    $ot_salary = $request->ot_salary[$key];
+                }else {
+                    $ot_salary = '';
+                }
+
                 DB::table('employees')->where('id', $employee_id)->update([
-                    'department_id' => $department,  'salaray_per_hour' => $employee_salary
+                    'department_id' => $department,  'salaray_per_hour' => $employee_salary,  'ot_salary' => $ot_salary
                 ]);
             }
         }

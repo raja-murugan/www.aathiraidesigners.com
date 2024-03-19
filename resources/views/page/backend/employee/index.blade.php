@@ -116,7 +116,8 @@
                                           <th style="width:15%">Phone No</th>
                                           <th style="width:15%">Address</th>
                                           <th style="width:15%">Salary / Date</th>
-                                          <th style="width:20%">Action</th>
+                                          <th style="width:10%">OT</th>
+                                          <th style="width:15%">Action</th>
                                        </tr>
                                     </thead>
                                     <tbody>
@@ -131,6 +132,7 @@
                                           <td>{{ $Employee_datas['phone_number'] }}</td>
                                           <td>{{ $Employee_datas['address'] }}</td>
                                           <td>{{ $Employee_datas['salaray_per_hour'] }}</td>
+                                          <td>{{ $Employee_datas['ot_salary'] }}</td>
                                           <td>
                                              <ul class="list-unstyled hstack gap-1 mb-0">
                                                 <li>

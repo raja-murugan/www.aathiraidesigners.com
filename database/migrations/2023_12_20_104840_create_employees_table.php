@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('gender')->nullable();
             $table->string('salaray_per_hour')->nullable();
+            $table->string('ot_salary')->nullable();
             $table->string('address')->nullable();
             $table->string('photo')->nullable();
             $table->string('aadhaar_card')->nullable();

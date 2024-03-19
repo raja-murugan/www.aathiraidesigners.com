@@ -25,8 +25,9 @@
                                                 <tr style="background: #f8f9fa;">
                                                    <th style="font-size:15px; width:10%;">S.No</th>
                                                    <th style="font-size:15px; width:30%;">Employee</th>
-                                                   <th style="font-size:15px; width:50%;">Department</th>
+                                                   <th style="font-size:15px; width:40%;">Department</th>
                                                    <th style="font-size:15px; width:10%;">(Day / Hour) Salary</th>
+                                                   <th style="font-size:15px; width:10%;">OT Salary / Hr</th>
                                                 </tr>
                                           </thead>
                                           <tbody class="">
@@ -45,13 +46,27 @@
                                                                <div class="input-group" style="margin-right: 5px;">
                                                                   <div class="input-group-text">
                                                                         <input class="form-check-input" type="radio" value="{{ $departments->id }}"
-                                                                           id="department{{ $employees->id }}" {{ $employees->department_id == $departments->id ? 'checked' : '' }}
+                                                                           id="department{{ $employees->id }}{{ $departments->id }}" {{ $employees->department_id == $departments->id ? 'checked' : '' }}
                                                                            name="department[{{ $employees->id }}]"
                                                                            aria-label="Radio button for following text input">
                                                                   </div>
                                                                   <input type="text" class="form-control" value="{{ $departments->name }}" disabled
                                                                         aria-label="Text input with radio button">
                                                                </div>
+
+                                                               <script>
+                                                                    $('#department' + {{ $employees->id }}{{ $departments->id }}).click(function() {
+                                                                        var department = $(this).val();
+                                                                        //alert(department);
+
+                                                                        if (department == 2) {
+                                                                            $("#ot_div" + {{ $employees->id }}).show();
+                                                                        } else if (department == 1) {
+                                                                            $("#ot_div" + {{ $employees->id }}).hide();
+                                                                        }
+                                                                    });
+
+                                                                </script>
                                                                @endforeach 
                                                             </div>
                                                       </td>
@@ -59,7 +74,13 @@
                                                       <input type="text" id="employee_salary" name="employee_salary[]"
                                                                value="{{ $employees->salaray_per_hour }}"  class="form-control" />
                                                       </td>
+                                                      <td id="ot_div{{ $employees->id }}" style="display:none;">
+                                                      <input type="text" id="ot_salary" name="ot_salary[]"  class="form-control" value="{{ $employees->ot_salary }}"/>
+                                                      </td>
                                                    </tr>
+
+
+                                                   
                                                 @endforeach
                                           </tbody>
                                        </table>
