@@ -129,9 +129,13 @@ class PayoffController extends Controller
                         $total_minits = ($time2 - $time1) / 60;
     
                         $totalmins += $total_minits;
-
-                        $get_ot_mins = $total_minits - 600;
-                        $total_ot_mins += $get_ot_mins;
+                        if($total_minits > 600){
+                            $get_ot_mins = $total_minits - 600;
+                            $total_ot_mins += $get_ot_mins;
+                        }else {
+                            $total_ot_mins += 0;
+                        }
+                        
                     }else {
                         $total_minits = 0;
                         $totalmins += 0;
@@ -324,8 +328,12 @@ class PayoffController extends Controller
     
                         $totalmins += $total_minits;
 
-                        $get_ot_mins = $total_minits - 600;
-                        $total_ot_mins += $get_ot_mins;
+                        if($total_minits > 600){
+                            $get_ot_mins = $total_minits - 600;
+                            $total_ot_mins += $get_ot_mins;
+                        }else {
+                            $total_ot_mins += 0;
+                        }
                     }else {
                         $total_minits = 0;
                         $totalmins += 0;
@@ -919,8 +927,12 @@ class PayoffController extends Controller
         
                             $totalmins += $total_minits;
 
-                            $get_ot_mins = $total_minits - 600;
-                            $total_ot_mins += $get_ot_mins;
+                            if($total_minits > 600){
+                                $get_ot_mins = $total_minits - 600;
+                                $total_ot_mins += $get_ot_mins;
+                            }else {
+                                $total_ot_mins += 0;
+                            }
                         }else {
                             $total_minits = 0;
                             $totalmins += 0;
