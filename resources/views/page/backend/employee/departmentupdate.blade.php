@@ -63,6 +63,7 @@
                                                                             $("#ot_div" + {{ $employees->id }}).show();
                                                                         } else if (department == 1) {
                                                                             $("#ot_div" + {{ $employees->id }}).hide();
+                                                                            $("#ot_salary" + {{ $employees->id }}).val('');
                                                                         }
                                                                     });
 
@@ -74,9 +75,15 @@
                                                       <input type="text" id="employee_salary" name="employee_salary[]"
                                                                value="{{ $employees->salaray_per_hour }}"  class="form-control" />
                                                       </td>
-                                                      <td id="ot_div{{ $employees->id }}" style="display:none;">
-                                                      <input type="text" id="ot_salary" name="ot_salary[]"  class="form-control" value="{{ $employees->ot_salary }}"/>
+                                                      @if($employees->department_id == 2)
+                                                      <td id="ot_div{{ $employees->id }}">
+                                                      <input type="text" id="ot_salary{{ $employees->id }}" name="ot_salary[]"  class="form-control" value="{{ $employees->ot_salary }}"/>
                                                       </td>
+                                                      @else
+                                                      <td id="ot_div{{ $employees->id }}" style="display:none;">
+                                                      <input type="text" id="ot_salary{{ $employees->id }}" name="ot_salary[]"  class="form-control" value="{{ $employees->ot_salary }}"/>
+                                                      </td>
+                                                      @endif
                                                    </tr>
 
 
