@@ -90,7 +90,7 @@
                             <textarea name="address" id="address" class="form-control" placeholder="Enter Employee Address" required></textarea>
                         </div>
                     </div>
-                    <div class="col-lg-12 col-md-12" hidden>
+                    <div class="col-lg-12 col-md-12" >
                         <div class="form-group">
                             <label>Photo</label>
                             <div class="col-sm-7">
@@ -104,7 +104,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-12 col-md-12" >
+                    <div class="col-lg-12 col-md-12" hidden>
                         <div class="form-group">
                             <label>Photo</label>
                             <input type="file" class="form-control" name="employee_photo">
