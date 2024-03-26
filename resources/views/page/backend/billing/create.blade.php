@@ -181,7 +181,7 @@
                                                             <label>Discount Amount<span
                                                                     class="text-danger">*</span></label>
                                                             <input type="text" class="form-control billingdiscount"
-                                                                name="discount" id="discount" placeholder="0">
+                                                                name="discount" id="discount" placeholder="0" value="0">
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-12 col-md-12 col-sm-12">
