@@ -232,6 +232,98 @@
               });
     });
 
+    var s = 1;
+    var w = 1;
+
+            $(document).on('click', '.addmeasurement', function() {
+              ++s;
+
+                $(".measurements_fields").append(
+                    '<tr>' +
+                    '<td><input type="hidden" id="product_measurements_id" name="product_measurements_id[]" />' +
+                    '<select class="form-control  measurement_id select js-example-basic-single"  name="measurement_id[]" id="measurement_id' + s + '" required>' +
+                    '<option value="" selected disabled class="text-muted">Select Measurement</option></select>' +
+                    '</td>' +
+                    '<td><button class="btn additemplus_button addmeasurement" style="margin-right: 3px;" type="button" id="" value="Add"><i class="fe fe-plus-circle"></i></button>' +
+                    '<button class="btn additemminus_button remove-measurementtr" type="button" id="" value="Add"><i class="fe fe-minus-circle"></i></button></td>' +
+                    '</tr>'
+                );
+                $(".measurements_fields").find('.js-example-basic-single').select2();
+
+
+                $.ajax({
+                    url: '/getmeasurements/',
+                    type: 'get',
+                    dataType: 'json',
+                    success: function(response) {
+                        //console.log(response['data']);
+                        var len = response['data'].length;
+
+                        var selectedValues = new Array();
+
+                        if (len > 0) {
+                            for (var i = 0; i < len; i++) {
+
+                                    var id = response['data'][i].id;
+                                    var name = response['data'][i].measurement;
+                                    var option = "<option value='" + id + "'>" + name +
+                                        "</option>";
+                                    selectedValues.push(option);
+                            }
+                        }
+                        ++w;
+                        $('#measurement_id' + w).append(selectedValues);
+                        //add_count.push(Object.keys(selectedValues).length);
+                    }
+                });
+
+            });
+
+
+            $(document).on('click', '.remove-measurementtr', function() {
+              $(this).parents('tr').remove();
+            });
+
+
+
+
+
+            $('#product_id' + 1).on('change', function() {
+              var product_id = this.value;
+                  $.ajax({
+                    url: '/getproduct_Mesurements/' + product_id,
+                    type: 'get',
+                    dataType: 'json',
+                    success: function(response) {
+                        console.log(response['data']);
+
+                        var output = response['data'].length;
+                        $('#customer_measurements' + 1).empty();
+                            for (var i = 0; i < output; i++) {
+
+
+                            var column_0 = $('<td/>', {
+                                    html: '<input type="hidden" name="product_customer_mesasurementid[]" value=""/>' +
+                                          '<input type="hidden" name="measurement_id[]" value="' + response['data'][i].measurement_id + '"/>' +
+                                          '<input type="hidden" name="productid[]" value="' + product_id + '"/>' +
+                                          '<input type="text" class="measurement_name form-control" id="measurement_name" name="measurement_name[]" value="' + response['data'][i].measurement + '" readonly>',
+                                });
+                                var column_1 = $('<td/>', {
+                                    html: '<input type="text"  class=" form-control" id="measurement_no" name="measurement_no[]" placeholder="Enter Measurements"/>',
+                                });
+                                var row = $('<tr id=stages_tr/>', {}).append(column_0,
+                                    column_1);
+
+                                $('#customer_measurements' + 1).append(row);
+                               
+                            }
+
+                      }
+                    });
+            });
+
+
+
     // Customer Products
 
     var i = 1;
@@ -246,9 +338,9 @@
                     '<select class="form-control  product_id select js-example-basic-single"  name="product_id[]" id="product_id' + i + '" required>' +
                     '<option value="" selected disabled class="text-muted">Select Product</option></select>' +
                     '</td>' +
-                    '<td><input type="text" class="form-control measurements" id="measurements" name="measurements[]" placeholder="Measurement" /></td>' +
+                    '<td><table class="table " id="customer_measurementss' + i + '"></table></td>' +
                     '<td><button class="btn additemplus_button addproducts" style="margin-right: 3px;" type="button" id="" value="Add"><i class="fe fe-plus-circle"></i></button>' +
-                    '<button class="btn additemminus_button remove-tr" type="button" id="" value="Add"><i class="fe fe-minus-circle"></i></button></td>' +
+                    '<button class="btn additemminus_button remove-producttr" type="button" id="" value="Add"><i class="fe fe-minus-circle"></i></button></td>' +
                     '</tr>'
                 );
                 $(".product_fields").find('.js-example-basic-single').select2();
@@ -280,9 +372,209 @@
                     }
                 });
 
+
+                if(i == '2'){
+                      $('#product_id' + i).on('change', function() {
+                        var product_id = this.value;
+                            $.ajax({
+                              url: '/getproduct_Mesurements/' + product_id,
+                              type: 'get',
+                              dataType: 'json',
+                              success: function(response) {
+                                  console.log(response['data']);
+
+                                  var output = response['data'].length;
+                                  $('#customer_measurementss' + 2).empty();
+                                      for (var f = 0; f < output; f++) {
+
+
+                                      var column_0 = $('<td/>', {
+                                              html: '<input type="hidden" name="product_customer_mesasurementid[]" value=""/>' + 
+                                                    '<input type="hidden" name="measurement_id[]" value="' + response['data'][f].measurement_id + '"/>' +
+                                                      '<input type="hidden" name="productid[]" value="' + product_id + '"/>' +
+                                                    '<input type="text" class="measurement_name form-control" id="measurement_name" name="measurement_name[]" value="' +
+                                                      response['data'][f].measurement + '" readonly>',
+                                          });
+                                          var column_1 = $('<td/>', {
+                                              html: '<input type="text"  class=" form-control" id="measurement_no" name="measurement_no[]" placeholder="Enter Measurements"/>',
+                                          });
+                                          var row = $('<tr id=stages_tr/>', {}).append(column_0,
+                                              column_1);
+
+                                          $('#customer_measurementss' + i).append(row);
+                                        
+                                      }
+
+                                }
+                              });
+                      });
+                }
+
+
+
+                if(i == '3'){
+                      $('#product_id' + i).on('change', function() {
+                        var product_id = this.value;
+                            $.ajax({
+                              url: '/getproduct_Mesurements/' + product_id,
+                              type: 'get',
+                              dataType: 'json',
+                              success: function(response) {
+                                  console.log(response['data']);
+
+                                  var output = response['data'].length;
+                                  $('#customer_measurementss' + 3).empty();
+                                      for (var f = 0; f < output; f++) {
+
+
+                                      var column_0 = $('<td/>', {
+                                              html: '<input type="hidden" name="product_customer_mesasurementid[]" value=""/>' + 
+                                                      '<input type="hidden" name="measurement_id[]" value="' + response['data'][f].measurement_id + '"/>' +
+                                                      '<input type="hidden" name="productid[]" value="' + product_id + '"/>' +
+                                              '<input type="text" class="measurement_name form-control" id="measurement_name" name="measurement_name[]" value="' +
+                                              response['data'][f].measurement + '" readonly>',
+                                          });
+                                          var column_1 = $('<td/>', {
+                                              html: '<input type="text"  class=" form-control" id="measurement_no" name="measurement_no[]" placeholder="Enter Measurements"/>',
+                                          });
+                                          var row = $('<tr id=stages_tr/>', {}).append(column_0,
+                                              column_1);
+
+                                          $('#customer_measurementss' + i).append(row);
+                                        
+                                      }
+
+                                }
+                              });
+                      });
+                }
+
+
+
+                if(i == '4'){
+                      $('#product_id' + i).on('change', function() {
+                        var product_id = this.value;
+                            $.ajax({
+                              url: '/getproduct_Mesurements/' + product_id,
+                              type: 'get',
+                              dataType: 'json',
+                              success: function(response) {
+                                  console.log(response['data']);
+
+                                  var output = response['data'].length;
+                                  $('#customer_measurementss' + 4).empty();
+                                      for (var f = 0; f < output; f++) {
+
+
+                                      var column_0 = $('<td/>', {
+                                              html: '<input type="hidden" name="product_customer_mesasurementid[]" value=""/>' + 
+                                                    '<input type="hidden" name="measurement_id[]" value="' + response['data'][f].measurement_id + '"/>' +
+                                                      '<input type="hidden" name="productid[]" value="' + product_id + '"/>' +
+                                                    '<input type="text" class="measurement_name form-control" id="measurement_name" name="measurement_name[]" value="' +
+                                              response['data'][f].measurement + '" readonly>',
+                                          });
+                                          var column_1 = $('<td/>', {
+                                              html: '<input type="text"  class=" form-control" id="measurement_no" name="measurement_no[]" placeholder="Enter Measurements"/>',
+                                          });
+                                          var row = $('<tr id=stages_tr/>', {}).append(column_0,
+                                              column_1);
+
+                                          $('#customer_measurementss' + i).append(row);
+                                        
+                                      }
+
+                                }
+                              });
+                      });
+                }
+
+
+
+                if(i == '5'){
+                      $('#product_id' + i).on('change', function() {
+                        var product_id = this.value;
+                            $.ajax({
+                              url: '/getproduct_Mesurements/' + product_id,
+                              type: 'get',
+                              dataType: 'json',
+                              success: function(response) {
+                                  console.log(response['data']);
+
+                                  var output = response['data'].length;
+                                  $('#customer_measurementss' + 5).empty();
+                                      for (var f = 0; f < output; f++) {
+
+
+                                      var column_0 = $('<td/>', {
+                                              html: '<input type="hidden" name="product_customer_mesasurementid[]" value=""/>' + 
+                                                    '<input type="hidden" name="measurement_id[]" value="' + response['data'][f].measurement_id + '"/>' +
+                                                      '<input type="hidden" name="productid[]" value="' + product_id + '"/>' +
+                                                      '<input type="text" class="measurement_name form-control" id="measurement_name" name="measurement_name[]" value="' +
+                                              response['data'][f].measurement + '" readonly>',
+                                          });
+                                          var column_1 = $('<td/>', {
+                                              html: '<input type="text"  class=" form-control" id="measurement_no" name="measurement_no[]" placeholder="Enter Measurements"/>',
+                                          });
+                                          var row = $('<tr id=stages_tr/>', {}).append(column_0,
+                                              column_1);
+
+                                          $('#customer_measurementss' + i).append(row);
+                                        
+                                      }
+
+                                }
+                              });
+                      });
+                }
+
+
+
+                if(i == '6'){
+                      $('#product_id' + i).on('change', function() {
+                        var product_id = this.value;
+                            $.ajax({
+                              url: '/getproduct_Mesurements/' + product_id,
+                              type: 'get',
+                              dataType: 'json',
+                              success: function(response) {
+                                  console.log(response['data']);
+
+                                  var output = response['data'].length;
+                                  $('#customer_measurementss' + 6).empty();
+                                      for (var f = 0; f < output; f++) {
+
+
+                                      var column_0 = $('<td/>', {
+                                              html: '<input type="hidden" name="product_customer_mesasurementid[]" value=""/>' + 
+                                                    '<input type="hidden" name="measurement_id[]" value="' + response['data'][f].measurement_id + '"/>' +
+                                                    '<input type="hidden" name="productid[]" value="' + product_id + '"/>' +
+                                                    '<input type="text" class="measurement_name form-control" id="measurement_name" name="measurement_name[]" value="' +
+                                              response['data'][f].measurement + '" readonly>',
+                                          });
+                                          var column_1 = $('<td/>', {
+                                              html: '<input type="text"  class=" form-control" id="measurement_no" name="measurement_no[]" placeholder="Enter Measurements"/>',
+                                          });
+                                          var row = $('<tr id=stages_tr/>', {}).append(column_0,
+                                              column_1);
+
+                                          $('#customer_measurementss' + i).append(row);
+                                        
+                                      }
+
+                                }
+                              });
+                      });
+                }
+
+
+
+
+
+
+
             });
 
-            $(document).on('click', '.remove-tr', function() {
+            $(document).on('click', '.remove-producttr', function() {
               $(this).parents('tr').remove();
             });
 

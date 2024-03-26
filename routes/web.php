@@ -135,10 +135,14 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     // INDEX
     Route::middleware(['auth:sanctum', 'verified'])->get('/zworktechtechnology/product', [ProductController::class, 'index'])->name('product.index');
+    // CREATE
+    Route::middleware(['auth:sanctum', 'verified'])->get('/zworktechtechnology/product/create', [ProductController::class, 'create'])->name('product.create');
     // STORE
     Route::middleware(['auth:sanctum', 'verified'])->post('/zworktechtechnology/product/store', [ProductController::class, 'store'])->name('product.store');
     // EDIT
-    Route::middleware(['auth:sanctum', 'verified'])->post('/zworktechtechnology/product/edit/{unique_key}', [ProductController::class, 'edit'])->name('product.edit');
+    Route::middleware(['auth:sanctum', 'verified'])->get('/zworktechtechnology/product/edit/{unique_key}', [ProductController::class, 'edit'])->name('product.edit');
+    // EDIT
+    Route::middleware(['auth:sanctum', 'verified'])->put('/zworktechtechnology/product/update/{unique_key}', [ProductController::class, 'update'])->name('product.update');
     // DELETE
     Route::middleware(['auth:sanctum', 'verified'])->put('/zworktechtechnology/product/delete/{unique_key}', [ProductController::class, 'delete'])->name('product.delete');
     // CHECK DUPLICATE
@@ -229,9 +233,12 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
 
 Route::get('getproducts/', [ProductController::class, 'getproducts']);
+Route::get('getmeasurements/', [ProductController::class, 'getmeasurements']);
 
 Route::get('/getcustomerwiseproducts', [CustomerController::class, 'getcustomerwiseproducts']);
 Route::get('/getmeasurementforproduct', [CustomerController::class, 'getmeasurementforproduct']);
 Route::get('/gettotal_salary', [PayoffController::class, 'gettotal_salary']);
 Route::get('/gettotal_daysalary', [PayoffController::class, 'gettotal_daysalary']);
 Route::get('/getEmployeePayoffs', [PayoffController::class, 'getEmployeePayoffs']);
+
+Route::get('getproduct_Mesurements/{product_id}', [ProductController::class, 'getproduct_Mesurements']);

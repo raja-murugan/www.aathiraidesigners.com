@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use App\Models\Customer;
-use App\Models\Product;
 use App\Models\CustomerProduct;
-use App\Models\BillingProduct;
-use App\Models\Billing;
+use App\Models\CustomerProductMeasurement;
+use App\Models\Product;
+use App\Models\ProductMeasurement;
+use App\Models\Measurement;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -27,40 +28,39 @@ class CustomerController extends Controller
         $productsarr = [];
         foreach ($data as $key => $datas) {
 
-
+            $measurementssarr = [];
             $CustomerProduct = CustomerProduct::where('customer_id', '=', $datas->id)->orderBy('id', 'DESC')->get();
             foreach ($CustomerProduct as $key => $CustomerProducts_arr) {
 
                 $productarr = Product::findOrFail($CustomerProducts_arr->product_id);
 
-                $billing_product = BillingProduct::where('billing_product_id', '=', $CustomerProducts_arr->product_id)->where('customer_id', '=', $datas->id)->first();
-                if($billing_product != ""){
-                    $quantity = $billing_product->billing_qty;
-                    $rate = $billing_product->billing_rateperqty;
-                    $billingid = $billing_product->billing_id;
+               
+                        $ProductMeasurements = ProductMeasurement::where('product_id', '=', $CustomerProducts_arr->product_id)->get();
+                        foreach ($ProductMeasurements as $key => $ProductMeasurementsarr) {
 
-                    $GetBilling_status = Billing::findOrFail($billingid);
-                    $billingstatus = $GetBilling_status->status;
-                }else {
-                    $quantity = '';
-                    $rate = '';
-                    $billingstatus = '';
-                }
+                            $measurementss = Measurement::findOrFail($ProductMeasurementsarr->measurement_id);
+
+                        
+                            $measurementssarr[] = array(
+                                'measurement_id' => $ProductMeasurementsarr->measurement_id,
+                                'measurement' => $measurementss->measurement,
+                                'product_id' => $ProductMeasurementsarr->product_id,
+                                'id' => $ProductMeasurementsarr->id,
+                            );
+                        }
+
+
                 $productsarr[] = array(
                     'product' => $productarr->name,
                     'measurements' => $CustomerProducts_arr->measurements,
                     'product_id' => $CustomerProducts_arr->product_id,
                     'customer_id' => $CustomerProducts_arr->customer_id,
                     'id' => $CustomerProducts_arr->id,
-                    'status' => '',
-                    'quantity' => $quantity,
-                    'rate' => $rate,
-                    'billingstatus' => $billingstatus,
+                    'measurementssarr' => $measurementssarr,
                 );
             }
 
-            $total_products = CustomerProduct::where('customer_id', '=', $datas->id)->count();
-            $delivered_products = CustomerProduct::where('customer_id', '=', $datas->id)->where('status', '=', 2)->count();
+            
 
             $Customer_data[] = array(
                 'unique_key' => $datas->unique_key,
@@ -68,8 +68,6 @@ class CustomerController extends Controller
                 'phone_number' => $datas->phone_number,
                 'id' => $datas->id,
                 'productsarr' => $productsarr,
-                'total_products' => $total_products,
-                'delivered_products' => $delivered_products,
             );
 
         }
@@ -81,10 +79,11 @@ class CustomerController extends Controller
     public function create()
     {
         $products = Product::where('soft_delete', '!=', 1)->latest('created_at')->get();
+        $measurements = Measurement::All();
         $today = Carbon::now()->format('Y-m-d');
         $timenow = Carbon::now()->format('H:i');
 
-        return view('page.backend.customer.create', compact('products', 'today', 'timenow'));
+        return view('page.backend.customer.create', compact('products', 'today', 'timenow', 'measurements'));
     }
 
     public function store(Request $request)
@@ -100,16 +99,41 @@ class CustomerController extends Controller
         $data->save();
 
         $customer_id = $data->id;
+        error_reporting(0);
+        foreach ($request->get('measurement_no') as $key => $measurement_no) {
 
-        foreach ($request->get('product_id') as $key => $product_id) {
 
-            if($product_id != ""){
+            $CP = CustomerProduct::where('customer_id', '=', $customer_id)
+                            ->where('product_id', '=', $request->productid[$key])
+                            ->first();
+
+            if($CP == ''){
                 $CustomerProduct = new CustomerProduct;
                 $CustomerProduct->customer_id = $customer_id;
-                $CustomerProduct->product_id = $product_id;
-                $CustomerProduct->measurements = $request->measurements[$key];
+                $CustomerProduct->product_id = $request->productid[$key];
                 $CustomerProduct->save();
+
+                $CustomerProduct_id = $CustomerProduct->id;
+            }else if($CP != ''){
+                $CustomerProduct = new CustomerProduct;
+                $CustomerProduct->customer_id = $customer_id;
+                $CustomerProduct->product_id = $request->productid[$key];
+                $CustomerProduct->update();
+
+                $CustomerProduct_id = $CP->id;
             }
+                
+
+                
+
+                            $CustomerProductMeasurement = new CustomerProductMeasurement;
+                            $CustomerProductMeasurement->customer_id = $customer_id;
+                            $CustomerProductMeasurement->customer_product_id = $CustomerProduct_id;
+                            $CustomerProductMeasurement->product_id = $CustomerProduct->product_id;
+                            $CustomerProductMeasurement->measurement_id = $request->measurement_id[$key];
+                            $CustomerProductMeasurement->measurement_name = $request->measurement_name[$key];
+                            $CustomerProductMeasurement->measurement_no = $measurement_no;
+                            $CustomerProductMeasurement->save();
             
         }
 
@@ -122,12 +146,13 @@ class CustomerController extends Controller
     {
         $CustomerData = Customer::where('unique_key', '=', $unique_key)->first();
         $CustomerProducts = CustomerProduct::where('customer_id', '=', $CustomerData->id)->get();
+        $CustomerProductMeasurements = CustomerProductMeasurement::where('customer_id', '=', $CustomerData->id)->get();
 
         $products = Product::where('soft_delete', '!=', 1)->latest('created_at')->get();
         $today = Carbon::now()->format('Y-m-d');
         $timenow = Carbon::now()->format('H:i');
 
-        return view('page.backend.customer.edit', compact('CustomerData', 'CustomerProducts', 'products', 'today', 'timenow'));
+        return view('page.backend.customer.edit', compact('CustomerData', 'CustomerProducts', 'products', 'today', 'timenow', 'CustomerProductMeasurements'));
     }
 
 
@@ -156,32 +181,63 @@ class CustomerController extends Controller
         if (!empty($different_ids)) {
             foreach ($different_ids as $key => $different_id) {
                 CustomerProduct::where('id', $different_id)->delete();
+                CustomerProductMeasurement::where('customer_product_id', $different_id)->delete();
             }
+
+
         }
 
 
+        foreach ($request->get('product_customer_mesasurementid') as $key => $product_customer_mesasurementid) {
 
-        foreach ($request->get('customer_products_id') as $key => $customer_products_id) {
 
-            if ($customer_products_id > 0) {
+            $CP = CustomerProduct::where('customer_id', '=', $customer_id)
+                            ->where('product_id', '=', $request->productid[$key])
+                            ->first();
 
-                $updateData = CustomerProduct::where('id', '=', $customer_products_id)->first();
-                $updateData->product_id = $request->product_id[$key];
-                $updateData->measurements = $request->measurements[$key];
+            if($CP == ''){
+                $CustomerProduct = new CustomerProduct;
+                $CustomerProduct->customer_id = $customer_id;
+                $CustomerProduct->product_id = $request->productid[$key];
+                $CustomerProduct->save();
+
+                $CustomerProduct_id = $CustomerProduct->id;
+            }else if($CP != ''){
+                $CustomerProduct = new CustomerProduct;
+                $CustomerProduct->customer_id = $customer_id;
+                $CustomerProduct->product_id = $request->productid[$key];
+                $CustomerProduct->update();
+
+                $CustomerProduct_id = $CP->id;
+            }
+
+            
+            if ($product_customer_mesasurementid > 0) {
+
+                $updateData = CustomerProductMeasurement::where('id', '=', $product_customer_mesasurementid)->first();
+                $updateData->customer_id = $customer_id;
+                $updateData->customer_product_id = $CustomerProduct_id;
+                $updateData->product_id = $CustomerProduct->product_id;
+                $updateData->measurement_id = $request->measurement_id[$key];
+                $updateData->measurement_name = $request->measurement_name[$key];
+                $updateData->measurement_no = $request->measurement_no[$key];
                 $updateData->update();
 
-            } else if ($customer_products_id == '') {
+            }else {
 
-                if($request->product_id[$key] != ""){
-
-                    $CustomerProduct = new CustomerProduct;
-                    $CustomerProduct->customer_id = $customer_id;
-                    $CustomerProduct->product_id = $request->product_id[$key];
-                    $CustomerProduct->measurements = $request->measurements[$key];
-                    $CustomerProduct->save();
-                }
+                $CustomerProductMeasurement = new CustomerProductMeasurement;
+                $CustomerProductMeasurement->customer_id = $customer_id;
+                $CustomerProductMeasurement->customer_product_id = $CustomerProduct_id;
+                $CustomerProductMeasurement->product_id = $CustomerProduct->product_id;
+                $CustomerProductMeasurement->measurement_id = $request->measurement_id[$key];
+                $CustomerProductMeasurement->measurement_name = $request->measurement_name[$key];
+                $CustomerProductMeasurement->measurement_no = $request->measurement_no[$key];
+                $CustomerProductMeasurement->save();
             }
+
+           
         }
+        
 
         return redirect()->route('customer.index')->with('info', 'Updated !');
     }

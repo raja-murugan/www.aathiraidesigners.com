@@ -28,11 +28,9 @@
                            <thead class="thead-light">
                               <tr>
                                  <th style="width:10%">S.No</th>
-                                 <th style="width:20%">Name</th>
-                                 <th style="width:16%">Phone No</th>
-                                 <!-- <th style="width:20%">Products</th> -->
-                                 {{-- <th style="width:17%">Total Products</th>
-                                 <th style="width:17%">Delivered Products</th> --}}
+                                 <th style="width:15%">Name</th>
+                                 <th style="width:15%">Phone No</th>
+                                 <th style="width:40%">Products</th>
                                  <th style="width:20%">Action</th>
                               </tr>
                            </thead>
@@ -42,18 +40,23 @@
                                  <td>{{ ++$keydata }}</td>
                                  <td>{{ $Customer_datas['name'] }}</td>
                                  <td>{{ $Customer_datas['phone_number'] }}</td>
-                                 <!-- <td style="text-transform:uppercase">
+                                 <td>
                                        @foreach ($Customer_datas['productsarr'] as $index => $terms_array)
                                                     @if ($terms_array['customer_id'] == $Customer_datas['id'])
-                                                    {{ $terms_array['product'] }} -  {{ $terms_array['measurements'] }} <br/>
+
+                                                   <span style="text-transform:uppercase; font-weight:700"> {{ $terms_array['product'] }}  </span>- 
+
+                                                         @foreach ($terms_array['measurementssarr'] as $index => $measurementssarr)
+                                                            @if ($measurementssarr['product_id'] == $terms_array['product_id'])
+                                                            <span>{{ $measurementssarr['measurement'] }} ,</span>
+                                                            @endif
+                                                         @endforeach
+                                                         <br/>
+
+                                                    
                                                     @endif
                                                     @endforeach
-                                 </td> -->
-                                 {{-- <td>
-                                    <a href="#allproductlist{{ $Customer_datas['unique_key'] }}" data-bs-toggle="modal"
-                                    data-bs-target=".allproductlist-modal-xl{{ $Customer_datas['unique_key'] }}" class="btn btn-sm btn-soft-success badge">{{ $Customer_datas['total_products'] }}</a>
                                  </td>
-                                 <td>{{ $Customer_datas['delivered_products'] }}</td> --}}
                                  <td>
                                     <ul class="list-unstyled hstack gap-1 mb-0">
                                        <li>
@@ -70,12 +73,7 @@
                               </tr>
 
 
-                              <div class="modal fade allproductlist-modal-xl{{ $Customer_datas['unique_key'] }}"
-                                    tabindex="-1" role="dialog"data-bs-backdrop="static"
-                                    aria-labelledby="allproductlistLargeModalLabel{{ $Customer_datas['unique_key'] }}"
-                                    aria-hidden="true">
-                                    @include('page.backend.customer.allproductlist')
-                              </div>
+                             
                               <div class="modal fade customerdelete-modal-xl{{ $Customer_datas['unique_key'] }}"
                                     tabindex="-1" role="dialog"data-bs-backdrop="static"
                                     aria-labelledby="customerdeleteLargeModalLabel{{ $Customer_datas['unique_key'] }}"

@@ -27,7 +27,7 @@
 
 
                                     <div class="row align-item-center">
-                                        <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <div class="col-lg-4 col-md-64 col-sm-12">
                                             <div class="form-group">
                                                 <label>Customer <span class="text-danger">*</span></label>
                                                 <input type="text" value="" class="form-control"
@@ -35,7 +35,7 @@
                                                     required>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <div class="col-lg-4 col-md-4 col-sm-12">
                                             <div class="form-group">
                                                 <label>Contact Number <span class="text-danger">*</span></label>
                                                 <input type="text" value="" class="form-control customerphoneno"
@@ -54,12 +54,12 @@
 
 
                                             <div class="table-responsive no-pagination">
-                                                <table class="table table-center table-hover">
+                                                <table class="table table-center ">
                                                     <thead class="thead-light">
                                                         <tr>
-                                                            <th style="width:15%;">Product</th>
-                                                            <th style="width:80%;">Measurements</th>
-                                                            <th style="width:5%;">Action</th>
+                                                            <th style="width:35%;">Product</th>
+                                                            <th style="width:50%;">Measurements</th>
+                                                            <th style="width:10%;">Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody class="product_fields">
@@ -81,9 +81,7 @@
                                                                     @endforeach
                                                                 </select>
                                                             </td>
-                                                            <td><input type="text" class="form-control measurements"
-                                                                    id="measurements" name="measurements[]"
-                                                                    placeholder="Measurement" /></td>
+                                                            <td><table class="table " id="customer_measurements1"></table></td>
 
                                                             <td>
                                                                 <button class="btn additemplus_button addproducts"

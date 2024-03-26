@@ -47,17 +47,16 @@
 
                                  <div class="form-group-item border-0 mb-0">
                                     <div class="row align-item-center">
-                                       <div class="col-lg-10 col-md-12 col-sm-12">
+                                       <div class="col-lg-12 col-md-12 col-sm-12">
 
 
                                           <div class="table-responsive no-pagination">
-                                          <button class="additemplus_button addproducts" type="button" id="" value="Add">Add</button>
                                             <table class="table table-center table-hover">
                                                 <thead class="thead-light">
                                                     <tr>
-                                                        <th style="width:25%;">Product</th>
-                                                        <th style="width:20%;">Measurements</th>
-                                                        <th style="width:5%;">Action</th>
+                                                            <th style="width:35%;">Product</th>
+                                                            <th style="width:50%;">Measurements</th>
+                                                            <th style="width:10%;">Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody class="product_fields">
@@ -67,7 +66,7 @@
                                                         <input type="hidden" id="customer_products_id" name="customer_products_id[]" value="{{ $CustomerProductsarr->id }}"/>
                                                             <select
                                                                 class="form-control  product_id select js-example-basic-single"
-                                                                name="product_id[]" id="product_id1" required>
+                                                                name="product_id[]" id="product_id1" disabled>
                                                                 <option value="" selected disabled class="text-muted">
                                                                     Select Product
                                                                 </option>
@@ -78,13 +77,34 @@
                                                                 @endforeach
                                                             </select>
                                                         </td>
-                                                        <td><input type="text" class="form-control measurements" id="measurements" name="measurements[]" 
-                                                        placeholder="Measurement" value="{{ $CustomerProductsarr->measurements }}"/></td>
+                                                        <td>
+                                                            <table class="table">
+                                                                  @foreach ($CustomerProductMeasurements as $index => $CustomerProductMeasurementss)
+                                                                     @if($CustomerProductMeasurementss->customer_product_id == $CustomerProductsarr->id)
+                                                                        <tr>
+                                                                           <td>
+                                                                              <input type="hidden" name="product_customer_mesasurementid[]" value="{{ $CustomerProductMeasurementss->id }}"/>
+                                                                              <input type="hidden" name="measurement_id[]" value="{{ $CustomerProductMeasurementss->measurement_id }}"/>
+                                                                              <input type="hidden" name="productid[]" value="{{ $CustomerProductMeasurementss->product_id }}"/>
+                                                                              <input type="text" class="measurement_name form-control" id="measurement_name" name="measurement_name[]" 
+                                                                              value="{{ $CustomerProductMeasurementss->measurement_name }}" readonly>
+                                                                           </td>
+                                                                           <td>
+                                                                              <input type="text"  class=" form-control" id="measurement_no" name="measurement_no[]"
+                                                                               value="{{ $CustomerProductMeasurementss->measurement_no }}" placeholder="Enter Measurements"/>
+                                                                           </td>
+                                                                        </tr>
+                                                                     @endif
+                                                                  @endforeach
+                                                            </table>
+                                                            <table class="table"  id="customer_measurements1"></table>
+                                                         </td>
                                                         
                                                         <td>
-                                                            <button class="additemplus_button addproducts" type="button" id="" value="Add"><i class="fe fe-plus-circle"></i></button>
-                                                            <button class="additemminus_button remove-tr" type="button" id="" value="Add"><i class="fe fe-minus-circle"></i></button>
+                                                            <button class="btn additemplus_button addproducts" type="button" id="" value="Add"><i class="fe fe-plus-circle"></i></button>
+                                                            <button class="btn additemminus_button remove-producttr" type="button" id="" value="Add"><i class="fe fe-minus-circle"></i></button>
                                                         </td>
+                                                        
                                                     </tr>
                                                     @endforeach
                                                 </tbody>
