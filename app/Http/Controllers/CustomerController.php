@@ -40,7 +40,7 @@ class CustomerController extends Controller
 
                         $CPM = CustomerProductMeasurement::where('customer_product_id', '=', $CustomerProducts_arr->id)->get();
                         foreach ($CPM as $key => $CPMs) {
-                            
+
                             if($CPMs->measurement_no != ""){
                                 $measurementss = Measurement::findOrFail($CPMs->measurement_id);
 
@@ -108,7 +108,7 @@ class CustomerController extends Controller
 
         $customer_id = $data->id;
         error_reporting(0);
-        foreach ($request->get('measurement_no') as $key => $measurement_no) {
+        foreach ($request->get('measurement_name') as $key => $measurement_name) {
 
 
             $CP = CustomerProduct::where('customer_id', '=', $customer_id)
@@ -139,8 +139,8 @@ class CustomerController extends Controller
                             $CustomerProductMeasurement->customer_product_id = $CustomerProduct_id;
                             $CustomerProductMeasurement->product_id = $CustomerProduct->product_id;
                             $CustomerProductMeasurement->measurement_id = $request->measurement_id[$key];
-                            $CustomerProductMeasurement->measurement_name = $request->measurement_name[$key];
-                            $CustomerProductMeasurement->measurement_no = $measurement_no;
+                            $CustomerProductMeasurement->measurement_name = $measurement_name;
+                            $CustomerProductMeasurement->measurement_no = $request->measurement_no[$key];
                             $CustomerProductMeasurement->save();
             
         }
