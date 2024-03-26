@@ -50,11 +50,11 @@
                                                             id="delivery_date" required>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                                <div class="col-lg-4 col-md-6 col-sm-12" hidden>
                                                     <div class="form-group">
                                                         <label>Delivery Time <span class="text-danger">*</span></label>
                                                         <input type="time" class="form-control" name="delivery_time"
-                                                            id="delivery_time" required>
+                                                            id="delivery_time" value="{{$timenow}}" required >
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-4 col-md-6 col-sm-12">

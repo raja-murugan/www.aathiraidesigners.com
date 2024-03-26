@@ -44,11 +44,11 @@
                                        @foreach ($Customer_datas['productsarr'] as $index => $terms_array)
                                                     @if ($terms_array['customer_id'] == $Customer_datas['id'])
 
-                                                   <span style="text-transform:uppercase; font-weight:700"> {{ $terms_array['product'] }}  </span>- 
+                                                   <span style="text-transform:uppercase; font-weight:600"> {{ $terms_array['product'] }}  </span>- 
 
                                                          @foreach ($terms_array['measurementssarr'] as $index => $measurementssarr)
                                                             @if ($measurementssarr['product_id'] == $terms_array['product_id'])
-                                                            <span>{{ $measurementssarr['measurement'] }} ,</span>
+                                                            {{ $measurementssarr['measurement'] }} <span style="color:red">({{ $measurementssarr['measurement_no'] }})</span>,
                                                             @endif
                                                          @endforeach
                                                          <br/>

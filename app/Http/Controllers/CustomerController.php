@@ -35,18 +35,26 @@ class CustomerController extends Controller
                 $productarr = Product::findOrFail($CustomerProducts_arr->product_id);
 
                
-                        $ProductMeasurements = ProductMeasurement::where('product_id', '=', $CustomerProducts_arr->product_id)->get();
-                        foreach ($ProductMeasurements as $key => $ProductMeasurementsarr) {
+                     
 
-                            $measurementss = Measurement::findOrFail($ProductMeasurementsarr->measurement_id);
+
+                        $CPM = CustomerProductMeasurement::where('customer_product_id', '=', $CustomerProducts_arr->id)->get();
+                        foreach ($CPM as $key => $CPMs) {
+                            
+                            if($CPMs->measurement_no != ""){
+                                $measurementss = Measurement::findOrFail($CPMs->measurement_id);
 
                         
-                            $measurementssarr[] = array(
-                                'measurement_id' => $ProductMeasurementsarr->measurement_id,
-                                'measurement' => $measurementss->measurement,
-                                'product_id' => $ProductMeasurementsarr->product_id,
-                                'id' => $ProductMeasurementsarr->id,
-                            );
+                                $measurementssarr[] = array(
+                                    'measurement_id' => $CPMs->measurement_id,
+                                    'measurement' => $measurementss->measurement,
+                                    'measurement_no' => $CPMs->measurement_no,
+                                    'product_id' => $CPMs->product_id,
+                                    'id' => $CPMs->id,
+                                );
+                            }
+
+                            
                         }
 
 
