@@ -49,24 +49,20 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-2 border">
+                        <div class="col-md-3 border">
                             <span
                                 style="vertical-align: inherit;vertical-align: inherit;font-size: 14px;color:#000;font-weight: 700;line-height: 35px; ">Product</span>
                         </div>
-                        <div class="col-md-4 border">
-                            <span
-                                style="vertical-align: inherit;vertical-align: inherit;font-size: 14px;color:#000;font-weight: 700;line-height: 35px; ">Measurement</span>
-                        </div>
-                        <div class="col-md-2 border">
+                        <div class="col-md-3 border">
                             <span
                                 style="vertical-align: inherit;vertical-align: inherit;font-size: 14px;color:#000;font-weight: 700;line-height: 35px; ">Qty</span>
                         </div>
-                        <div class="col-md-2 border">
+                        <div class="col-md-3 border">
                             <span
                                 style="vertical-align: inherit;vertical-align: inherit;font-size: 14px;color:#000;font-weight: 700;line-height: 35px; ">Rate
                                 / Qty</span>
                         </div>
-                        <div class="col-md-2 border">
+                        <div class="col-md-3 border">
                             <span
                                 style="vertical-align: inherit;vertical-align: inherit;font-size: 14px;color:#000;font-weight: 700;line-height: 35px; ">Total</span>
                         </div>
@@ -74,23 +70,19 @@
                     <div class="row ">
                         @foreach ($Billing_datas['productsarr'] as $index => $products_data)
                             @if ($products_data['billing_id'] == $Billing_datas['id'])
-                                <div class="col-md-2 border">
+                                <div class="col-md-3 border">
                                     <span
                                         style="vertical-align: inherit;vertical-align: inherit;font-size: 14px;color:#000;font-weight: 400;line-height: 35px; ">{{ $products_data['product'] }}</span>
                                 </div>
-                                <div class="col-md-4 border">
-                                    <span
-                                        style="vertical-align: inherit;vertical-align: inherit;font-size: 14px;color:#000;font-weight: 400;line-height: 35px; ">{{ $products_data['billing_measurement'] }}</span>
-                                </div>
-                                <div class="col-md-2 border">
+                                <div class="col-md-3 border">
                                     <span
                                         style="vertical-align: inherit;vertical-align: inherit;font-size: 14px;color:#000;font-weight: 400;line-height: 35px; ">{{ $products_data['billing_qty'] }}</span>
                                 </div>
-                                <div class="col-md-2 border">
+                                <div class="col-md-3 border">
                                     <span
                                         style="vertical-align: inherit;vertical-align: inherit;font-size: 14px;color:#000;font-weight: 400;line-height: 35px; ">{{ $products_data['billing_rateperqty'] }}</span>
                                 </div>
-                                <div class="col-md-2 border">
+                                <div class="col-md-3 border">
                                     <span
                                         style="vertical-align: inherit;vertical-align: inherit;font-size: 14px;color:#000;font-weight: 400;line-height: 35px; ">{{ $products_data['billing_total'] }}</span>
                                 </div>
