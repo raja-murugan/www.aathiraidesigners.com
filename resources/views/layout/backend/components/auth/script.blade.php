@@ -616,7 +616,6 @@ var l = 1;
                     '<select class="form-control  billing_product_id select js-example-basic-single"  name="billing_product_id[]" id="billing_product_id' + k + '" required>' +
                     '<option value="" selected disabled class="text-muted">Select Product</option></select>' +
                     '</td>' +
-                    '<td><input type="text" class="form-control billing_measurement" id="billing_measurement' + k + '" name="billing_measurement[]" placeholder="Measurement" /></td>' +
                     '<td><input type="text" class="form-control billing_qty" id="billing_qty" name="billing_qty[]" placeholder="qty" /></td>' +
                     '<td><input type="text" class="form-control billing_rateperqty" id="billing_rateperqty" name="billing_rateperqty[]" placeholder="Rate / Qty" /></td>' +
                     '<td><input type="text" class="form-control billing_total" id="billing_total" name="billing_total[]" placeholder="total"  />' +
@@ -660,112 +659,6 @@ var l = 1;
 
 
 
-                if(k == '2'){
-                                $('#billing_product_id' + k).on('change', function() {
-                                  var billing_product_id = this.value;
-
-                                  $.ajax({
-                                    url: '/getmeasurementforproduct/',
-                                    type: 'get',
-                                    data: {
-                                      _token: "{{ csrf_token() }}",
-                                      billing_product_id: billing_product_id,
-                                      billing_customerid: billing_customerid,
-                                    },
-                                    dataType: 'json',
-                                    success: function(response) {
-                                          $('#billing_measurement' + 2).val('');
-                                          $('#billing_measurement' + 2).val(response['data']);
-                                        }
-                                    });
-                                });
-                }
-
-
-                if(k == '3'){
-                                $('#billing_product_id' + k).on('change', function() {
-                                  var billing_product_id = this.value;
-
-                                  $.ajax({
-                                    url: '/getmeasurementforproduct/',
-                                    type: 'get',
-                                    data: {
-                                      _token: "{{ csrf_token() }}",
-                                      billing_product_id: billing_product_id,
-                                      billing_customerid: billing_customerid,
-                                    },
-                                    dataType: 'json',
-                                    success: function(response) {
-                                          $('#billing_measurement' + 3).val('');
-                                          $('#billing_measurement' + 3).val(response['data']);
-                                        }
-                                    });
-                                });
-                }
-
-                if(k == '4'){
-                                $('#billing_product_id' + k).on('change', function() {
-                                  var billing_product_id = this.value;
-
-                                  $.ajax({
-                                    url: '/getmeasurementforproduct/',
-                                    type: 'get',
-                                    data: {
-                                      _token: "{{ csrf_token() }}",
-                                      billing_product_id: billing_product_id,
-                                      billing_customerid: billing_customerid,
-                                    },
-                                    dataType: 'json',
-                                    success: function(response) {
-                                          $('#billing_measurement' + 4).val('');
-                                          $('#billing_measurement' + 4).val(response['data']);
-                                        }
-                                    });
-                                });
-                }
-
-
-                if(k == '5'){
-                                $('#billing_product_id' + k).on('change', function() {
-                                  var billing_product_id = this.value;
-
-                                  $.ajax({
-                                    url: '/getmeasurementforproduct/',
-                                    type: 'get',
-                                    data: {
-                                      _token: "{{ csrf_token() }}",
-                                      billing_product_id: billing_product_id,
-                                      billing_customerid: billing_customerid,
-                                    },
-                                    dataType: 'json',
-                                    success: function(response) {
-                                          $('#billing_measurement' + 5).val('');
-                                          $('#billing_measurement' + 5).val(response['data']);
-                                        }
-                                    });
-                                });
-                }
-
-                if(k == '6'){
-                                $('#billing_product_id' + k).on('change', function() {
-                                  var billing_product_id = this.value;
-
-                                  $.ajax({
-                                    url: '/getmeasurementforproduct/',
-                                    type: 'get',
-                                    data: {
-                                      _token: "{{ csrf_token() }}",
-                                      billing_product_id: billing_product_id,
-                                      billing_customerid: billing_customerid,
-                                    },
-                                    dataType: 'json',
-                                    success: function(response) {
-                                          $('#billing_measurement' + 6).val('');
-                                          $('#billing_measurement' + 6).val(response['data']);
-                                        }
-                                    });
-                                });
-                }
 
             });
 

@@ -82,7 +82,6 @@
                                                         style="background: linear-gradient(320deg, #DDCEFF 0%, #DBECFF 100%);">
                                                         <tr>
                                                             <th style="width:25%">Product</th>
-                                                            <th style="width:30%">Measurement</th>
                                                             <th style="width:10%">Qty</th>
                                                             <th style="width:15%">Rate / Qty</th>
                                                             <th style="width:15%">Total</th>
@@ -104,10 +103,6 @@
                                                             name="billing_product_id[]" id="billing_product_id1" required>
                                                         </select>
                                                     </td>
-                                                    <td><input type="text" class="form-control billing_measurement"
-                                                            id="billing_measurement1" name="billing_measurement[]"
-                                                            placeholder="Measurement" /></td>
-
                                                     <td><input type="text" class="form-control billing_qty"
                                                             id="billing_qty" name="billing_qty[]" placeholder="Qty" />
                                                     </td>

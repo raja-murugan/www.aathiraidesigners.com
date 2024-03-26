@@ -85,7 +85,6 @@
                                                       <thead  style="background: linear-gradient(320deg, #DDCEFF 0%, #DBECFF 100%);">
                                                          <tr>
                                                             <th style="width:25%">Product</th>
-                                                            <th style="width:25%">Measurement</th>
                                                             <th style="width:10%">Qty</th>
                                                             <th style="width:14%">Rate / Qty</th>
                                                             <th style="width:19%">Total</th>
@@ -104,15 +103,14 @@
                                                                         <option value="" selected disabled class="text-muted">
                                                                            Select Product
                                                                         </option>
-                                                                        @foreach ($products as $products_arr)
-                                                                           <option value="{{ $products_arr->id }}"@if ($products_arr->id === $BillingProductsarr->billing_product_id) selected='selected' @endif>
-                                                                                 {{ $products_arr->name }}
+                                                                        @foreach ($Customer_data as $Customer_datas)
+                                                                        
+                                                                           <option value="{{ $Customer_datas['id'] }}"@if ($Customer_datas['id'] === $BillingProductsarr->billing_product_id) selected='selected' @endif>
+                                                                                 {{ $Customer_datas['name'] }}
                                                                            </option>
                                                                         @endforeach
                                                                      </select>
                                                             </td>
-                                                            <td><input type="text" class="form-control billing_measurement" id="billing_measurement"
-                                                                  name="billing_measurement[]" placeholder="Measurement" value="{{ $BillingProductsarr->billing_measurement }}"/></td>
 
                                                             <td><input type="text" class="form-control billing_qty" id="billing_qty"
                                                                   name="billing_qty[]" placeholder="Qty" value="{{ $BillingProductsarr->billing_qty }}"/></td>

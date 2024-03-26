@@ -230,7 +230,6 @@ class BillingController extends Controller
                     $BillingProduct = new BillingProduct;
                     $BillingProduct->billing_id = $billing_id;
                     $BillingProduct->billing_product_id = $billing_product_id;
-                    $BillingProduct->billing_measurement = $request->billing_measurement[$key];
                     $BillingProduct->billing_qty = $request->billing_qty[$key];
                     $BillingProduct->billing_rateperqty = $request->billing_rateperqty[$key];
                     $BillingProduct->billing_total = $request->billing_total[$key];
@@ -246,14 +245,12 @@ class BillingController extends Controller
 
                     $CustomerProducts->customer_id = $request->get('customer_id');
                     $CustomerProducts->product_id = $billing_product_id;
-                    $CustomerProducts->measurements = $request->billing_measurement[$key];
                     $CustomerProducts->update();
 
                 }else {
                     $CustomerProduct = new CustomerProduct;
                     $CustomerProduct->customer_id = $request->get('customer_id');
                     $CustomerProduct->product_id = $billing_product_id;
-                    $CustomerProduct->measurements = $request->billing_measurement[$key];
                     $CustomerProduct->save();
 
                   
@@ -288,12 +285,28 @@ class BillingController extends Controller
         $BillingProducts = BillingProduct::where('billing_id', '=', $BillingData->id)->get();
         $BillingPayments = BillingPayment::where('billing_id', '=', $BillingData->id)->get();
 
-        $products = Product::where('soft_delete', '!=', 1)->latest('created_at')->get();
+
+            $customerproducts = CustomerProduct::where('customer_id', '=', $BillingData->customer_id)->get();
+            if($customerproducts != ""){
+
+                $Customer_data = [];
+                foreach ($customerproducts as $key => $CustomerProducts_arr) {
+        
+                    $productarr = Product::findOrFail($CustomerProducts_arr->product_id);
+        
+                    $Customer_data[] = array(
+                        'id' => $productarr->id,
+                        'name' => $productarr->name,
+                    );
+                }
+            }
+
+
         $customers = Customer::where('soft_delete', '!=', 1)->latest('created_at')->get();
         $today = Carbon::now()->format('Y-m-d');
         $timenow = Carbon::now()->format('H:i');
 
-        return view('page.backend.billing.edit', compact('BillingData', 'BillingProducts', 'BillingPayments', 'products', 'customers', 'today', 'timenow'));
+        return view('page.backend.billing.edit', compact('BillingData', 'BillingProducts', 'BillingPayments', 'Customer_data', 'customers', 'today', 'timenow'));
     }
 
 
@@ -349,34 +362,20 @@ class BillingController extends Controller
                     $updateData = BillingProduct::where('id', '=', $billingproducts_id)->first();
                     $updateData->billing_id = $billing_id;
                     $updateData->billing_product_id = $request->billing_product_id[$key];
-                    $updateData->billing_measurement = $request->billing_measurement[$key];
                     $updateData->billing_qty = $request->billing_qty[$key];
                     $updateData->billing_rateperqty = $request->billing_rateperqty[$key];
                     $updateData->billing_total = $request->billing_total[$key];
                     $updateData->update();
 
 
-                    $CustomerProducts = CustomerProduct::where('customer_id', '=', $BillingData->customer_id)->where('product_id', '=', $request->billing_product_id[$key])->first();
-
-                    $CustomerProducts->product_id = $request->billing_product_id[$key];
-                    $CustomerProducts->measurements = $request->billing_measurement[$key];
-                    $CustomerProducts->status = 2;
-                    $CustomerProducts->update();
 
                 } else if ($billingproducts_id == '') {
 
                     if($request->billing_product_id[$key] != ""){
 
-                        $CustomerProduct = new CustomerProduct;
-                        $CustomerProduct->customer_id = $BillingData->customer_id;
-                        $CustomerProduct->product_id = $request->billing_product_id[$key];
-                        $CustomerProduct->measurements = $request->billing_measurement[$key];
-                        $CustomerProduct->save();
-
                         $BillingProduct = new BillingProduct;
                         $BillingProduct->billing_id = $billing_id;
                         $BillingProduct->billing_product_id = $request->billing_product_id[$key];
-                        $BillingProduct->billing_measurement = $request->billing_measurement[$key];
                         $BillingProduct->billing_qty = $request->billing_qty[$key];
                         $BillingProduct->billing_rateperqty = $request->billing_rateperqty[$key];
                         $BillingProduct->billing_total = $request->billing_total[$key];
