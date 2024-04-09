@@ -10,6 +10,7 @@ use App\Http\Controllers\BillingController;
 use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\PayoffController;
+use App\Http\Controllers\MeasurementController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -111,6 +112,21 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     // DELETE
     Route::middleware(['auth:sanctum', 'verified'])->put('/zworktechtechnology/department/delete/{unique_key}', [DepartmentController::class, 'delete'])->name('department.delete');
  });
+
+
+
+ // MEASUREMENT CONTROLLER
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    // INDEX
+    Route::middleware(['auth:sanctum', 'verified'])->get('/zworktechtechnology/measurement', [MeasurementController::class, 'index'])->name('measurement.index');
+    // STORE
+    Route::middleware(['auth:sanctum', 'verified'])->post('/zworktechtechnology/measurement/store', [MeasurementController::class, 'store'])->name('measurement.store');
+    // EDIT
+    Route::middleware(['auth:sanctum', 'verified'])->post('/zworktechtechnology/measurement/edit/{id}', [MeasurementController::class, 'edit'])->name('measurement.edit');
+    // DELETE
+    Route::middleware(['auth:sanctum', 'verified'])->put('/zworktechtechnology/measurement/delete/{id}', [MeasurementController::class, 'delete'])->name('measurement.delete');
+ });
+
 
 
   // CUSTOMER CONTROLLER

@@ -52,6 +52,10 @@
             <ul>
                 <li class="menu-title"><span>Billing</span></li>
 
+                <li class="{{ Route::is('measurement.index') ? 'active' : '' }}">
+                   <a href="{{ route('measurement.index') }}"><i class="fe fe-briefcase"></i> <span>Measurements</span></a>
+               </li>
+
                <li class="{{ Route::is('product.index') ? 'active' : '' }}">
                    <a href="{{ route('product.index') }}"><i class="fe fe-briefcase"></i> <span>Product</span></a>
                </li>
