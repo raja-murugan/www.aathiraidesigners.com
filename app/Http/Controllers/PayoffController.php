@@ -178,11 +178,22 @@ class PayoffController extends Controller
                 $day_salary = $perdaysalary * $present_dayscount;
 
                 $sixty_minsot_salary = $employeesarray->ot_salary;
-                $one_minute_ot_salary = ($sixty_minsot_salary / 60) * 1;
-                $total_ot_salary = $one_minute_ot_salary * $total_ot_mins;
+                if($sixty_minsot_salary != ""){
 
-                $emp_total_salary = $day_salary + $total_ot_salary;
-                $total_salary = number_format((float)$emp_total_salary, 2, '.', '');
+                    $one_minute_ot_salary = ($sixty_minsot_salary / 60) * 1;
+                    $total_ot_salary = $one_minute_ot_salary * $total_ot_mins;
+    
+                    $emp_total_salary = $day_salary + $total_ot_salary;
+                    $total_salary = number_format((float)$emp_total_salary, 2, '.', '');
+                }else {
+
+                    $one_minute_ot_salary = (0 / 60) * 1;
+                    $total_ot_salary = $one_minute_ot_salary * $total_ot_mins;
+    
+                    $emp_total_salary = $day_salary + $total_ot_salary;
+                    $total_salary = number_format((float)$emp_total_salary, 2, '.', '');
+                }
+                
 
             }
 
