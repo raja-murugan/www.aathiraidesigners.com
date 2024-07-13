@@ -980,7 +980,12 @@ class PayoffController extends Controller
             $day_salary = $perdaysalary * $present_dayscount;
 
 
-            $sixty_minsot_salary = $Employees_arr->ot_salary;
+            $ot_salary = $Employees_arr->ot_salary;
+            if($ot_salary != ""){
+                $sixty_minsot_salary = $ot_salary;
+            }else {
+                $sixty_minsot_salary = 0;
+            }
             $one_minute_ot_salary = ($sixty_minsot_salary / 60) * 1;
             $total_ot_salary = $one_minute_ot_salary * $total_ot_mins;
 
