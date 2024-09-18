@@ -190,9 +190,9 @@ class AttendanceController extends Controller
         $department_name = $request->get('department_name');
 
         $departmentname = Department::where('name', '=', $department_name)->first();
-      
+
         $current_date = Carbon::now()->format('Y-m-d');
-      
+
 
         $today = $request->get('date');
         $timenow = Carbon::now()->format('H:i');
@@ -289,8 +289,8 @@ class AttendanceController extends Controller
             $data->year = date('Y', strtotime($request->get('date')));
             $data->date = $request->get('date');
             $data->employee_id = $request->get('employee_id');
-            $data->checkin_date = $request->get('date');
-            $data->checkin_time = $request->get('time');
+            $data->checkin_date = $today;
+            $data->checkin_time = $timenow;
             $data->working_hour = '';
 
             $checkin_photo = $request->checkin_photo;
@@ -308,7 +308,7 @@ class AttendanceController extends Controller
             $data->save();
 
             return redirect()->route('attendance.index')->with('message', 'Added !');
-            
+
         }else {
 
             // $today = Carbon::now()->format('Y-m-d');
@@ -330,7 +330,7 @@ class AttendanceController extends Controller
             // $data->status = 1;
             // $data->save();
 
-            
+
             return redirect()->route('attendance.index')->with('warning', 'Capture Your Photo !');
 
         }
@@ -349,8 +349,8 @@ class AttendanceController extends Controller
             $random_no =  rand(100,999);
 
             $checkindata = Attendance::where('checkin_date', '=', $request->get('date'))->where('employee_id', '=', $employee_id)->where('status', '=', 1)->first();
-            $checkindata->checkout_date = $request->get('date');
-            $checkindata->checkout_time = $request->get('time');
+            $checkindata->checkout_date = $today;
+            $checkindata->checkout_time = $timenow;
 
 
             $checkout_photo = $request->checkout_photo;
@@ -557,11 +557,11 @@ class AttendanceController extends Controller
             $data->save();
 
 
-            
+
         }
 
 
-        
+
 
 
         $today = $date;
@@ -755,9 +755,9 @@ class AttendanceController extends Controller
         $department_name = $request->get('department_name');
 
         $departmentname = Department::where('name', '=', $department_name)->first();
-      
 
-      
+
+
 
         $today = Carbon::now()->format('Y-m-d');
         $timenow = Carbon::now()->format('H:i');
