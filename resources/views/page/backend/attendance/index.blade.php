@@ -133,14 +133,12 @@
                                                     <ul class="list-unstyled hstack gap-1 mb-0">
                                                         @if ($today == $current_date)
                                                             @if ($Attendance_datas['status'] == 'Present')
-                                                                @if (Auth::user()->role = 'Super-Admin')
+                                                                @if (Auth::user()->role == 'Super-Admin')
                                                                     <li>
                                                                         <a class="badge btn" data-bs-toggle="modal"
                                                                             data-bs-target=".attendanceedit-modal-xl{{ $Attendance_datas['unique_key'] }}"
                                                                             style="color: #333;background: #d8c730d9;">Edit</a>
                                                                     </li>
-                                                                @else
-                                                                    <li></li>
                                                                 @endif
                                                             @elseif ($Attendance_datas['status'] == 'Absent')
                                                                 <li>
@@ -164,14 +162,12 @@
                                                                         style="color: #28084b;background: #d55561;">Leave</a>
                                                                 </li>
                                                             @else
-                                                                @if (Auth::user()->role = 'Super-Admin')
+                                                                @if (Auth::user()->role == 'Super-Admin')
                                                                     <li>
                                                                         <a class="badge btn" data-bs-toggle="modal"
                                                                             data-bs-target=".attendanceedit-modal-xl{{ $Attendance_datas['unique_key'] }}"
                                                                             style="color: #333;background: #d8c730d9;">Edit</a>
                                                                     </li>
-                                                                @else
-                                                                    <li></li>
                                                                 @endif
                                                                 @if ($Attendance_datas['status'] != 'Present')
                                                                     <li>
